@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">exampleMVVM3</string>
+    <string name="hint_add_quote">Quote</string>
+    <string name="hint_add_author">Author</string>
+    <string name="title_add_quote">TYPE YOUR OWN QUOTE</string>
+    <string name="btAddQuote">AÑADIR</string>
+    <string name="fragment_option">WATCH</string>
+    <string name="add_option">ADD</string>
+</resources>
