@@ -15,7 +15,9 @@ import com.example.examplemvvm3.R
 import com.example.examplemvvm3.databinding.FragmentQuoteBinding
 import com.example.examplemvvm3.domain.model.Quote
 import com.example.examplemvvm3.ui.viewmodel.QuoteFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QuoteFragment : Fragment() {
 
     companion object {
