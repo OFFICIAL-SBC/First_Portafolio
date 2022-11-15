@@ -22,6 +22,7 @@ class AddQuoteViewModel @Inject constructor(
         if (!quote.isNullOrEmpty() and !author.isNullOrEmpty()){
             viewModelScope.launch {
                 addQuoteUseCase(quote,author)
+                msg.value="Your quote have been successfully added to our list"
             }
         }else{
             msg.value="Please type a new quote with its author"

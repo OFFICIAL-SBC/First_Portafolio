@@ -49,6 +49,8 @@ class AddQuoteFragment : Fragment() {
             val quote = addQuoteBinding.addQuoteEditText.text.toString()
             val author = addQuoteBinding.addAuthorEditText.text.toString()
             viewModel.addNewQuote(quote, author)
+            addQuoteBinding.addQuoteEditText.text?.clear()
+            addQuoteBinding.addAuthorEditText.text?.clear()
         }
     }
 
