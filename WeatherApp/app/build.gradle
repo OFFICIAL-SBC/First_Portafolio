@@ -37,13 +37,36 @@ android {
 }
 
 dependencies {
+    def nav_version="2.5.3"
 
+    //Component navigation
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    //ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+
+    // Librerias opcionales para facilitar la creacion del viewmodel en el activity y en el fragment
+    //Fragment
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
+    //Activity
+    implementation "androidx.activity:activity-ktx:1.6.1"
+
+    //GoogleMap
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
