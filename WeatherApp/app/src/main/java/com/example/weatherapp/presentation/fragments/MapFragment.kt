@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentMapBinding
@@ -16,7 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFragment : Fragment(),OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     companion object {
         fun newInstance() = MapFragment()
@@ -32,8 +33,9 @@ class MapFragment : Fragment(),OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mapBinding = FragmentMapBinding.inflate(inflater,container,false)
-        val mapFragment=childFragmentManager.findFragmentById(R.id.fActualMap) as SupportMapFragment
+        mapBinding = FragmentMapBinding.inflate(inflater, container, false)
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.fActualMap) as SupportMapFragment
         mapFragment.getMapAsync(this)
         return mapBinding.root
     }
@@ -45,9 +47,22 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val sidney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sidney).title("Marker in sidney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sidney))
+        var currentPosition = LatLng(1.85371, -76.05071)
+        mMap.addMarker(MarkerOptions().position(currentPosition).title("Hello Pitalito"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition))
+        mMap.setOnMapClickListener {
+            currentPosition = it
+            mMap.clear()
+            mMap.addMarker(
+                MarkerOptions().position(currentPosition)
+            )
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(currentPosition),600,null)
+        }
+
+        mMap.setOnMarkerClickListener {
+            Toast.makeText(requireContext(),"Lat: ${it.position.latitude} Lon:${it.position.longitude}",Toast.LENGTH_LONG).show()
+            false
+        }
     }
 
 }

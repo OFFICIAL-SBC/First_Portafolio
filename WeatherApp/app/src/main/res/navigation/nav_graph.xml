@@ -8,6 +8,15 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.weatherapp.presentation.fragments.MapFragment"
-        android:label="MAP"
-        tools:layout="@layout/fragment_map" />
+        android:label="@string/map_label"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.weatherapp.presentation.fragments.FavoriteFragment"
+        android:label="@string/favorites_label"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>
