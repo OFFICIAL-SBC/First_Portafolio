@@ -24,7 +24,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private lateinit var mMap: GoogleMap
-    private var mapReady = false
+    private  var currentPosition: LatLng? = null
 
     private lateinit var mapBinding: FragmentMapBinding
     private val viewModel: MapViewModel by viewModels()
@@ -47,16 +47,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        var currentPosition = LatLng(1.85371, -76.05071)
-        mMap.addMarker(MarkerOptions().position(currentPosition).title("Hello Pitalito"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition))
+        if(currentPosition == null) currentPosition = LatLng(1.85371, -76.05071)
+        mMap.addMarker(MarkerOptions().position(currentPosition ?: LatLng(1.85371, -76.05071) ).title("Hello Pitalito"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition ?: LatLng(1.85371, -76.05071)))
         mMap.setOnMapClickListener {
             currentPosition = it
             mMap.clear()
             mMap.addMarker(
-                MarkerOptions().position(currentPosition)
+                MarkerOptions().position(currentPosition!!)
             )
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(currentPosition),600,null)
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(currentPosition!!),600,null)
         }
 
         mMap.setOnMarkerClickListener {
