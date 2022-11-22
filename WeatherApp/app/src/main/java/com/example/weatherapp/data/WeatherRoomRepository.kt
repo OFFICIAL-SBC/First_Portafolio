@@ -1,4 +1,4 @@
 package com.example.weatherapp.data
 
-class WeatherRepository {
+class WeatherRoomRepository() {
 }

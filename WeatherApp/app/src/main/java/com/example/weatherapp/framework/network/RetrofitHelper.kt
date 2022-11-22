@@ -8,7 +8,7 @@ object RetrofitHelper {
 
     fun getInstanceRetrofit():Retrofit{
         val headerInterceptor=HeaderInterceptor()
-        val client=Client(headerInterceptor)
+        val client=OkClient(headerInterceptor)
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_API_REST)
             .addConverterFactory(GsonConverterFactory.create())
