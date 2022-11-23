@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:src="@drawable/weather_icon"
+        android:id="@+id/ivDialogIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDialogIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivDialogIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLabelTimezone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/timezone_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDialogIcon" />
+
+    <TextView
+        android:id="@+id/tvValueTimezone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Timezone"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelTimezone"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelTimezone"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelTimezone" />
+
+    <TextView
+        android:id="@+id/tvLabelAirquality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/air_qualitylabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelTimezone" />
+
+    <TextView
+        android:id="@+id/tvValueAirquality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Air Quality"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelAirquality"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelAirquality"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelAirquality" />
+
+    <TextView
+        android:id="@+id/tvLabelTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/temperature_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvValueAirquality" />
+
+    <TextView
+        android:id="@+id/tvValueTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Temperature"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelTemperature"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelTemperature"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelTemperature" />
+
+    <TextView
+        android:id="@+id/tvLabelHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/humidity_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelTemperature" />
+
+    <TextView
+        android:id="@+id/tvValueHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Humidity"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelHumidity"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelHumidity"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelHumidity" />
+
+    <TextView
+        android:id="@+id/tvLabelWindSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/wind_speed_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelHumidity" />
+
+    <TextView
+        android:id="@+id/tvValueWindSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Wind Speed"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelWindSpeed"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelWindSpeed"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelWindSpeed" />
+
+
+    <TextView
+        android:id="@+id/tvLabelDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/description_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelWindSpeed" />
+
+    <TextView
+        android:id="@+id/tvValueDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        tools:text="Description"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelDescription"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelDescription"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelDescription" />
+
+    <Button
+        android:id="@+id/bnCloseDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/close_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription" />
+
+    <Button
+        android:id="@+id/bnSaveCurrentWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="96dp"
+        android:text="@string/save_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

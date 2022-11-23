@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mapFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_showWeatherDescription"
+            app:destination="@id/showWeatherDescription" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -23,4 +26,12 @@
             android:id="@+id/action_favoriteFragment_to_mapFragment"
             app:popUpTo="@id/mapFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/showWeatherDescription"
+        android:name="com.example.weatherapp.presentation.dialogs.ShowWeatherDescription"
+        android:label="ShowWeatherDescription" >
+        <argument
+            android:name="weatherAtributes"
+            app:argType="com.example.weatherapp.presentation.Model.WeahterDataPresentation" />
+    </dialog>
 </navigation>

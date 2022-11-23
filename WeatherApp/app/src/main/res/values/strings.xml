@@ -3,4 +3,12 @@
     <string name="map_label">Map</string>
     <string name="favorites_label">Favorites</string>
     <string name="label_fab_current_weather">Get current weather</string>
+    <string name="timezone_label">Timezone</string>
+    <string name="air_qualitylabel">Air Quality</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="wind_speed_label">Wind Speed</string>
+    <string name="description_label">Descripton</string>
+    <string name="close_label">Close</string>
+    <string name="save_label">Save</string>
 </resources>

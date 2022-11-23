@@ -17,10 +17,13 @@ class MapViewModel(interactors: Interactors) : WeatherViewModel(interactors) {
     private val msg:MutableLiveData<String> = MutableLiveData()
     val msgDone:LiveData<String> = msg
 
+    private val currentWeather: MutableLiveData<WeahterDataPresentation> = MutableLiveData()
+    val currentWeatherDone: LiveData<WeahterDataPresentation> = currentWeather
+
     fun getCurrentWeather(ubication: LatLng){
         viewModelScope.launch(Dispatchers.IO){
             val result: WeahterDataPresentation =interactors.getCurrentWeatherUseCase(ubication)
-            Log.w("HELLO",result.toString())
+            currentWeather.postValue(result)
         }
     }
 
