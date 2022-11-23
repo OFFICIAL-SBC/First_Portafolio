@@ -20,7 +20,7 @@ class MapViewModel(interactors: Interactors) : WeatherViewModel(interactors) {
     fun getCurrentWeather(ubication: LatLng){
         viewModelScope.launch(Dispatchers.IO){
             val result: WeahterDataPresentation =interactors.getCurrentWeatherUseCase(ubication)
-            Log.w("RESULT",result.toString())
+            Log.w("HELLO",result.toString())
         }
     }
 
