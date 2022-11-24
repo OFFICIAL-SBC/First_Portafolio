@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:src="@drawable/weather_icon"
+        tools:src="@drawable/weather_icon"
         android:id="@+id/ivDialogIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
         android:id="@+id/bnCloseDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="36dp"
         android:text="@string/close_label"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="25dp"
         android:text="@string/save_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLabelDescription" />

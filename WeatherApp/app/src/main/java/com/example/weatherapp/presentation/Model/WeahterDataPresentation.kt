@@ -4,15 +4,16 @@ import com.example.weatherapp.domain.WeatherDataDomain
 import java.io.Serializable
 
 data class WeahterDataPresentation(
-    val aqi: Int,
+    val aqi: Double,
     val city_name: String,
     val temp: Double,
-    val rh: Int,
+    val rh: Double,
     val wind_spd: Double,
     val timezone: String,
     val description: String,
     val lat: Double,
-    val lon: Double
+    val lon: Double,
+    val icon_code: String
 ): Serializable
 
 
@@ -26,5 +27,6 @@ fun WeatherDataDomain.toPresentation() =
         data[0].timezone,
         data[0].weather.description,
         data[0].lat,
-        data[0].lon
+        data[0].lon,
+        data[0].weather.icon
     )
