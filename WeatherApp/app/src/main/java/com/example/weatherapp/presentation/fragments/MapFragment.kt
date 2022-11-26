@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentMapBinding
 import com.example.weatherapp.framework.WeatherViewModelFactory
-import com.example.weatherapp.presentation.Model.WeahterDataPresentation
+import com.example.weatherapp.presentation.Model.WeatherDataPresentation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,10 +21,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
-    companion object {
-        fun newInstance() = MapFragment()
-    }
 
     private lateinit var mMap: GoogleMap
     private var currentPosition: LatLng? = null
@@ -51,6 +46,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
 
         //Observers
+        //--------------------------------------------------------------------------------------
         viewModel.msgDone.observe(viewLifecycleOwner, Observer { msg ->
             onMessageDoneSuscribe(msg)
         })
@@ -58,13 +54,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         viewModel.currentWeatherDone.observe(viewLifecycleOwner, Observer { weather ->
             onCurrentWeatherDoneSuscribe(weather)
         })
+        //---------------------------------------------------------------------------------------
 
         mapBinding.fabGetWeather.setOnClickListener {
             currentPosition?.let { it -> viewModel.getCurrentWeather(it) }
         }
     }
 
-    private fun onCurrentWeatherDoneSuscribe(weather: WeahterDataPresentation?) {
+    private fun onCurrentWeatherDoneSuscribe(weather: WeatherDataPresentation?) {
         weather?.let {
             findNavController().navigate(MapFragmentDirections.actionMapFragmentToShowWeatherDescription(it))
         }

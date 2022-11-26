@@ -9,13 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.weatherapp.databinding.WeatherDialogBinding
-import com.example.weatherapp.presentation.Model.WeahterDataPresentation
+import com.example.weatherapp.framework.WeatherViewModelFactory
+import com.example.weatherapp.presentation.Model.WeatherDataPresentation
 import com.squareup.picasso.Picasso
 
 class ShowWeatherDescription : DialogFragment() {
+
+
+    private lateinit var viewModel: ShowWeatherViewModel
 
     private lateinit var binding: WeatherDialogBinding
     private val args: ShowWeatherDescriptionArgs by navArgs()
@@ -25,6 +30,7 @@ class ShowWeatherDescription : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel=ViewModelProvider(this,WeatherViewModelFactory)[ShowWeatherViewModel::class.java]
         binding = WeatherDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,7 +41,7 @@ class ShowWeatherDescription : DialogFragment() {
         setWidthPercent(80)
 
 
-        val selectedLocation: WeahterDataPresentation = args.weatherAtributes
+        val selectedLocation: WeatherDataPresentation = args.weatherAtributes
 
         binding.tvDialogTitle.text = selectedLocation.city_name
         binding.tvValueTimezone.text = selectedLocation.timezone
@@ -53,10 +59,6 @@ class ShowWeatherDescription : DialogFragment() {
             findNavController().navigate(ShowWeatherDescriptionDirections.actionShowWeatherDescriptionToMapFragment())
         }
 
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
     }
 
     private fun DialogFragment.setWidthPercent(percentage: Int) {

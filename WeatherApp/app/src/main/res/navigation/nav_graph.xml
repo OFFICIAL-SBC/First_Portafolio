@@ -34,7 +34,7 @@
         android:label="ShowWeatherDescription" >
         <argument
             android:name="weatherAtributes"
-            app:argType="com.example.weatherapp.presentation.Model.WeahterDataPresentation" />
+            app:argType="com.example.weatherapp.presentation.Model.WeatherDataPresentation" />
         <action
             android:id="@+id/action_showWeatherDescription_to_mapFragment"
             app:destination="@id/mapFragment"
