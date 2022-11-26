@@ -3,7 +3,7 @@ package com.example.weatherapp.framework.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.weatherapp.presentation.Model.WeahterDataPresentation
+import com.example.weatherapp.presentation.Model.WeatherDataPresentation
 
 @Entity(tableName = "weather_table")
 data class WeatherEntity(
@@ -21,7 +21,7 @@ data class WeatherEntity(
     @ColumnInfo(name = "icon_code") val icon_code: String
 )
 
-fun WeahterDataPresentation.toDatabase() =
+fun WeatherDataPresentation.toDatabase() =
     WeatherEntity(
         aqi = aqi,
         city_name = city_name,

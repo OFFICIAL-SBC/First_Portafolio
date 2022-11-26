@@ -1,9 +1,10 @@
 package com.example.weatherapp.presentation.Model
 
 import com.example.weatherapp.domain.WeatherDataDomain
+import com.example.weatherapp.framework.local.WeatherEntity
 import java.io.Serializable
 
-data class WeahterDataPresentation(
+data class WeatherDataPresentation(
     val aqi: Double,
     val city_name: String,
     val temp: Double,
@@ -14,11 +15,11 @@ data class WeahterDataPresentation(
     val lat: Double,
     val lon: Double,
     val icon_code: String
-): Serializable
+) : Serializable
 
 
 fun WeatherDataDomain.toPresentation() =
-    WeahterDataPresentation(
+    WeatherDataPresentation(
         data[0].aqi,
         data[0].city_name,
         data[0].temp,
@@ -29,4 +30,9 @@ fun WeatherDataDomain.toPresentation() =
         data[0].lat,
         data[0].lon,
         data[0].weather.icon
+    )
+
+fun WeatherEntity.toPresentation() =
+    WeatherDataPresentation(
+        aqi, city_name, temp, rh, wind_spd, timezone, description, lat, lon, icon_code
     )

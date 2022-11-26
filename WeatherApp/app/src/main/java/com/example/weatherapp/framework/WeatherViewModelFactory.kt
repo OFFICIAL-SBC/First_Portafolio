@@ -1,9 +1,11 @@
 package com.example.weatherapp.framework
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 object WeatherViewModelFactory:ViewModelProvider.Factory {
+
     lateinit var dependencies: Interactors
 
     fun inject(dependencies: Interactors){
