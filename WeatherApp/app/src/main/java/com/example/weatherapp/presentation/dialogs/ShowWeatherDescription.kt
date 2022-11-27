@@ -8,7 +8,9 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -54,11 +56,23 @@ class ShowWeatherDescription : DialogFragment() {
             .load("https://www.weatherbit.io/static/img/icons/${selectedLocation.icon_code}.png")
             .into(binding.ivDialogIcon)
 
-        binding.bnSaveCurrentWeather.setOnClickListener { dismiss() }
+
+        //Observers
+        viewModel.msgDone.observe(viewLifecycleOwner, Observer {
+            onMessageDoneSuscribe(it)
+        })
+
+        binding.bnSaveCurrentWeather.setOnClickListener {
+            viewModel.saveWeather(selectedLocation)
+        }
         binding.bnCloseDialog.setOnClickListener {
             findNavController().navigate(ShowWeatherDescriptionDirections.actionShowWeatherDescriptionToMapFragment())
         }
 
+    }
+
+    private fun onMessageDoneSuscribe(it: String?) {
+        Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
     }
 
     private fun DialogFragment.setWidthPercent(percentage: Int) {

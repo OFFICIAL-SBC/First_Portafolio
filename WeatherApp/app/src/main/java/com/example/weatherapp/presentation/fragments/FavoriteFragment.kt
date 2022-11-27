@@ -42,12 +42,12 @@ class FavoriteFragment : Fragment() {
 
         //Observers
         favoriteViewModel.listLoadedDone.observe(viewLifecycleOwner, Observer {
-            onListLoadedDone(it)
+            onListLoadedDoneSuscribe(it)
         })
 
     }
 
-    private fun onListLoadedDone(it: List<WeatherDataPresentation>?) {
+    private fun onListLoadedDoneSuscribe(it: List<WeatherDataPresentation>?) {
         if(!it.isNullOrEmpty()){
             weatherAdapter.appendItems(it)
         }
