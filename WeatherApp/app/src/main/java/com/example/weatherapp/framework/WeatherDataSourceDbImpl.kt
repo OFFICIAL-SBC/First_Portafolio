@@ -15,7 +15,7 @@ class WeatherDataSourceDbImpl(context:Context):WeatherDataSourceDb {
 
     override suspend fun delete(currentWeather: WeatherEntity) {
 
-        weatherDao.deleteWeather(currentWeather)
+        weatherDao.deleteWeather(currentWeather.id)
 
     }
 

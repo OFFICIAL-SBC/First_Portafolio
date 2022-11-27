@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.presentation.Model.WeatherDataPresentation
 
-class WeatherAdapter(private var weatherList: List<WeatherDataPresentation>) : RecyclerView.Adapter<WeatherViewHolder>() {
+class WeatherAdapter(private var weatherList: List<WeatherDataPresentation>, private val onItemClicked: (WeatherDataPresentation)-> Unit) : RecyclerView.Adapter<WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
         val layoutInflater=LayoutInflater.from(parent.context)
@@ -15,7 +15,7 @@ class WeatherAdapter(private var weatherList: List<WeatherDataPresentation>) : R
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val item = weatherList[position]
-        holder.render(item)
+        holder.render(item, onItemClicked)
     }
 
     override fun getItemCount(): Int = weatherList.size

@@ -8,7 +8,7 @@ import com.example.weatherapp.presentation.Model.WeatherDataPresentation
 @Entity(tableName = "weather_table")
 data class WeatherEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Int = 0,
+    @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "aqi") val aqi: Double,
     @ColumnInfo(name = "city_name") val city_name: String,
     @ColumnInfo(name = "temp") val temp: Double,
@@ -21,8 +21,8 @@ data class WeatherEntity(
     @ColumnInfo(name = "icon_code") val icon_code: String
 )
 
-fun WeatherDataPresentation.toDatabase() =
-    WeatherEntity(
+fun WeatherDataPresentation.toDatabase(): WeatherEntity{
+    val new = WeatherEntity(
         aqi = aqi,
         city_name = city_name,
         temp = temp,
@@ -34,4 +34,10 @@ fun WeatherDataPresentation.toDatabase() =
         lon = lon,
         icon_code = icon_code
     )
+
+    if (id != -1) new.id = id
+
+    return new
+}
+
 

@@ -5,6 +5,7 @@ import com.example.weatherapp.framework.local.WeatherEntity
 import java.io.Serializable
 
 data class WeatherDataPresentation(
+    val id: Int,
     val aqi: Double,
     val city_name: String,
     val temp: Double,
@@ -20,6 +21,7 @@ data class WeatherDataPresentation(
 
 fun WeatherDataDomain.toPresentation() =
     WeatherDataPresentation(
+        -1,
         data[0].aqi,
         data[0].city_name,
         data[0].temp,
@@ -34,5 +36,5 @@ fun WeatherDataDomain.toPresentation() =
 
 fun WeatherEntity.toPresentation() =
     WeatherDataPresentation(
-        aqi, city_name, temp, rh, wind_spd, timezone, description, lat, lon, icon_code
+      id, aqi, city_name, temp, rh, wind_spd, timezone, description, lat, lon, icon_code
     )

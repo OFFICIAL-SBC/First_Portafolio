@@ -2,6 +2,7 @@ package com.example.weatherapp.presentation.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,15 +28,20 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        favoriteViewModel=ViewModelProvider(this, WeatherViewModelFactory)[FavoriteViewModel::class.java]
-        favoriteBinding = FragmentFavoriteBinding.inflate(inflater,container,false)
+        favoriteViewModel =
+            ViewModelProvider(this, WeatherViewModelFactory)[FavoriteViewModel::class.java]
+        favoriteBinding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return favoriteBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        weatherAdapter = WeatherAdapter(weatherList)
+        weatherAdapter = WeatherAdapter(weatherList) { selectedWeather ->
+            onItemClicked(
+                selectedWeather
+            )
+        }
         initRecyclerView()
 
         favoriteViewModel.getSavedWeatherObjects()
@@ -45,20 +51,33 @@ class FavoriteFragment : Fragment() {
             onListLoadedDoneSuscribe(it)
         })
 
+        favoriteViewModel.indicatorDone.observe(viewLifecycleOwner, Observer {
+            onDeleteIndicatorDoneSuscribe(it)
+        })
+
+    }
+
+    private fun onDeleteIndicatorDoneSuscribe(it: Boolean?) {
+        Log.i("Hello","Its me, I was wondering ")
+        if (it == true) favoriteViewModel.getSavedWeatherObjects()
     }
 
     private fun onListLoadedDoneSuscribe(it: List<WeatherDataPresentation>?) {
-        if(!it.isNullOrEmpty()){
-            weatherAdapter.appendItems(it)
+
+        it?.let { weatherAdapter.appendItems(it) }
+
+    }
+
+    private fun initRecyclerView() {
+        with(favoriteBinding.rvWeatherList) {
+            layoutManager = LinearLayoutManager(this@FavoriteFragment.requireContext())
+            adapter = weatherAdapter
+            setHasFixedSize(false)
         }
     }
 
-    private fun initRecyclerView(){
-        with(favoriteBinding.rvWeatherList){
-            layoutManager=LinearLayoutManager(this@FavoriteFragment.requireContext())
-            adapter=weatherAdapter
-            setHasFixedSize(false)
-        }
+    fun onItemClicked(selectedWeather: WeatherDataPresentation) {
+        favoriteViewModel.deleteSelectedWeather(selectedWeather)
     }
 
 }

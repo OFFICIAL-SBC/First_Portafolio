@@ -64,6 +64,7 @@ class ShowWeatherDescription : DialogFragment() {
 
         binding.bnSaveCurrentWeather.setOnClickListener {
             viewModel.saveWeather(selectedLocation)
+            findNavController().navigate(ShowWeatherDescriptionDirections.actionShowWeatherDescriptionToMapFragment())
         }
         binding.bnCloseDialog.setOnClickListener {
             findNavController().navigate(ShowWeatherDescriptionDirections.actionShowWeatherDescriptionToMapFragment())

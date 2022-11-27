@@ -10,7 +10,7 @@ class WeatherViewHolder(view: View) : ViewHolder(view) {
 
     private val binding = ItemWeatherBinding.bind(view)
 
-    fun render(weatherDataPresentation: WeatherDataPresentation) {
+    fun render(weatherDataPresentation: WeatherDataPresentation, onItemClicked: (WeatherDataPresentation)-> Unit) {
         with(binding) {
             Picasso.get()
                 .load("https://www.weatherbit.io/static/img/icons/${weatherDataPresentation.icon_code}.png")
@@ -20,6 +20,9 @@ class WeatherViewHolder(view: View) : ViewHolder(view) {
             tvTemp.text=weatherDataPresentation.temp.toString()
             tvTimezone.text=weatherDataPresentation.timezone
             tvUbication.text="Lat: ${weatherDataPresentation.lat} Lon: ${weatherDataPresentation.lon}"
+            ivDeleteIcon.setOnClickListener {
+                onItemClicked(weatherDataPresentation)
+            }
         }
     }
 }
