@@ -1,10 +1,8 @@
-package com.example.weatherapp.data
+package com.example.countriesapp.data
 
 import android.util.Log
-import com.example.weatherapp.domain.CustomErrorApi
-import com.example.weatherapp.utils.Resource
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.countriesapp.domain.CountryList
+import com.example.countriesapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -13,7 +11,6 @@ import java.io.IOException
 
 abstract class BaseRepo() {
     //We use this function in all repos to handle api errors
-
     suspend fun <T> safeApiCall(apiToBeCall: suspend () -> Response<T>): Resource<T> {
 
         return withContext(Dispatchers.IO) {
@@ -26,21 +23,10 @@ abstract class BaseRepo() {
                     // by passing our data in it.
                     Resource.Success(data = response.body()!!)
                 } else {
-                    // parsing api's own custom json error
-                    // response in CustomErrorApi pojo
-
-                    //Log.w("Hello",response.errorBody()?.string() ?: "Es nulo")
-
-                    val errorResponse: CustomErrorApi? = convertErrorBody(response.errorBody()?.string()!!)
-
-                    // Simply returning api's own failure message
-
-                    Resource.Error(
-                        errorMessage = errorResponse?.message
-                            ?: "Something went wrong from custom error api"
-                    )
+                    val errorMessage = response.errorBody()?.string()
+                        ?: "Something went wrong. response.errorBody()?.string()"
+                    Resource.Error(errorMessage = errorMessage)
                 }
-
             } catch (e: HttpException) {
                 // Returning HttpException's message
                 // wrapped in Resource.Error
@@ -48,24 +34,13 @@ abstract class BaseRepo() {
             } catch (e: IOException) {
                 // Returning no internet message
                 // wrapped in Resource.Error
-                Resource.Error(errorMessage = "There is not INTERNET conexion")
+                Resource.Error(errorMessage = e.message ?: "There is not internet conexion")
             } catch (e: Exception) {
                 // Returning 'Something went wrong' in case
                 // of unknown error wrapped in Resource.Error
-                Resource.Error(errorMessage = "Something went wrong. Unknown error wrapped")
+                Resource.Error(errorMessage = e.message ?: "Unknown error")
             }
         }
-
-
     }
 
-    private fun convertErrorBody(errorBody: String): CustomErrorApi? {
-        return try {
-            val gson = Gson()
-            val type = object : TypeToken<CustomErrorApi>() {}.type
-            gson.fromJson(errorBody,type)
-        } catch (exception: Exception) {
-            null
-        }
-    }
 }
