@@ -1,7 +1,5 @@
 package com.example.countriesapp.data
 
-import android.util.Log
-import com.example.countriesapp.domain.CountryList
 import com.example.countriesapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
