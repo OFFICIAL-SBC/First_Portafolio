@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- icons array-->
+    <array name="icons">
+        <item>@drawable/africa</item>
+        <item>@drawable/america</item>
+        <item>@drawable/europe</item>
+        <item>@drawable/asia</item>
+        <item>@drawable/oceania</item>
+    </array>
+    
+    <array name="colors">
+        <item>@color/africa</item>
+        <item>@color/america</item>
+        <item>@color/europe</item>
+        <item>@color/asia</item>
+        <item>@color/oceania</item>
+    </array>
+    
+</resources>

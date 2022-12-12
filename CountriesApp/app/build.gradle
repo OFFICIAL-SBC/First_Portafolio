@@ -39,6 +39,8 @@ android {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //Circle Menu
+    implementation 'com.ramotion.circlemenu:circle-menu:0.3.2'
 
     //Component navigation
     def nav_version="2.5.3"

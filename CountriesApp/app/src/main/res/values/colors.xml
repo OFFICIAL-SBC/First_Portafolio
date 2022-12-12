@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="asia">#FF4B32</color>
+    <color name="europe">#8A39FF</color>
+    <color name="america">#FF6A00</color>
+    <color name="africa">#30A400</color>
+    <color name="oceania">#258CFF</color>
 </resources>
