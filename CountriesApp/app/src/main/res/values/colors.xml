@@ -13,4 +13,6 @@
     <color name="america">#FF6A00</color>
     <color name="africa">#30A400</color>
     <color name="oceania">#258CFF</color>
+
+    <color name="cardBackGround">#81E4DA</color>
 </resources>
