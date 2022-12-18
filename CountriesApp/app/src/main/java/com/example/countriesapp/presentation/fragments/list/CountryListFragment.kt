@@ -1,6 +1,7 @@
 package com.example.countriesapp.presentation.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countriesapp.databinding.FragmentCountryListBinding
 import com.example.countriesapp.domain.CountryClass
+import com.example.countriesapp.domain.CountryItemClass
 import com.example.countriesapp.framework.CountryViewModelFactory
 import com.example.countriesapp.presentation.fragments.list.adapter.CountryListAdapter
 
@@ -24,7 +26,7 @@ class CountryListFragment : Fragment() {
     private lateinit var fragmentCountryListBinding: FragmentCountryListBinding
     private lateinit var viewModel: CountryListViewModel
     private val args: CountryListFragmentArgs by navArgs()
-    private val countryList: ArrayList<CountryClass> = arrayListOf()
+    private val countryList: ArrayList<CountryItemClass> = arrayListOf()
     private lateinit var countryAdapter : CountryListAdapter
 
     override fun onCreateView(
@@ -40,6 +42,7 @@ class CountryListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         countryList.clear()
+
         countryAdapter = CountryListAdapter(countryList)
         initRecyclerView()
 
@@ -79,7 +82,7 @@ class CountryListFragment : Fragment() {
 
     }
 
-    private fun onCountriesDoneSuscribe(countries: ArrayList<CountryClass>?) {
+    private fun onCountriesDoneSuscribe(countries: ArrayList<CountryItemClass>?) {
         countries?.let {
             countryAdapter.appendItems(countries)
         }

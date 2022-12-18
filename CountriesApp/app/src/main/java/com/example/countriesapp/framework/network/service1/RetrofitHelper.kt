@@ -1,4 +1,4 @@
-package com.example.countriesapp.framework.network
+package com.example.countriesapp.framework.network.service1
 
 import com.example.countriesapp.utils.Constans
 import okhttp3.OkHttpClient

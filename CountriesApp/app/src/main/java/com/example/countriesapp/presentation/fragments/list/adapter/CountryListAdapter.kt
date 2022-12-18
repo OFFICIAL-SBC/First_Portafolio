@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.countriesapp.R
 import com.example.countriesapp.domain.CountryClass
+import com.example.countriesapp.domain.CountryItemClass
 
-class CountryListAdapter(private var countryList: ArrayList<CountryClass>): RecyclerView.Adapter<CountryListViewHolder>() {
+class CountryListAdapter(private var countryList: ArrayList<CountryItemClass>): RecyclerView.Adapter<CountryListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return CountryListViewHolder(layoutInflater.inflate(R.layout.item_country,parent,false))
@@ -19,7 +20,7 @@ class CountryListAdapter(private var countryList: ArrayList<CountryClass>): Recy
 
     override fun getItemCount() = countryList.size
 
-    fun appendItems(newArray: ArrayList<CountryClass>){
+    fun appendItems(newArray: ArrayList<CountryItemClass>){
         countryList.clear()
         countryList.addAll(newArray)
         notifyDataSetChanged()

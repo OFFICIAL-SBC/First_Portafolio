@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintCountryDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvNameCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            tools:text="NAME COUNTRY"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/imFlagImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            app:layout_constraintTop_toBottomOf="@id/tvNameCountry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvregion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="24dp"
+            tools:text="Region"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imFlagImage"
+            />
+
+        <TextView
+            android:id="@+id/tvSubregion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="24dp"
+            tools:text="SubRegion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imFlagImage"
+            />
+
+        <TextView
+            android:id="@+id/tvPopulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Population"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvregion"/>
+
+        <TextView
+            android:id="@+id/tvTimezones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Timezones"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubregion"/>
+
+        <TextView
+            android:id="@+id/tvExactUbication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="exact ubication"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPopulation"
+            />
+
+        <TextView
+            android:id="@+id/tvDemonyms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="Demonyms"
+            app:layout_constraintStart_toEndOf="@+id/tvExactUbication"
+            app:layout_constraintTop_toBottomOf="@+id/tvPopulation"
+            app:layout_constraintEnd_toStartOf="@+id/tvCca2"/>
+
+
+        <TextView
+            android:id="@+id/tvCca2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="Cca2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPopulation"/>
+
+        <TextView
+            android:id="@+id/tvTitleCities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_title_cities"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvExactUbication"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCities"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleCities"/>
+
+        <TextView
+            android:id="@+id/tvCapital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="CAPITAL"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCities"
+            />
+
+        <TextView
+            android:id="@+id/tvLenguages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Lenguages"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCapital"
+            />
+
+        <TextView
+            android:id="@+id/tvCunrrencies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Currencies"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvLenguages"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvBorders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="borders"
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCunrrencies"/>
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    
+</ScrollView>

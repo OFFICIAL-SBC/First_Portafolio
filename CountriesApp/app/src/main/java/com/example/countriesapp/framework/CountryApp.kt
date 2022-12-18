@@ -2,7 +2,7 @@ package com.example.countriesapp.framework
 
 import android.app.Application
 import com.example.countriesapp.data.CountryApiRepository
-import com.example.countriesapp.usecases.getCountriesByContinentUseCase
+import com.example.countriesapp.usecases.GetCountriesByContinentUseCase
 import com.example.countriesapp.usecases.getCountryByCapitalUseCase
 
 class CountryApp:Application() {
@@ -12,7 +12,7 @@ class CountryApp:Application() {
         val countryApiRepository = CountryApiRepository(CountryDataSourceOneImpl())
 
         val interactors = Interactors(
-            getCountriesByContinentUseCase(countryApiRepository),
+            GetCountriesByContinentUseCase(countryApiRepository),
             getCountryByCapitalUseCase(countryApiRepository)
         )
 
