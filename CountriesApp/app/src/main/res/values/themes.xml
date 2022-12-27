@@ -26,4 +26,8 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="CountrySubName.textViewDetail">
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

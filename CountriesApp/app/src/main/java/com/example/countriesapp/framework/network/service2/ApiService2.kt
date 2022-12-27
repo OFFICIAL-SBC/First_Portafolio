@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface ApiService2 {
 
-    @GET
+    @GET("cities")
     suspend fun getCitiesFromAcountry(@Query("countryIds") countryId: String): Response<CityList>
 }

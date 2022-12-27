@@ -17,4 +17,8 @@ class CountryDataSourceOneImpl:CountryDataSourceOne {
     override suspend fun getCountryByCapital(capital: String): Response<ArrayList<CountryClass>> {
         return client.getCountryByCapital(capital)
     }
+
+    override suspend fun getCountryByCode(code: String): Response<ArrayList<CountryClass>> {
+        return client.getCountyByCode(code)
+    }
 }

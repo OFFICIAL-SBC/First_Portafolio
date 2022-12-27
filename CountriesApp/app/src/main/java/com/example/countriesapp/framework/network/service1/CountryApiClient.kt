@@ -22,6 +22,12 @@ class CountryApiClient {
         }
     }
 
+    suspend fun getCountyByCode(code: String): Response<ArrayList<CountryClass>>{
+        return withContext(Dispatchers.IO){
+            retrofit.create(ApiService::class.java).getCountryByCode(code)
+        }
+    }
+
 
 
 }

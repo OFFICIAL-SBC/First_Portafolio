@@ -22,5 +22,16 @@
         <argument
             android:name="region"
             app:argType="string" />
+        <action
+            android:id="@+id/action_countryListFragment_to_countryDetail"
+            app:destination="@id/countryDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryDetail"
+        android:name="com.example.countriesapp.presentation.fragments.detail.CountryDetail"
+        android:label="CountryDetail" >
+        <argument
+            android:name="countryItemClass"
+            app:argType="com.example.countriesapp.domain.CountryItemClass" />
     </fragment>
 </navigation>

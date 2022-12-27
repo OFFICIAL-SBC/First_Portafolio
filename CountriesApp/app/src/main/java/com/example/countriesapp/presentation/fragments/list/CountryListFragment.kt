@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,14 +28,15 @@ class CountryListFragment : Fragment() {
     private lateinit var viewModel: CountryListViewModel
     private val args: CountryListFragmentArgs by navArgs()
     private val countryList: ArrayList<CountryItemClass> = arrayListOf()
-    private lateinit var countryAdapter : CountryListAdapter
+    private lateinit var countryAdapter: CountryListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this,CountryViewModelFactory)[CountryListViewModel::class.java]
-        fragmentCountryListBinding = FragmentCountryListBinding.inflate(inflater,container,false)
+        viewModel =
+            ViewModelProvider(this, CountryViewModelFactory)[CountryListViewModel::class.java]
+        fragmentCountryListBinding = FragmentCountryListBinding.inflate(inflater, container, false)
         return fragmentCountryListBinding.root
     }
 
@@ -43,7 +45,11 @@ class CountryListFragment : Fragment() {
 
         countryList.clear()
 
-        countryAdapter = CountryListAdapter(countryList)
+        countryAdapter = CountryListAdapter(countryList) { selectedCountry ->
+
+            onItemClicked(selectedCountry)
+
+        }
         initRecyclerView()
 
         val regionSelected = args.region
@@ -64,7 +70,6 @@ class CountryListFragment : Fragment() {
         })
 
 
-
     }
 
     private fun onProgressBarIndicatorDoneSuscribe(indicator: Boolean?) {
@@ -77,7 +82,7 @@ class CountryListFragment : Fragment() {
 
     private fun onMessageDoneSuscribe(msg: String?) {
         msg?.let {
-            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         }
 
     }
@@ -90,11 +95,21 @@ class CountryListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        with(fragmentCountryListBinding.rvCountriesList){
+        with(fragmentCountryListBinding.rvCountriesList) {
             layoutManager = LinearLayoutManager(this@CountryListFragment.requireContext())
             adapter = countryAdapter
             setHasFixedSize(true)
         }
+    }
+
+    fun onItemClicked(selectedCountry: CountryItemClass) {
+        countryList.clear()
+        countryAdapter.appendItems(countryList)
+        findNavController().navigate(
+            CountryListFragmentDirections.actionCountryListFragmentToCountryDetail(
+                selectedCountry
+            )
+        )
     }
 
 }

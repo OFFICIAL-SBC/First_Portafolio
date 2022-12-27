@@ -7,7 +7,7 @@ import retrofit2.Response
 
 class CountryApiClient2 {
 
-    val retrofit = RetrofitHelper2.getInstanceRetrofit()
+    private val retrofit = RetrofitHelper2.getInstanceRetrofit()
 
     suspend fun getCitiesByCountry(countryId: String):Response<CityList>{
         return withContext(Dispatchers.IO){

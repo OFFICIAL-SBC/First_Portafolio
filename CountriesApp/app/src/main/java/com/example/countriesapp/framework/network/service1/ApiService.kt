@@ -12,4 +12,7 @@ interface ApiService {
 
     @GET("capital/{capital}")
     suspend fun getCountryByCapital(@Path("capital") capitalCity: String): Response<ArrayList<CountryClass>>
+
+    @GET("alpha/{code}")
+    suspend fun getCountryByCode(@Path("code") cca: String): Response<ArrayList<CountryClass>>
 }

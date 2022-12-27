@@ -10,4 +10,6 @@ interface CountryDataSourceOne {
 
     suspend fun getCountryByCapital(capital:String):Response<ArrayList<CountryClass>>
 
+    suspend fun getCountryByCode(code: String): Response<ArrayList<CountryClass>>
+
 }

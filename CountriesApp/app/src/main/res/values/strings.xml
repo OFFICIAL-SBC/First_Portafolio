@@ -4,4 +4,6 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="label_title_cities">Cities</string>
+    <string name="select_a">Select a</string>
+    <string name="continent">Continent</string>
 </resources>

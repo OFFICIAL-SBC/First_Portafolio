@@ -1,7 +1,6 @@
 package com.example.countriesapp.usecases
 
 import com.example.countriesapp.data.CountryApiRepository
-import com.example.countriesapp.domain.CountryClass
 import com.example.countriesapp.domain.CountryItemClass
 import com.example.countriesapp.utils.Resource
 
