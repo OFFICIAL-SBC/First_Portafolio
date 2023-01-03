@@ -5,7 +5,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,15 +39,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navController = host.navController
 
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id != R.id.continentFragment && nd.id != R.id.capitalFragment) {
+                mainBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            } else {
+                mainBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            }
+        }
+
         //appBarConfiguration = AppBarConfiguration(navController.graph)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.continentFragment),
+            setOf(R.id.continentFragment, R.id.capitalFragment),
             mainBinding.drawerLayout
         )
 
         //First
-        setUpActionBar(navController,appBarConfiguration)
+        setUpActionBar(navController, appBarConfiguration)
 
         //Second
         /*
@@ -64,8 +74,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun setUpActionBar(navController: NavController, appBarConfig : AppBarConfiguration) {
-        setupActionBarWithNavController(navController,appBarConfig)
+    private fun setUpActionBar(navController: NavController, appBarConfig: AppBarConfiguration) {
+        setupActionBarWithNavController(navController, appBarConfig)
     }
 
     private fun setUpNavigationView(controller: NavController) {
@@ -73,13 +83,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        //Is not neccesary this method.
         mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_container)
-        return navController.navigateUp(appBarConfiguration)|| super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {

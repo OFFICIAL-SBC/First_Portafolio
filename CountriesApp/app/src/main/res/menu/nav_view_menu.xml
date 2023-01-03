@@ -10,6 +10,11 @@
             android:icon="@drawable/south_america_icon"
             android:title="@string/title_continents"/>
 
+        <item
+            android:id="@+id/capitalFragment"
+            android:icon="@drawable/capital_icon"
+            android:title="Capital"/>
+
     </group>
 
 

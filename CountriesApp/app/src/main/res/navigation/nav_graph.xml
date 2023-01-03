@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/continentFragment"
         android:name="com.example.countriesapp.presentation.fragments.continent.ContinentFragment"
-        android:label="fragment_continent"
+        android:label="Continent"
         tools:layout="@layout/fragment_continent" >
         <action
             android:id="@+id/action_continentFragment_to_countryListFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/countryListFragment"
         android:name="com.example.countriesapp.presentation.fragments.list.CountryListFragment"
-        android:label="fragment_country_list"
+        android:label="List"
         tools:layout="@layout/fragment_country_list" >
         <argument
             android:name="region"
@@ -29,9 +29,14 @@
     <fragment
         android:id="@+id/countryDetail"
         android:name="com.example.countriesapp.presentation.fragments.detail.CountryDetail"
-        android:label="CountryDetail" >
+        android:label="Country Detail" >
         <argument
             android:name="countryItemClass"
             app:argType="com.example.countriesapp.domain.CountryItemClass" />
     </fragment>
+    <fragment
+        android:id="@+id/capitalFragment"
+        android:name="com.example.countriesapp.presentation.fragments.capital.CapitalFragment"
+        android:label="Capital"
+        tools:layout="@layout/fragment_capital" />
 </navigation>
