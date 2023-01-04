@@ -47,9 +47,11 @@ class CountryDetail : Fragment() {
         detailAdapter = CountryDetailAdapter(cityList)
         initRecyclerView()
 
-        val countrySelected: CountryItemClass = args.countryItemClass
+        val content = args.content
+        val indicator = args.indicator
 
-        viewModel.getCountryByCode(countrySelected.cca2)
+        if (indicator == 0 ) viewModel.getCountryByCode(content)
+        else viewModel.getCountryByCapital(content)
 
 
         //Observers

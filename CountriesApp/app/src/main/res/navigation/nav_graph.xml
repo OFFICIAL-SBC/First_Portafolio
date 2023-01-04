@@ -31,12 +31,19 @@
         android:name="com.example.countriesapp.presentation.fragments.detail.CountryDetail"
         android:label="Country Detail" >
         <argument
-            android:name="countryItemClass"
-            app:argType="com.example.countriesapp.domain.CountryItemClass" />
+            android:name="content"
+            app:argType="string" />
+        <argument
+            android:name="indicator"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/capitalFragment"
         android:name="com.example.countriesapp.presentation.fragments.capital.CapitalFragment"
         android:label="Capital"
-        tools:layout="@layout/fragment_capital" />
+        tools:layout="@layout/fragment_capital" >
+        <action
+            android:id="@+id/action_capitalFragment_to_countryDetail"
+            app:destination="@id/countryDetail" />
+    </fragment>
 </navigation>

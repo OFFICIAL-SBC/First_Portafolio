@@ -107,7 +107,7 @@ class CountryListFragment : Fragment() {
         countryAdapter.appendItems(countryList)
         findNavController().navigate(
             CountryListFragmentDirections.actionCountryListFragmentToCountryDetail(
-                selectedCountry
+                selectedCountry.cca2,0
             )
         )
     }

@@ -15,12 +15,5 @@ import kotlinx.coroutines.launch
 
 class ContinentViewModel(interactors: Interactors) : CountryViewModel(interactors) {
 
-    private val countries: MutableLiveData<ArrayList<CountryClass>> = MutableLiveData()
-    val countriesDone: LiveData<ArrayList<CountryClass>> = countries
-
-    private val msg: MutableLiveData<String> = MutableLiveData()
-    val msgDone: LiveData<String> = msg
-
-
 
 }

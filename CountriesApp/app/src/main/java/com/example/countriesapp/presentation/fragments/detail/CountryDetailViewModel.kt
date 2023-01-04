@@ -46,4 +46,15 @@ class CountryDetailViewModel(interactors: Interactors) : CountryViewModel(intera
         }
     }
 
+    fun getCountryByCapital(capital: String) {
+        viewModelScope.launch(Dispatchers.IO){
+            val result: Resource<ArrayList<CountryClass>> = interactors.getCountryByCapitalUseCase(capital)
+
+            when(result){
+                is Resource.Error -> msg.postValue(result.message!!)
+                is Resource.Success -> country.postValue(result.data!![0])
+            }
+        }
+    }
+
 }

@@ -8,9 +8,12 @@ class CapitalViewHolder(view: View): ViewHolder(view)  {
 
     private val binding = ItemCapitalBinding.bind(view)
 
-    fun bind(capital: String){
-
+    fun bind(capital: String, onItemClicked: (String) -> Unit){
         binding.tvTitleCapital.text = capital
+
+        binding.tvTitleCapital.setOnClickListener {
+            onItemClicked(capital)
+        }
 
     }
 
