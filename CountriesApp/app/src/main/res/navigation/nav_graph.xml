@@ -46,4 +46,9 @@
             android:id="@+id/action_capitalFragment_to_countryDetail"
             app:destination="@id/countryDetail" />
     </fragment>
+    <fragment
+        android:id="@+id/ubicationFragment"
+        android:name="com.example.countriesapp.presentation.fragments.ubication.UbicationFragment"
+        android:label="User Ubication"
+        tools:layout="@layout/fragment_ubication" />
 </navigation>

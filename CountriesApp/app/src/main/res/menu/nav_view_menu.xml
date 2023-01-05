@@ -13,7 +13,12 @@
         <item
             android:id="@+id/capitalFragment"
             android:icon="@drawable/capital_icon"
-            android:title="Capital"/>
+            android:title="@string/capital_label"/>
+
+        <item
+            android:id="@+id/ubicationFragment"
+            android:icon="@drawable/icon_option_location"
+            android:title="@string/location_label"/>
 
     </group>
 

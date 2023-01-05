@@ -7,4 +7,6 @@ interface CountryDataSourceTwo {
 
     suspend fun getCitiesByCountry(countryId: String): Response<CityList>
 
+    suspend fun getCitiesNearToALocation(location: String): Response<CityList>
+
 }

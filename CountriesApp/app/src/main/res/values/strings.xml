@@ -9,4 +9,8 @@
     <string name="search_label">Search</string>
     <string name="label_capital">Capital</string>
     <string name="title_capital">Type the capital and get the country</string>
+    <string name="getYourPosition">Get your</string>
+    <string name="positionLabel">Position</string>
+    <string name="capital_label">Capital</string>
+    <string name="location_label">Location</string>
 </resources>

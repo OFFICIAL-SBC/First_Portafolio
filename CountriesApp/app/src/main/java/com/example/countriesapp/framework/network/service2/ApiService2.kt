@@ -9,4 +9,7 @@ interface ApiService2 {
 
     @GET("cities")
     suspend fun getCitiesFromAcountry(@Query("countryIds") countryId: String): Response<CityList>
+
+    @GET("cities")
+    suspend fun getCitiesNearToALocation(@Query("location") location: String): Response<CityList>
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragments.ubication.UbicationFragment">
+
+
+    <TextView
+        android:id="@+id/tvTitleGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/getYourPosition"
+        android:fontFamily="sans-serif-light"
+        android:textSize="38sp"
+        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintHorizontal_bias=".15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitlePosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/positionLabel"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/black"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTitleGet"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGet" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGetCurrebtPosition"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:clickable="true"
+        app:fabCustomSize="250dp"
+        android:elevation="16dp"
+        android:backgroundTint="@color/CoolGray"
+        android:src="@drawable/location_icon_big"
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePosition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

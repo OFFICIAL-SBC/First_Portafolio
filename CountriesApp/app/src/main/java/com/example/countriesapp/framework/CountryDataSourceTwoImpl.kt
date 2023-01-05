@@ -13,4 +13,9 @@ class CountryDataSourceTwoImpl: CountryDataSourceTwo {
         val result: Response<CityList> =retroClient2.getCitiesByCountry(countryId)
         return result
     }
+
+    override suspend fun getCitiesNearToALocation(location: String): Response<CityList> {
+        val result = retroClient2.getCitiesNearToALocation(location)
+        return result
+    }
 }

@@ -2,10 +2,7 @@ package com.example.countriesapp.framework
 
 import android.app.Application
 import com.example.countriesapp.data.CountryApiRepository
-import com.example.countriesapp.usecases.GetCitiesByCountryUseCase
-import com.example.countriesapp.usecases.GetCountriesByContinentUseCase
-import com.example.countriesapp.usecases.GetCountryByCapitalUseCase
-import com.example.countriesapp.usecases.GetCountryByCodeUseCase
+import com.example.countriesapp.usecases.*
 
 class CountryApp : Application() {
     override fun onCreate() {
@@ -18,7 +15,8 @@ class CountryApp : Application() {
             GetCountriesByContinentUseCase(countryApiRepository),
             GetCountryByCapitalUseCase(countryApiRepository),
             GetCitiesByCountryUseCase(countryApiRepository),
-            GetCountryByCodeUseCase(countryApiRepository)
+            GetCountryByCodeUseCase(countryApiRepository),
+            GetCityNearToALocationUseCase(countryApiRepository)
         )
 
         CountryViewModelFactory.inject(dependencies = interactors)

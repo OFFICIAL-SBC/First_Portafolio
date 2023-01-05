@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //appBarConfiguration = AppBarConfiguration(navController.graph)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.continentFragment, R.id.capitalFragment),
+            setOf(R.id.continentFragment, R.id.capitalFragment, R.id.ubicationFragment),
             mainBinding.drawerLayout
         )
 

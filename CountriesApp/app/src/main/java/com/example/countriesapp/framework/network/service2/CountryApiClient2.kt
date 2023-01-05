@@ -15,4 +15,10 @@ class CountryApiClient2 {
         }
     }
 
+    suspend fun getCitiesNearToALocation(location: String): Response<CityList>{
+        return withContext(Dispatchers.IO){
+            retrofit.create(ApiService2::class.java).getCitiesNearToALocation(location)
+        }
+    }
+
 }

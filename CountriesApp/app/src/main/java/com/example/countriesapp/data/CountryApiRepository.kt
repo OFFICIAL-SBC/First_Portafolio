@@ -27,4 +27,7 @@ class CountryApiRepository(
         return safeApiCall { dataSourceApiOne.getCountryByCode(code) }
     }
 
+    suspend fun getCountryNearToALocation(location: String): Resource<CityList>{
+        return safeApiCall { dataSourceApiTwo.getCitiesNearToALocation(location) }
+    }
 }
