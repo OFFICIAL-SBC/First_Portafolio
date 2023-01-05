@@ -1,6 +1,7 @@
 package com.example.countriesapp.presentation.fragments.ubication
 
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -12,13 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
-import com.example.countriesapp.R
+import android.location.Location
+import android.util.Log
 import com.example.countriesapp.databinding.FragmentUbicationBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import java.util.jar.Manifest
+
 
 class UbicationFragment : Fragment() {
 
@@ -42,12 +43,47 @@ class UbicationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        binding.fabGetCurrebtPosition.setOnClickListener {
+            getCurrentLocation()
+        }
+
+
     }
 
     private fun getCurrentLocation() {
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
+
+                //Final latittud and logitud
+                if (ActivityCompat.checkSelfPermission(
+                        this@UbicationFragment.requireActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this@UbicationFragment.requireActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermission()
+                    return
+                }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this@UbicationFragment.requireActivity()) { task ->
+                    val location: Location? = task.result
+                    if (location == null) {
+                        Toast.makeText(
+                            this@UbicationFragment.requireContext(),
+                            "Null Received",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        val content = "lat: ${location.latitude} lon: ${location.longitude}"
+                        Toast.makeText(
+                            this@UbicationFragment.requireContext(),
+                            content,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
 
             } else {
                 //Setting open here
@@ -66,7 +102,7 @@ class UbicationFragment : Fragment() {
 
     private fun isLocationEnabled(): Boolean {
         val locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
