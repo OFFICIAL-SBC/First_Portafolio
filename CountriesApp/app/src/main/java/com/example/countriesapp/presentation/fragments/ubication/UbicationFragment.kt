@@ -4,6 +4,8 @@ package com.example.countriesapp.presentation.fragments.ubication
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -17,8 +19,10 @@ import android.location.Location
 import android.util.Log
 import com.example.countriesapp.databinding.FragmentUbicationBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
+import com.example.countriesapp.presentation.models.UbicationClass
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.util.*
 
 
 class UbicationFragment : Fragment() {
@@ -76,12 +80,14 @@ class UbicationFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }else{
-                        val content = "lat: ${location.latitude} lon: ${location.longitude}"
-                        Toast.makeText(
-                            this@UbicationFragment.requireContext(),
-                            content,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        val geocoder = Geocoder(this@UbicationFragment.requireContext(), Locale.getDefault())
+                        val list: List<Address> =
+                            geocoder.getFromLocation(location.latitude,location.longitude,1) as List<Address>
+                            val ubication = UbicationClass(
+                                list[0].latitude.toLong(),
+                                list[0].longitude.toLong(),
+                                list[0].getAddressLine(0)
+                            )
                     }
                 }
 
