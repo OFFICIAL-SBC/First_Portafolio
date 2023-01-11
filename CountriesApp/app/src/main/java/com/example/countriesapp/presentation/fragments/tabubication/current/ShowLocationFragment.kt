@@ -23,4 +23,5 @@ class ShowLocationFragment : Fragment() {
             super.onViewCreated(view, savedInstanceState)
     }
 
+
 }

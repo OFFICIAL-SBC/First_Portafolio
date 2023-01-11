@@ -11,6 +11,7 @@ import com.example.countriesapp.R
 class ListNearCityFragment : Fragment() {
 
     private lateinit var viewModel: ListNearCityViewModel
+    private var location: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,6 +22,19 @@ class ListNearCityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(arguments != null) location = arguments?.getString("location")
+
+    }
+
+    companion object{
+        fun getInstance(location:String): Fragment{
+            val fragment = ListNearCityFragment()
+            val bundle = Bundle()
+            bundle.putString("location",location)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
 }
