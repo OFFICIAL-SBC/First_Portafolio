@@ -1,4 +1,4 @@
-package com.example.countriesapp.presentation.fragments
+package com.example.countriesapp.presentation.fragments.tabubication.current
 
 import androidx.lifecycle.ViewModel
 

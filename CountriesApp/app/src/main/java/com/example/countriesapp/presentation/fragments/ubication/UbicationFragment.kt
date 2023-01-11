@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import android.location.Location
 import android.util.Log
+import androidx.navigation.fragment.findNavController
 import com.example.countriesapp.databinding.FragmentUbicationBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
 import com.example.countriesapp.presentation.models.UbicationClass
@@ -79,15 +80,27 @@ class UbicationFragment : Fragment() {
                             "Null Received",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }else{
-                        val geocoder = Geocoder(this@UbicationFragment.requireContext(), Locale.getDefault())
+                    } else {
+                        val geocoder =
+                            Geocoder(this@UbicationFragment.requireContext(), Locale.getDefault())
                         val list: List<Address> =
-                            geocoder.getFromLocation(location.latitude,location.longitude,1) as List<Address>
-                            val ubication = UbicationClass(
-                                list[0].latitude.toLong(),
-                                list[0].longitude.toLong(),
-                                list[0].getAddressLine(0)
+                            geocoder.getFromLocation(
+                                location.latitude,
+                                location.longitude,
+                                1
+                            ) as List<Address>
+                        val ubication = UbicationClass(
+                            list[0].latitude.toLong(),
+                            list[0].longitude.toLong(),
+                            list[0].getAddressLine(0),
+                            list[0].countryName,
+                            list[0].locality
+                        )
+                        findNavController().navigate(
+                            UbicationFragmentDirections.actionUbicationFragmentToTabMainFragment(
+                                ubication
                             )
+                        )
                     }
                 }
 

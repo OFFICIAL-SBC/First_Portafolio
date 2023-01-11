@@ -1,6 +1,5 @@
-package com.example.countriesapp.presentation.fragments
+package com.example.countriesapp.presentation.fragments.tabubication.current
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

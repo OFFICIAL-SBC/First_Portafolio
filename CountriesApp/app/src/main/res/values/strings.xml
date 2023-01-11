@@ -13,4 +13,7 @@
     <string name="positionLabel">Position</string>
     <string name="capital_label">Capital</string>
     <string name="location_label">Location</string>
+    <string name="save_current_location">Save Current Location</string>
+    <string name="current_location">--- Current Location ---</string>
+    <string name="cities_near_to_you">Cities near to you</string>
 </resources>

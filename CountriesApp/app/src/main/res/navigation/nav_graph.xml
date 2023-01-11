@@ -50,5 +50,18 @@
         android:id="@+id/ubicationFragment"
         android:name="com.example.countriesapp.presentation.fragments.ubication.UbicationFragment"
         android:label="User Ubication"
-        tools:layout="@layout/fragment_ubication" />
+        tools:layout="@layout/fragment_ubication" >
+        <action
+            android:id="@+id/action_ubicationFragment_to_tabMainFragment"
+            app:destination="@id/tabMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tabMainFragment"
+        android:name="com.example.countriesapp.presentation.fragments.tabubication.TabMainFragment"
+        android:label="fragment_tab_main"
+        tools:layout="@layout/fragment_tab_main" >
+        <argument
+            android:name="currentpositionobject"
+            app:argType="com.example.countriesapp.presentation.models.UbicationClass" />
+    </fragment>
 </navigation>
