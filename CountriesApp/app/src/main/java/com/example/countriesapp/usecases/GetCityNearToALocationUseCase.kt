@@ -6,7 +6,7 @@ import com.example.countriesapp.utils.Resource
 
 class GetCityNearToALocationUseCase(private val repository: CountryApiRepository) {
 
-    suspend operator fun invoke(location: String): Resource<CityList>{
-        return repository.getCountryNearToALocation(location)
+    suspend operator fun invoke(location: String, radio: Int): Resource<CityList>{
+        return repository.getCountryNearToALocation(location,radio)
     }
 }

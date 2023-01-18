@@ -58,8 +58,8 @@
     <fragment
         android:id="@+id/tabMainFragment"
         android:name="com.example.countriesapp.presentation.fragments.tabubication.TabMainFragment"
-        android:label="fragment_tab_main"
-        tools:layout="@layout/fragment_tab_main" >
+        android:label="Ubication"
+        tools:layout="@layout/fragment_tab_main">
         <argument
             android:name="currentpositionobject"
             app:argType="com.example.countriesapp.presentation.models.UbicationClass" />

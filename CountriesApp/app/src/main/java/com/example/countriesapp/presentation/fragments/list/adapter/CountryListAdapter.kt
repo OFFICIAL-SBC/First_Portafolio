@@ -18,7 +18,7 @@ class CountryListAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryListViewHolder, position: Int) {
-        val item = countryList[position]
+        val item: CountryItemClass = countryList[position]
         holder.render(item,onItemClicked)
     }
 

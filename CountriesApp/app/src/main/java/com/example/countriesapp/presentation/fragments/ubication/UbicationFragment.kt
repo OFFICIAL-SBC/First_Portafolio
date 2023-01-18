@@ -90,8 +90,8 @@ class UbicationFragment : Fragment() {
                                 1
                             ) as List<Address>
                         val ubication = UbicationClass(
-                            list[0].latitude.toLong(),
-                            list[0].longitude.toLong(),
+                            list[0].latitude,
+                            list[0].longitude,
                             list[0].getAddressLine(0),
                             list[0].countryName,
                             list[0].locality

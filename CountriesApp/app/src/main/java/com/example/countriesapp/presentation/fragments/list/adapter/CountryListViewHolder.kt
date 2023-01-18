@@ -1,10 +1,8 @@
 package com.example.countriesapp.presentation.fragments.list.adapter
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.countriesapp.databinding.ItemCountryBinding
-import com.example.countriesapp.domain.CountryClass
 import com.example.countriesapp.domain.CountryItemClass
 import com.squareup.picasso.Picasso
 

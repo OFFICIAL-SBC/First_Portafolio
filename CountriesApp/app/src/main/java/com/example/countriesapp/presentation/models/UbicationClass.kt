@@ -4,8 +4,8 @@ import java.io.Serializable
 
 data class UbicationClass(
 
-    val latitud: Long,
-    val longitud: Long,
+    val latitud: Double,
+    val longitud: Double,
     val address: String,
     val countryName: String,
     val locality: String
