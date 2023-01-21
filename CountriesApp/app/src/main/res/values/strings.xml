@@ -16,4 +16,10 @@
     <string name="save_current_location">Save Current Location</string>
     <string name="current_location">--- Current Location ---</string>
     <string name="cities_near_to_you">Cities near to you</string>
+    <string name="favorites">Favorites</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="country_name">Country Name</string>
+    <string name="locality">Locality</string>
+    <string name="address">Address</string>
 </resources>

@@ -22,5 +22,12 @@
 
     </group>
 
+    <group>
+        <item
+            android:id="@+id/favoritesFragment"
+            android:icon="@drawable/ic_baseline_save_24"
+            android:title="@string/favorites"/>
+    </group>
+
 
 </menu>
