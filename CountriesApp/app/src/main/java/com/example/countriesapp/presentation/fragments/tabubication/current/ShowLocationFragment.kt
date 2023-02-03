@@ -4,30 +4,36 @@ package com.example.countriesapp.presentation.fragments.tabubication.current
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.os.Build
+import android.graphics.Matrix
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.countriesapp.R
+import androidx.core.content.FileProvider
+import androidx.exifinterface.media.ExifInterface
+import androidx.fragment.app.Fragment
 import com.example.countriesapp.databinding.FragmentShowLocationBinding
-import com.example.countriesapp.presentation.fragments.tabubication.listnearcities.ListNearCityFragment
 import com.example.countriesapp.presentation.models.UbicationClass
+import java.io.File
+import java.io.FileOutputStream
+
 
 class ShowLocationFragment : Fragment() {
 
     private val REQUEST_CODE = 200
-    private val REQUEST_IMAGE_CAPTURE = 1
-    private val REQUEST_PERMISSION = 100
+    private var path: String? = null
+    lateinit var imageUri: Uri
     private lateinit var viewModel: ShowLocationViewModel
     private lateinit var binding: FragmentShowLocationBinding
     var ubication: UbicationClass? = null
@@ -103,20 +109,87 @@ class ShowLocationFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
-                    if ((ContextCompat.checkSelfPermission(this@ShowLocationFragment.requireContext(),
-                            Manifest.permission.CAMERA) ===
-                                PackageManager.PERMISSION_GRANTED)) {
-                        Toast.makeText(this@ShowLocationFragment.requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    if ((ContextCompat.checkSelfPermission(
+                            this@ShowLocationFragment.requireContext(),
+                            Manifest.permission.CAMERA
+                        ) ==
+                                PackageManager.PERMISSION_GRANTED)
+                    ) {
+                        Toast.makeText(
+                            this@ShowLocationFragment.requireContext(),
+                            "Permission Granted",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(this@ShowLocationFragment.requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ShowLocationFragment.requireContext(),
+                        "Permission Denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return
+            }
+            2 -> {
+
+                if (grantResults.isNotEmpty() && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    if ((ContextCompat.checkSelfPermission(
+                            this@ShowLocationFragment.requireContext(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) ==
+                                PackageManager.PERMISSION_GRANTED)
+                    ) {
+                        Toast.makeText(
+                            this@ShowLocationFragment.requireContext(),
+                            "Permission Write Storage Granted",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ShowLocationFragment.requireContext(),
+                        "Permission Write Storage Denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return
+            }
+            3 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    if ((ContextCompat.checkSelfPermission(
+                            this@ShowLocationFragment.requireContext(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ) ==
+                                PackageManager.PERMISSION_GRANTED)
+                    ) {
+                        Toast.makeText(
+                            this@ShowLocationFragment.requireContext(),
+                            "Permission Read Storage Granted",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ShowLocationFragment.requireContext(),
+                        "Permission Read Storage Denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 return
             }
@@ -124,16 +197,85 @@ class ShowLocationFragment : Fragment() {
     }
 
     private fun capturePhoto() {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraIntent, REQUEST_CODE)
+        if (ContextCompat.checkSelfPermission(
+                this@ShowLocationFragment.requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                this@ShowLocationFragment.requireActivity(),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                2
+            )
+
+        } else if (ContextCompat.checkSelfPermission(
+                this@ShowLocationFragment.requireActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                this@ShowLocationFragment.requireActivity(),
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                3
+            )
+
+        } else {
+
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(cameraIntent, REQUEST_CODE)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null){
-            binding.ivPlaceMemory.setImageBitmap(data.extras?.get("data") as Bitmap)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val rotatedBitmap = rotateImage(imageBitmap,90F)
+            binding.ivPlaceMemory.setImageBitmap(rotatedBitmap)
         }
     }
+
+    fun handleImageOrientation(bitmap: Bitmap): Bitmap {
+        // Save the bitmap to a file
+        val file = saveBitmapToFile(bitmap)
+
+        // Read the Exif metadata from the file
+        val exif = ExifInterface(file.absolutePath)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+        Log.i("ORIENTATION","$orientation")
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90F)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap, 180F)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270F)
+            else -> bitmap
+        }
+    }
+
+    private fun saveBitmapToFile(bitmap: Bitmap): File {
+        // Create a file to save the image
+        val file = File(context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "temp.jpg")
+        file.createNewFile()
+
+        // Compress the bitmap to the specified format and quality, and save it to the file
+        val stream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.flush()
+        stream.close()
+
+        return file
+    }
+
+    private fun rotateImage(source: Bitmap, angle: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
 }
 
 
