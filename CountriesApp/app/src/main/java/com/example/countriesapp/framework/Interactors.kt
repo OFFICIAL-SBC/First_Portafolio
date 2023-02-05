@@ -7,5 +7,8 @@ data class Interactors(
     val getCountryByCapitalUseCase: GetCountryByCapitalUseCase,
     val getCitiesByCountryUseCase: GetCitiesByCountryUseCase,
     val getCountryByCodeUseCase: GetCountryByCodeUseCase,
-    val getCityNearToALocationUseCase: GetCityNearToALocationUseCase
+    val getCityNearToALocationUseCase: GetCityNearToALocationUseCase,
+    val getAllSavedLocationsUseCase: GetAllSavedLocationsUseCase,
+    val saveCurrentLocationUseCase: SaveCurrentLocationUseCase,
+    val deleteSelectedLocationUseCase: DeleteSelectedLocationUseCase
 )

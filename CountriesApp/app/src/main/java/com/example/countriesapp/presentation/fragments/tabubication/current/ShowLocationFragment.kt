@@ -8,6 +8,7 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
@@ -23,10 +24,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.countriesapp.databinding.FragmentShowLocationBinding
+import com.example.countriesapp.framework.CountryViewModelFactory
 import com.example.countriesapp.presentation.models.UbicationClass
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ShowLocationFragment : Fragment() {
@@ -43,6 +48,7 @@ class ShowLocationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this,CountryViewModelFactory)[ShowLocationViewModel::class.java]
         binding = FragmentShowLocationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -56,6 +62,9 @@ class ShowLocationFragment : Fragment() {
 
         if (arguments != null) {
 
+            val currentDateTime = Calendar.getInstance().time
+            val dateTimeString = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(currentDateTime)
+
             ubication = arguments?.getSerializable("current") as UbicationClass
 
             val lat = String.format("%.3f", ubication?.latitud)
@@ -63,10 +72,9 @@ class ShowLocationFragment : Fragment() {
 
             with(binding) {
                 tvAddress.text = ubication?.address
-                tvCountryName.text = ubication?.countryName
                 tvLatitude.text = "Latitude: $lat"
                 tvLongitude.text = "longitude: $lon"
-                tvLocality.text = ubication?.locality
+                tvDate.text = dateTimeString
                 fabCamera.setOnClickListener {
                     capturePhoto()
                 }
@@ -76,8 +84,6 @@ class ShowLocationFragment : Fragment() {
         } else {
             onMessageDoneSuscribe("Ubication has not been passed to this fragment")
         }
-
-
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
@@ -234,7 +240,9 @@ class ShowLocationFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             val rotatedBitmap = rotateImage(imageBitmap,90F)
-            binding.ivPlaceMemory.setImageBitmap(rotatedBitmap)
+            val file = saveBitmapToFile(rotatedBitmap)
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            binding.ivPlaceMemory.setImageBitmap(bitmap)
         }
     }
 
@@ -244,9 +252,11 @@ class ShowLocationFragment : Fragment() {
 
         // Read the Exif metadata from the file
         val exif = ExifInterface(file.absolutePath)
+
+        //This method always returns 0. I dont know why.
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
 
-        Log.i("ORIENTATION","$orientation")
+        Log.i("ORIENTATION","$orientation ${file.absolutePath}")
 
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90F)
