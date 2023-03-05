@@ -12,7 +12,7 @@ class CountryRoomRepository(private val countryDataSourceDb: CountryDataSourceDb
         countryDataSourceDb.delete(selectedLocation)
     }
 
-    suspend fun getAllLocations():List<CountryEntity>{
+    suspend fun getAllLocations():ArrayList<CountryEntity>{
         return countryDataSourceDb.getAllSavedLocations()
     }
 

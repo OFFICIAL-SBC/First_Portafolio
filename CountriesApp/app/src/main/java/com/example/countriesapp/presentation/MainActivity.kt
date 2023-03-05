@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //appBarConfiguration = AppBarConfiguration(navController.graph)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.continentFragment, R.id.capitalFragment, R.id.ubicationFragment),
+            setOf(R.id.continentFragment, R.id.capitalFragment, R.id.ubicationFragment,R.id.favoritesFragment),
             mainBinding.drawerLayout
         )
 
@@ -75,10 +75,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setUpActionBar(navController: NavController, appBarConfig: AppBarConfiguration) {
+        /*
+        * This method will connects the navigation controller with the app bar and allows the navigation
+        *  controller to control the app bar's appearance and behavior.
+        * */
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
     private fun setUpNavigationView(controller: NavController) {
+        /*
+        * The setupWithNavController() method sets up the NavigationView to automatically handle clicks on its menu items and
+        * navigate to the appropriate destination using the NavController.
+        * This eliminates the need to manually handle clicks on each menu item and call the navigate() method on the NavController.
+        * Instead, the Navigation component will automatically navigate to the selected destination based on the id of the menu item.
+        * */
         mainBinding.navView.setupWithNavController(controller)
     }
 

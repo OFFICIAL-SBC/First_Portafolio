@@ -17,7 +17,9 @@ class CountryDataSourceDbImpl(context: Context):CountryDataSourceDb {
         countryDao.deleteUbication(location.id)
     }
 
-    override suspend fun getAllSavedLocations(): List<CountryEntity> {
-        return countryDao.getAllUbicationObjects()
+    override suspend fun getAllSavedLocations(): ArrayList<CountryEntity> {
+        val auxArrayList= arrayListOf<CountryEntity>()
+        auxArrayList.addAll(countryDao.getAllUbicationObjects())
+        return auxArrayList
     }
 }

@@ -5,7 +5,7 @@ import com.example.countriesapp.framework.local.room.CountryEntity
 
 class GetAllSavedLocationsUseCase(private val repository: CountryRoomRepository) {
 
-    suspend operator fun invoke ():List<CountryEntity>{
+    suspend operator fun invoke ():ArrayList<CountryEntity>{
         return repository.getAllLocations()
     }
 

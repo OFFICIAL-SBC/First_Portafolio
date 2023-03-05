@@ -21,7 +21,7 @@ abstract class BaseRepo() {
                     // by passing our data in it.
                     Resource.Success(data = response.body()!!)
                 } else {
-                    val errorMessage = response.errorBody()?.string()
+                    val errorMessage = response.errorBody()?.string() //You only can use this line once.
                         ?: "Something went wrong. response.errorBody()?.string()"
                     Resource.Error(errorMessage = errorMessage)
                 }

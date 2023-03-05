@@ -64,4 +64,9 @@
             android:name="currentpositionobject"
             app:argType="com.example.countriesapp.presentation.models.UbicationClass" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.countriesapp.presentation.fragments.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

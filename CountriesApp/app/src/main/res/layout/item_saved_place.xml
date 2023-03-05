@@ -1,63 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/itemCountryMainConstaint"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvMainContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/cvMemorie"
         app:cardCornerRadius="25dp"
         android:layout_margin="10dp"
         android:clickable="true"
-        app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="true">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/itemCountrySecondConstaint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivFlag"
-                android:layout_width="400dp"
-                android:layout_height="250dp"
+                android:id="@+id/ivSavedPlace"
+                android:layout_width="330dp"
+                android:layout_height="210dp"
                 android:scaleType="fitXY"
+                android:src="@drawable/default_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvNameCountry"
+                android:id="@+id/tvLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Name country"
+                tools:text="Location"
                 style="@style/CountryName"
+                android:textSize="15sp"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@id/ivFlag"
+                app:layout_constraintTop_toBottomOf="@+id/ivSavedPlace"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
-                android:id="@+id/tvNameRegion"
+                android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Name Region"
+                tools:text="Date"
                 style="@style/CountrySubName"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tvNameCountry"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

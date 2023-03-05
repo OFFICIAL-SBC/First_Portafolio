@@ -25,9 +25,11 @@ import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.countriesapp.databinding.FragmentShowLocationBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
 import com.example.countriesapp.presentation.models.UbicationClass
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -38,7 +40,6 @@ class ShowLocationFragment : Fragment() {
 
     private val REQUEST_CODE = 200
     private var path: String? = null
-    lateinit var imageUri: Uri
     private lateinit var viewModel: ShowLocationViewModel
     private lateinit var binding: FragmentShowLocationBinding
     var ubication: UbicationClass? = null
@@ -48,7 +49,8 @@ class ShowLocationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this,CountryViewModelFactory)[ShowLocationViewModel::class.java]
+        viewModel =
+            ViewModelProvider(this, CountryViewModelFactory)[ShowLocationViewModel::class.java]
         binding = FragmentShowLocationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -63,7 +65,8 @@ class ShowLocationFragment : Fragment() {
         if (arguments != null) {
 
             val currentDateTime = Calendar.getInstance().time
-            val dateTimeString = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(currentDateTime)
+            val dateTimeString =
+                SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(currentDateTime)
 
             ubication = arguments?.getSerializable("current") as UbicationClass
 
@@ -77,6 +80,14 @@ class ShowLocationFragment : Fragment() {
                 tvDate.text = dateTimeString
                 fabCamera.setOnClickListener {
                     capturePhoto()
+                }
+
+                fabFavorites.setOnClickListener {
+                    viewModel.addCurrentLocation(
+                        dateTimeString,
+                        ubication?.address ?: "No address available",
+                        path ?: ""
+                    )
                 }
             }
 
@@ -239,10 +250,14 @@ class ShowLocationFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            val rotatedBitmap = rotateImage(imageBitmap,90F)
-            val file = saveBitmapToFile(rotatedBitmap)
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-            binding.ivPlaceMemory.setImageBitmap(bitmap)
+            val rotatedBitmap = rotateImage(imageBitmap, 90F)
+            lifecycleScope.launch {
+                //that this function should be called from a background thread, as it performs file I/O operations, which can block the main UI thread and lead to performance issues.
+                val file = saveBitmapToFile(rotatedBitmap)
+                path = file.absolutePath
+                val bitmap = BitmapFactory.decodeFile(path)
+                binding.ivPlaceMemory.setImageBitmap(bitmap)
+            }
         }
     }
 
@@ -254,9 +269,10 @@ class ShowLocationFragment : Fragment() {
         val exif = ExifInterface(file.absolutePath)
 
         //This method always returns 0. I dont know why.
-        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
 
-        Log.i("ORIENTATION","$orientation ${file.absolutePath}")
+        Log.i("ORIENTATION", "$orientation ${file.absolutePath}")
 
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90F)
@@ -268,7 +284,8 @@ class ShowLocationFragment : Fragment() {
 
     private fun saveBitmapToFile(bitmap: Bitmap): File {
         // Create a file to save the image
-        val file = File(context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "temp.jpg")
+        val fileName = generateFileName()
+        val file = File(context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
         file.createNewFile()
 
         // Compress the bitmap to the specified format and quality, and save it to the file
@@ -284,6 +301,11 @@ class ShowLocationFragment : Fragment() {
         val matrix = Matrix()
         matrix.postRotate(angle)
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
+    private fun generateFileName(): String {
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        return "IMG_$timestamp.jpg"
     }
 
 }
