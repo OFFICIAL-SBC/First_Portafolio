@@ -22,7 +22,7 @@ class FavoritesFragment : Fragment() {
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var binding: FragmentFavoritesBinding
     private val entityList: ArrayList<CountryEntity> = arrayListOf()
-    private lateinit var adapter:FavoriteAdapter
+    private lateinit var adapterFavorite:FavoriteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +35,8 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = FavoriteAdapter(entityList)
+        entityList.clear()
+        adapterFavorite = FavoriteAdapter(entityList)
         initRecyclerView()
 
         viewModel.getAllSavedPlaces()
@@ -51,20 +51,20 @@ class FavoritesFragment : Fragment() {
         if (places != null){
             entityList.clear()
             entityList.addAll(places)
-            adapter.notifyDataSetChanged()
+            adapterFavorite.notifyDataSetChanged()
         }else{
             onMessageDoneSuscribe("Something went wrong with Room")
         }
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(this@FavoritesFragment.requireContext(),msg,Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(),msg,Toast.LENGTH_LONG).show()
     }
 
     private fun initRecyclerView(){
         with(binding.rvShowSavedPlaces){
-            layoutManager = LinearLayoutManager(this@FavoritesFragment.requireContext())
-            adapter = adapter
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = adapterFavorite
             setHasFixedSize(true)
         }
     }

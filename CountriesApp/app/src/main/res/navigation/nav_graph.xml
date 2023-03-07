@@ -67,6 +67,6 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.example.countriesapp.presentation.fragments.favorites.FavoritesFragment"
-        android:label="fragment_favorites"
+        android:label="Favorite places"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

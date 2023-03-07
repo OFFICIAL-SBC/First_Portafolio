@@ -1,7 +1,10 @@
 package com.example.countriesapp.presentation.fragments.favorites.adapter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.countriesapp.R
 import com.example.countriesapp.domain.CountryItemClass
@@ -23,10 +26,10 @@ class FavoriteAdapter(private val placesList:ArrayList<CountryEntity>):RecyclerV
         return placesList.size
     }
 
+
     fun appendItems(newArray: ArrayList<CountryEntity>) {
         placesList.clear()
         placesList.addAll(newArray)
         notifyDataSetChanged()
     }
-
 }
