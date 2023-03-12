@@ -18,7 +18,7 @@ import com.example.countriesapp.presentation.fragments.favorites.adapter.Favorit
 
 class FavoritesFragment : Fragment() {
 
-
+    private var positionList: Int = 0
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var binding: FragmentFavoritesBinding
     private val entityList: ArrayList<CountryEntity> = arrayListOf()
@@ -36,7 +36,10 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         entityList.clear()
-        adapterFavorite = FavoriteAdapter(entityList)
+        adapterFavorite = FavoriteAdapter(entityList){selectedMemory,option,position ->
+            onItemClicked(selectedMemory,option,position)
+        }
+
         initRecyclerView()
 
         viewModel.getAllSavedPlaces()
@@ -45,6 +48,24 @@ class FavoritesFragment : Fragment() {
         viewModel.savedPlacesDone.observe(viewLifecycleOwner, Observer {
             onArrayListDoneSuscribe(it)
         })
+
+        viewModel.indicatorDone.observe(viewLifecycleOwner, Observer {
+            indicator ->
+            onDeleteIndicatorDoneSuscribe(indicator)
+        })
+
+    }
+
+    private fun onDeleteIndicatorDoneSuscribe(indicator: Boolean?) {
+        if (indicator == true) adapterFavorite.deleteItem(positionList)
+    }
+
+
+    private fun onItemClicked(selectedMemory: CountryEntity, option: Int, position: Int) {
+        positionList = position
+        when(option){
+            0 -> viewModel.deleteSelectedLocation(selectedMemory)
+        }
     }
 
     private fun onArrayListDoneSuscribe(places: java.util.ArrayList<CountryEntity>?) {
@@ -52,6 +73,7 @@ class FavoritesFragment : Fragment() {
             entityList.clear()
             entityList.addAll(places)
             adapterFavorite.notifyDataSetChanged()
+            //adapterFavorite.appendItems(places)
         }else{
             onMessageDoneSuscribe("Something went wrong with Room")
         }

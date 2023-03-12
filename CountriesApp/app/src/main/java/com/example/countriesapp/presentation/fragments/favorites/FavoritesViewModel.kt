@@ -15,9 +15,19 @@ class FavoritesViewModel(interactors: Interactors) : CountryViewModel(interactor
     private val savedPlaces: MutableLiveData<ArrayList<CountryEntity>> = MutableLiveData()
     val savedPlacesDone: LiveData<ArrayList<CountryEntity>> = savedPlaces
 
+    private val indicator: MutableLiveData<Boolean> = MutableLiveData()
+    val indicatorDone: LiveData<Boolean> = indicator
+
     fun getAllSavedPlaces(){
         viewModelScope.launch(Dispatchers.IO){
             savedPlaces.postValue(interactors.getAllSavedLocationsUseCase())
+        }
+    }
+
+    fun deleteSelectedLocation(selected: CountryEntity){
+        viewModelScope.launch(Dispatchers.IO){
+            interactors.deleteSelectedLocationUseCase(selected)
+            indicator.postValue(true)
         }
     }
 
