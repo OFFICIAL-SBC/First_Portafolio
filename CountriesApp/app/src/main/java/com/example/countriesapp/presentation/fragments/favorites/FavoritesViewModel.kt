@@ -24,7 +24,7 @@ class FavoritesViewModel(interactors: Interactors) : CountryViewModel(interactor
         }
     }
 
-    fun deleteSelectedLocation(selected: CountryEntity){
+    fun deleteSelectedLocation(selected: Int){
         viewModelScope.launch(Dispatchers.IO){
             interactors.deleteSelectedLocationUseCase(selected)
             indicator.postValue(true)

@@ -11,5 +11,6 @@ data class CountryEntity(
     @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "address") var address: String,
-    @ColumnInfo(name = "photo") var photoPath: String
+    @ColumnInfo(name = "photo") var photoPath: String,
+    @ColumnInfo(name = "description") var description: String
 )

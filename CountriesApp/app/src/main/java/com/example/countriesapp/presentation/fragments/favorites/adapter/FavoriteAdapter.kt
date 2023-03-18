@@ -10,7 +10,7 @@ import com.example.countriesapp.R
 import com.example.countriesapp.domain.CountryItemClass
 import com.example.countriesapp.framework.local.room.CountryEntity
 
-class FavoriteAdapter(private val placesList:ArrayList<CountryEntity>, private val onItemClicked:(CountryEntity,Int, Int)-> Unit):RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteAdapter(private val placesList:ArrayList<CountryEntity>, private val onItemClicked:(Int,String,Int, Int)-> Unit):RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

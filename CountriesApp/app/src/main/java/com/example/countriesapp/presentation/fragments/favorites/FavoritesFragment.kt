@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countriesapp.R
 import com.example.countriesapp.databinding.FragmentFavoritesBinding
@@ -22,22 +23,22 @@ class FavoritesFragment : Fragment() {
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var binding: FragmentFavoritesBinding
     private val entityList: ArrayList<CountryEntity> = arrayListOf()
-    private lateinit var adapterFavorite:FavoriteAdapter
+    private lateinit var adapterFavorite: FavoriteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFavoritesBinding.inflate(inflater,container,false)
-        viewModel = ViewModelProvider(this,CountryViewModelFactory)[FavoritesViewModel::class.java]
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this, CountryViewModelFactory)[FavoritesViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         entityList.clear()
-        adapterFavorite = FavoriteAdapter(entityList){selectedMemory,option,position ->
-            onItemClicked(selectedMemory,option,position)
+        adapterFavorite = FavoriteAdapter(entityList) { id, description, option, position ->
+            onItemClicked(id, description, option, position)
         }
 
         initRecyclerView()
@@ -49,8 +50,7 @@ class FavoritesFragment : Fragment() {
             onArrayListDoneSuscribe(it)
         })
 
-        viewModel.indicatorDone.observe(viewLifecycleOwner, Observer {
-            indicator ->
+        viewModel.indicatorDone.observe(viewLifecycleOwner, Observer { indicator ->
             onDeleteIndicatorDoneSuscribe(indicator)
         })
 
@@ -61,33 +61,38 @@ class FavoritesFragment : Fragment() {
     }
 
 
-    private fun onItemClicked(selectedMemory: CountryEntity, option: Int, position: Int) {
+    private fun onItemClicked(id: Int, description: String, option: Int, position: Int) {
         positionList = position
-        when(option){
-            0 -> viewModel.deleteSelectedLocation(selectedMemory)
+        when (option) {
+            0 -> viewModel.deleteSelectedLocation(id)
+            1 -> findNavController().navigate(
+                FavoritesFragmentDirections.actionFavoritesFragmentToAddShowMemoryDescriptionDialog(
+                    description
+                )
+            )
         }
     }
 
     private fun onArrayListDoneSuscribe(places: java.util.ArrayList<CountryEntity>?) {
-        if (places != null){
+        if (places != null) {
             entityList.clear()
             entityList.addAll(places)
             adapterFavorite.notifyDataSetChanged()
             //adapterFavorite.appendItems(places)
-        }else{
+        } else {
             onMessageDoneSuscribe("Something went wrong with Room")
         }
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(requireContext(),msg,Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
     }
 
-    private fun initRecyclerView(){
-        with(binding.rvShowSavedPlaces){
+    private fun initRecyclerView() {
+        with(binding.rvShowSavedPlaces) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = adapterFavorite
-            setHasFixedSize(true)
+            setHasFixedSize(false)
         }
     }
 

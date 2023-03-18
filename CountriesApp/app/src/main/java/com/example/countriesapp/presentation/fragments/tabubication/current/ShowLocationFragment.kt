@@ -98,7 +98,7 @@ class ShowLocationFragment : Fragment() {
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(this@ShowLocationFragment.requireContext(), msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
     }
 
     companion object {

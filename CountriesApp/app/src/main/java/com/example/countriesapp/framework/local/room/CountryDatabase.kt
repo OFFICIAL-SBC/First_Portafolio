@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [CountryEntity::class], version = 1)
+@Database(entities = [CountryEntity::class], version = 2)
 abstract class CountryDatabase: RoomDatabase() {
 
     companion object{
@@ -15,6 +15,7 @@ abstract class CountryDatabase: RoomDatabase() {
 
         private fun create(context: Context): CountryDatabase =
             Room.databaseBuilder(context,CountryDatabase::class.java, NAME_DATABASE)
+                .fallbackToDestructiveMigration()
                 .build()
 
         fun getInstance(context: Context) =(instance ?: create(context)).also { instance = it }

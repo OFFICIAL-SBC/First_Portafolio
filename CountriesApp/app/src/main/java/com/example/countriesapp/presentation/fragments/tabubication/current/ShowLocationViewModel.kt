@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class ShowLocationViewModel(interactors: Interactors) : CountryViewModel(interactors){
 
     fun addCurrentLocation(date: String, address: String, path: String){
-        val entity = CountryEntity(date = date, address = address, photoPath = path)
+        val entity = CountryEntity(date = date, address = address, photoPath = path, description = "")
         viewModelScope.launch(Dispatchers.IO){
             interactors.saveCurrentLocationUseCase(entity)
         }

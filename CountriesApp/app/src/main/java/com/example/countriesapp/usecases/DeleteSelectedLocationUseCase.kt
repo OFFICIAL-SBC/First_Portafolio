@@ -5,7 +5,7 @@ import com.example.countriesapp.framework.local.room.CountryEntity
 
 class DeleteSelectedLocationUseCase(private val repository: CountryRoomRepository) {
 
-    suspend operator fun invoke(selectedLocation: CountryEntity){
+    suspend operator fun invoke(selectedLocation: Int){
         repository.deleteLocation(selectedLocation)
     }
 

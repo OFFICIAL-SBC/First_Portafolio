@@ -21,7 +21,8 @@ class CountryApp : Application() {
             GetCityNearToALocationUseCase(countryApiRepository),
             GetAllSavedLocationsUseCase(countryRoomRepository),
             SaveCurrentLocationUseCase(countryRoomRepository),
-            DeleteSelectedLocationUseCase(countryRoomRepository)
+            DeleteSelectedLocationUseCase(countryRoomRepository),
+            UpdateDescriptionUseCase(countryRoomRepository)
         )
 
         CountryViewModelFactory.inject(dependencies = interactors)

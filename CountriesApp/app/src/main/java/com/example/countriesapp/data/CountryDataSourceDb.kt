@@ -6,8 +6,10 @@ interface CountryDataSourceDb {
 
     suspend fun add(currentLocation: CountryEntity)
 
-    suspend fun delete(location:CountryEntity)
+    suspend fun delete(location:Int)
 
     suspend fun getAllSavedLocations(): ArrayList<CountryEntity>
+
+    suspend fun updateDescription(id:Int,description: String)
 
 }

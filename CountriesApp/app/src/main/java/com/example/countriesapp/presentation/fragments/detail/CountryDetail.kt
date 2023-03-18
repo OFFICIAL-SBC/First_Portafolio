@@ -20,7 +20,7 @@ import com.example.countriesapp.framework.CountryViewModelFactory
 import com.example.countriesapp.presentation.fragments.detail.adapter.CountryDetailAdapter
 import com.squareup.picasso.Picasso
 
-class CountryDetail : Fragment() {
+class   CountryDetail : Fragment() {
 
 
     private lateinit var viewModel: CountryDetailViewModel

@@ -68,5 +68,18 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.countriesapp.presentation.fragments.favorites.FavoritesFragment"
         android:label="Favorite places"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_addShowMemoryDescriptionDialog"
+            app:destination="@id/addShowMemoryDescriptionDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/addShowMemoryDescriptionDialog"
+        android:name="com.example.countriesapp.presentation.fragments.favorites.dialog.AddShowMemoryDescriptionDialog"
+        android:label="Describe your memory"
+        tools:layout="@layout/fragment_add_show_memory_description_dialog" >
+        <argument
+            android:name="memoryDescription"
+            app:argType="string" />
+    </dialog>
 </navigation>
