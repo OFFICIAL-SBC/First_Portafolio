@@ -81,5 +81,11 @@
         <argument
             android:name="memoryDescription"
             app:argType="string" />
+        <argument
+            android:name="placeId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_addShowMemoryDescriptionDialog_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </dialog>
 </navigation>

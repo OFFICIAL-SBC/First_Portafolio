@@ -67,7 +67,7 @@ class FavoritesFragment : Fragment() {
             0 -> viewModel.deleteSelectedLocation(id)
             1 -> findNavController().navigate(
                 FavoritesFragmentDirections.actionFavoritesFragmentToAddShowMemoryDescriptionDialog(
-                    description
+                    memoryDescription = description, placeId = id
                 )
             )
         }
