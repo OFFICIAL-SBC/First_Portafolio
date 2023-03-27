@@ -15,14 +15,14 @@
     <string name="location_label">Location</string>
     <string name="save_current_location">Save Current Location</string>
     <string name="current_location">--- Current Location ---</string>
-    <string name="cities_near_to_you">Cities near to you</string>
+    <string name="cities_near_to_you">--- Cities near to you ---</string>
     <string name="favorites">Favorites</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="country_name">Country Name</string>
     <string name="locality">Locality</string>
     <string name="address">Address</string>
-    <string name="memories">Memories.</string>
+    <string name="memories">--- Memories ---</string>
     <string name="memory_description">Memory Description</string>
     <string name="add_your_description_here">Add your description here</string>
     <string name="description">Description</string>

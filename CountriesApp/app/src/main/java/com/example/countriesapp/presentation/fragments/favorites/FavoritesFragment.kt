@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.countriesapp.R
 import com.example.countriesapp.databinding.FragmentFavoritesBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
@@ -41,7 +42,10 @@ class FavoritesFragment : Fragment() {
             onItemClicked(id, description, option, position)
         }
 
+        (binding.rvShowSavedPlaces.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        (binding.rvShowSavedPlaces.itemAnimator as SimpleItemAnimator).moveDuration = 200
         initRecyclerView()
+
 
         viewModel.getAllSavedPlaces()
 

@@ -26,8 +26,10 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.countriesapp.R
 import com.example.countriesapp.databinding.FragmentShowLocationBinding
 import com.example.countriesapp.framework.CountryViewModelFactory
+import com.example.countriesapp.framework.local.room.CountryEntity
 import com.example.countriesapp.presentation.models.UbicationClass
 import kotlinx.coroutines.launch
 import java.io.File
@@ -43,7 +45,8 @@ class ShowLocationFragment : Fragment() {
     private lateinit var viewModel: ShowLocationViewModel
     private lateinit var binding: FragmentShowLocationBinding
     var ubication: UbicationClass? = null
-
+    var flag: Boolean = false
+    private lateinit var localDate: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +62,7 @@ class ShowLocationFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        flag = false
         checkCameraPermission()
 
         if (arguments != null) {
@@ -83,11 +86,23 @@ class ShowLocationFragment : Fragment() {
                 }
 
                 fabFavorites.setOnClickListener {
-                    viewModel.addCurrentLocation(
-                        dateTimeString,
-                        ubication?.address ?: "No address available",
-                        path ?: ""
-                    )
+                    if(!flag){
+                        val entity = CountryEntity(date = dateTimeString, address = ubication?.address ?: "No address available", photoPath = path ?: "", description = "")
+
+                        localDate = entity.date
+                        Log.i("AFRICALINDA",localDate)
+                        flag = !flag
+                        fabFavorites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                        viewModel.addCurrentLocation(
+                            entity
+                        )
+                    }else{
+                        flag = !flag
+                        fabFavorites.setImageResource(R.drawable.ubfllied_heart_icon)
+                        viewModel.deleteSavedItem(localDate)
+                    }
+
+
                 }
             }
 

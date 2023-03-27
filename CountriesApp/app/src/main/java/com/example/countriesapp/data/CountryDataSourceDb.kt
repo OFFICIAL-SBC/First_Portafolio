@@ -12,4 +12,6 @@ interface CountryDataSourceDb {
 
     suspend fun updateDescription(id:Int,description: String)
 
+    suspend fun deleteUbicationByDate(date: String)
+
 }

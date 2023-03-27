@@ -16,4 +16,7 @@ interface CountryDao {
 
     @Query("UPDATE country_table SET description = :ubication_description WHERE id = :ubication_id")
     suspend fun updateDescription(ubication_id: Int,ubication_description: String)
+
+    @Query("DELETE FROM country_table WHERE date = :date_eliminated")
+    suspend fun deleteUbicationByDate(date_eliminated: String)
 }

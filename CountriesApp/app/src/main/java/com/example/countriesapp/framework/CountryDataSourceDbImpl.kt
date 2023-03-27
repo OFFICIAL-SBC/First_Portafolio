@@ -26,4 +26,8 @@ class CountryDataSourceDbImpl(context: Context):CountryDataSourceDb {
     override suspend fun updateDescription(id:Int,description: String) {
         countryDao.updateDescription(id,description)
     }
+
+    override suspend fun deleteUbicationByDate(date: String) {
+        countryDao.deleteUbicationByDate(date)
+    }
 }

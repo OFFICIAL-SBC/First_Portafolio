@@ -2,6 +2,7 @@ package com.example.countriesapp.presentation.fragments.favorites.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -12,11 +13,11 @@ import com.example.countriesapp.framework.local.room.CountryEntity
 
 class FavoriteViewHolder(view: View):ViewHolder(view), View.OnClickListener {
 
-    private val binding = ItemSavedPlaceBinding.bind(view)
+    val binding = ItemSavedPlaceBinding.bind(view)
     private lateinit var localEntity:CountryEntity
     private lateinit var onLocalItemSelected: (Int,String,Int,Int) -> Unit
 
-    private var flag: Boolean = false
+    var flag: Boolean = false
 
     init{
         binding.ibThreeDots.setOnClickListener(this)
@@ -27,14 +28,21 @@ class FavoriteViewHolder(view: View):ViewHolder(view), View.OnClickListener {
         localEntity = entity
         onLocalItemSelected = onItemClicked
         with(binding){
-            if(entity.photoPath != ""){
+            if(!entity.photoPath.isNullOrEmpty()){
                 val bitmap = BitmapFactory.decodeFile(entity.photoPath)
                 ivSavedPlace.setImageBitmap(bitmap)
+            }else{
+                ivSavedPlace.setImageResource(R.drawable.gray_painted_background)
             }
             binding.tvDescription.text = if (localEntity.description.isEmpty()) "There is not description availale"
             else localEntity.description
             tvDate.text = entity.date
             tvLocation.text = entity.address
+            if(!flag){
+                tvDescription.visibility = View.GONE
+            }else{
+                tvDescription.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -58,20 +66,6 @@ class FavoriteViewHolder(view: View):ViewHolder(view), View.OnClickListener {
                     else -> false
                 }
             }
-        }else if(v == binding.ibShowMore){
-            with(binding.tvDescription){
-                if(!flag){
-                    visibility = VISIBLE
-                    binding.ibShowMore.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
-                    flag = !flag
-                }else{
-                    visibility= GONE
-                    binding.ibShowMore.setImageResource(R.drawable.heyboard_down_narrow_icon)
-                    flag = !flag
-                }
-            }
-
-
         }
     }
 

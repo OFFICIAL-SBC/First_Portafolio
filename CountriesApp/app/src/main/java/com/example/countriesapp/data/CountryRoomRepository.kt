@@ -20,4 +20,8 @@ class CountryRoomRepository(private val countryDataSourceDb: CountryDataSourceDb
         countryDataSourceDb.updateDescription(id,description)
     }
 
+    suspend fun deleteLocationByDate(date: String){
+        countryDataSourceDb.deleteUbicationByDate(date)
+    }
+
 }

@@ -86,6 +86,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_addShowMemoryDescriptionDialog_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            app:destination="@id/favoritesFragment"
+            app:popUpTo="@+id/favoritesFragment"
+            app:popUpToInclusive="true"/>
     </dialog>
 </navigation>

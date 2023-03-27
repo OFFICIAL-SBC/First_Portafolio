@@ -41,7 +41,7 @@
                 android:layout_width="330dp"
                 android:layout_height="210dp"
                 android:scaleType="fitXY"
-                tools:src="@drawable/default_background"
+                tools:src="@drawable/gray_painted_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,13 +60,13 @@
 
             <TextView
                 android:id="@+id/tvDate"
-                style="@style/CountrySubName"
+                style="@style/GeneralTitles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Date" />

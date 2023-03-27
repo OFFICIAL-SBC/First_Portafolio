@@ -11,5 +11,6 @@ data class Interactors(
     val getAllSavedLocationsUseCase: GetAllSavedLocationsUseCase,
     val saveCurrentLocationUseCase: SaveCurrentLocationUseCase,
     val deleteSelectedLocationUseCase: DeleteSelectedLocationUseCase,
-    val  updateDescriptionUseCase: UpdateDescriptionUseCase
+    val  updateDescriptionUseCase: UpdateDescriptionUseCase,
+    val deleteSelectedLocationByDateUseCase: DeleteSelectedLocationByDateUseCase
 )

@@ -12,12 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="cursive"
         android:gravity="center"
+        style="@style/GeneralTitles"
         android:text="@string/cities_near_to_you"
-        android:textColor="#651FFF"
-        android:textSize="28sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

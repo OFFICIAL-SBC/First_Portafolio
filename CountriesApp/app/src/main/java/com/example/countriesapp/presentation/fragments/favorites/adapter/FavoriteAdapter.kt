@@ -10,15 +10,28 @@ import com.example.countriesapp.R
 import com.example.countriesapp.domain.CountryItemClass
 import com.example.countriesapp.framework.local.room.CountryEntity
 
-class FavoriteAdapter(private val placesList:ArrayList<CountryEntity>, private val onItemClicked:(Int,String,Int, Int)-> Unit):RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteAdapter(
+    private val placesList: ArrayList<CountryEntity>,
+    private val onItemClicked: (Int, String, Int, Int) -> Unit
+) : RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return FavoriteViewHolder(layoutInflater.inflate(R.layout.item_saved_place,parent,false))
+        return FavoriteViewHolder(layoutInflater.inflate(R.layout.item_saved_place, parent, false))
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         val item = placesList[position]
+
+        holder.binding.ibShowMore.setOnClickListener {
+            if (!holder.flag) {
+                it.animate().setDuration(200).rotation(180F);
+            } else {
+                it.animate().setDuration(200).rotation(0F);
+            }
+            holder.flag = !holder.flag
+            notifyItemChanged(position)
+        }
         holder.render(item, onItemClicked)
     }
 
@@ -26,10 +39,10 @@ class FavoriteAdapter(private val placesList:ArrayList<CountryEntity>, private v
         return placesList.size
     }
 
-    fun deleteItem(position: Int){
+    fun deleteItem(position: Int) {
         placesList.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position,itemCount)
+        notifyItemRangeChanged(position, itemCount)
     }
 
 
