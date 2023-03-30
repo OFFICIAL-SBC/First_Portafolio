@@ -101,8 +101,8 @@ class   CountryDetail : Fragment() {
 
                 tvCapital.text ="Capital: ${actual.capital[0]}"
                 tvBorders.text = borders
-                tvCca2.text = actual.cca2
-                tvNameCountry.text = actual.name.common
+                tvCca2.text = "CCA: ${actual.cca2}"
+                tvNameCountry.text = actual.name.common.uppercase()
 
                 for (key in actual.currencies.keys) currencies += "${actual.currencies[key]?.name}, "
                 tvCunrrencies.text = currencies

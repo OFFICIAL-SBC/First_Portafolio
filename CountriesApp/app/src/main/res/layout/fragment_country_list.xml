@@ -5,7 +5,6 @@
     android:id="@+id/ConstraintLayoutCpuntriesList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardBackGround"
     tools:context=".presentation.fragments.list.CountryListFragment">
 
 

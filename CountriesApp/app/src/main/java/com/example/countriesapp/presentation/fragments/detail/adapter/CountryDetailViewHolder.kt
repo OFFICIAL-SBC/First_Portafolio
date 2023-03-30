@@ -13,7 +13,7 @@ class CountryDetailViewHolder(view: View):ViewHolder(view) {
         with(binding){
             this.tvCityName.text = cityClass.name
             this.tvCityRegion.text = cityClass.region.replace("Department","")
-            this.tvnCityPopulation.text = cityClass.population.toString()
+            this.tvnCityPopulation.text = "Population: ${cityClass.population}"
         }
     }
 
