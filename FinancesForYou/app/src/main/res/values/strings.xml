@@ -2,4 +2,10 @@
     <string name="app_name">FinancesForYou</string>
     <string name="transactions">Transactions</string>
     <string name="reports">Reports</string>
+    <string name="log_in_text">Log In</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="no_account_solution">No Account? Register Now!</string>
 </resources>

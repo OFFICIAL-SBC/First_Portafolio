@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "161222606070",
+    "project_id": "financesforyou-8b520",
+    "storage_bucket": "financesforyou-8b520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161222606070:android:1ba937888b7b4e9872c0d7",
+        "android_client_info": {
+          "package_name": "com.example.financesforyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161222606070-f9fblpkab7a94e299g13uu6bkigni0l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.financesforyou",
+            "certificate_hash": "2d3d5b4d3534490372a08abd28db810bc62aaeaa"
+          }
+        },
+        {
+          "client_id": "161222606070-f285thtverjgfte6a7k8hrsgs923710v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYhlQ3OXzuka52W7A406bZsOQNMOVjQKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161222606070-f285thtverjgfte6a7k8hrsgs923710v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

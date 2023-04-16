@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val toolBar = mainBinding.activityMainContent.mainToolbar
 
-        //Setting up the tool bar as the app bar for the activity
+        //Setting up the tool bar as the action bar for the activity
         setSupportActionBar(toolBar)
 
         val host: NavHostFragment =
@@ -76,8 +76,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setUpActionBar(navController: NavController, appBarConfig: AppBarConfiguration) {
         /*
-        * This method will connects the navigation controller with the app bar and allows the navigation
-        *  controller to control the app bar's appearance and behavior.
+        * This method will connects the navigation controller with the default action app bar and allows the navigation
+        *  controller to control the action bar's appearance and behavior.
+        * Basically, add navigation support to the default action bar.
         * */
         setupActionBarWithNavController(navController, appBarConfig)
     }
