@@ -51,6 +51,9 @@ class LoginFragment : Fragment() {
                         }
                 }
             }
+            tvNoAccount.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+            }
         }
 
     }
