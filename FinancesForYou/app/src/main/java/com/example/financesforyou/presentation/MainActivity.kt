@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -17,11 +18,17 @@ import com.example.financesforyou.databinding.ActivityMainBinding
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
+private lateinit var viewModel: UserViewModel
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //User Sesion
+        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        viewModel.firstMoment()
+        viewModel.initializeAuth()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val topLevelDestinations = setOf(R.id.transactionFragment, R.id.reportsFragment)
