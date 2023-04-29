@@ -32,8 +32,8 @@ class TransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Checking if there is a open user sesion
-        userViewModel.userIndicator.observe(viewLifecycleOwner, Observer { user ->
-            if (!user) { //User == null; remember that user will be a class That will contain al the user data.
+        userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
+            if (!user) { //User == null; remember that user will be a class That will contain all the user data.
                 findNavController().navigate(R.id.loginFragment)
             }
         })

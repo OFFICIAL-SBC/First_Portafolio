@@ -1,5 +1,6 @@
 package com.example.financesforyou.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +12,11 @@ class UserViewModel: ViewModel() {
 
     private lateinit var auth: FirebaseAuth
 
-    val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will the variable that contains user information.
-    private val userIndicatorDone = userIndicator
+    private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will the variable that contains user information.
+    val userIndicatorDone:LiveData<Boolean> = userIndicator
+
+    private val msg: MutableLiveData<String> = MutableLiveData()
+    val msgDone: LiveData<String> = msg
 
     fun firstMoment(){
         userIndicator.value = false
@@ -22,14 +26,27 @@ class UserViewModel: ViewModel() {
     }
 
     fun openSesion(email:String, password: String):LiveData<Boolean>{
-        //What about Error messages?
         val loginIndicator:MutableLiveData<Boolean> = MutableLiveData()
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener(){ task ->
-                loginIndicator.value = task.isSuccessful
-                userIndicator.value = task.isSuccessful //This is just temporary.
+                loginIndicator.value = task.isSuccessful.also { result ->
+                    if (!result) msg.value = task.exception.toString()
+                }
+                userIndicator.value = task.isSuccessful //This is just temporary. This will be a class that will hold all user information.
             }
         return loginIndicator
     }
 
+    fun createNewUser(email:String, password: String):LiveData<Boolean>{
+        Log.i("AQUITOY","Hello")
+        val registerIndicator: MutableLiveData<Boolean> = MutableLiveData()
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(){ task ->
+                registerIndicator.value = task.isSuccessful.also { result ->
+                    if(result) msg.value = "User registation has been made correctly."
+                    else msg.value = task.exception.toString()
+                }
+        }
+        return registerIndicator
+    }
 }

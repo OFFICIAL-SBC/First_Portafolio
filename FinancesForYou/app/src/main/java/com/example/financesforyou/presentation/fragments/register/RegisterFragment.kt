@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.databinding.FragmentRegisterBinding
+import com.example.financesforyou.presentation.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
 
+    private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: RegisterViewModel
     private lateinit var auth: FirebaseAuth
@@ -33,7 +37,6 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        auth = FirebaseAuth.getInstance()
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,29 +65,26 @@ class RegisterFragment : Fragment() {
                     flag = false
                 }
                 if (flag) {
-                    auth.createUserWithEmailAndPassword(user, password)
-                        .addOnCompleteListener() { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                onMessageDoneSuscribe("User registation has been made correctly.")
-                                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                onMessageDoneSuscribe("Registation Fail: ${task.exception}")
-                                tietEmail.text?.clear()
-                                tietPassword.text?.clear()
-                                tietConPassword.text?.clear()
-                            }
+                    userViewModel.createNewUser(user,password).observe(viewLifecycleOwner, Observer { result ->
+                        if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                        else{
+                            tietEmail.text?.clear()
+                            tietPassword.text?.clear()
+                            tietConPassword.text?.clear()
                         }
+                    })
                 }
             }
         }
 
+        userViewModel.msgDone.observe(viewLifecycleOwner, Observer { msg ->
+            onMessageDoneSuscribe(msg)
+        })
+
     }
 
     fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
     fun isValidEmail(str: String): Boolean{

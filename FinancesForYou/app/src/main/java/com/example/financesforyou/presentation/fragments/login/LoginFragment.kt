@@ -16,14 +16,23 @@ import com.example.financesforyou.R
 import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var viewModel: LoginViewModel
     private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var savedStateHandle: SavedStateHandle
     //private lateinit var auth: FirebaseAuth
+    val EMAIL_ADDRESS_PATTERN = Pattern.compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
 
     companion object {
         const val LOGIN_SUCCESSFUL: String = "LOGIN_SUCCESSFUL"
@@ -42,7 +51,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
-        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL] = false
+        savedStateHandle[LOGIN_SUCCESSFUL] = false //Create this savedStatedHandle in the transaction fragment
 
         with(binding){
             btLogin.setOnClickListener {
@@ -52,6 +61,12 @@ class LoginFragment : Fragment() {
                 if (user.isEmpty() || password.isEmpty()) {
                     onMessageDoneSuscribe("You have to type your email and password")
                     flag=false
+                }else if(!isValidEmail(user)){
+                    onMessageDoneSuscribe("Please, type a valid email")
+                    flag = false
+                }else if(password.length < 6){
+                    onMessageDoneSuscribe("Password must be a at lest of 6 characters")
+                    flag = false
                 }
                 if(flag){
                     userViewModel.openSesion(user,password).observe(viewLifecycleOwner, Observer { result ->
@@ -62,35 +77,27 @@ class LoginFragment : Fragment() {
                                 .setPopUpTo(startDestination, true)
                                 .build()
                             findNavController().navigate(startDestination,null,navOptions)
-                        }else{
-                            onMessageDoneSuscribe("Athentication failed: Unable to open sesion")
                         }
                     })
-                    /*
-                    auth.signInWithEmailAndPassword(user,password)
-                        .addOnCompleteListener(){ task ->
-                            if(task.isSuccessful){
-                                val startDestination = findNavController().graph.startDestinationId
-                                val navOptions = NavOptions.Builder()
-                                    .setPopUpTo(startDestination, true)
-                                    .build()
-
-                                findNavController().navigate(startDestination,null,navOptions)
-                            }else{
-                                onMessageDoneSuscribe("Athentication failed: ${task.exception}")
-                            }
-                        }*/
                 }
             }
             tvNoAccount.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
+
+            userViewModel.msgDone.observe(viewLifecycleOwner, Observer {
+                onMessageDoneSuscribe(it)
+            })
         }
 
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(requireContext(),msg,Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(),msg,Toast.LENGTH_SHORT).show()
+    }
+
+    fun isValidEmail(str: String): Boolean{
+        return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
     }
 
 }
