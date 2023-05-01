@@ -70,6 +70,7 @@ class LoginFragment : Fragment() {
                 }
                 if(flag){
                     userViewModel.openSesion(user,password).observe(viewLifecycleOwner, Observer { result ->
+                        onMessageDoneSuscribe(userViewModel.returnMessage())
                         if(result){
                             savedStateHandle[LOGIN_SUCCESSFUL] = true
                             val startDestination = findNavController().graph.startDestinationId
@@ -77,6 +78,9 @@ class LoginFragment : Fragment() {
                                 .setPopUpTo(startDestination, true)
                                 .build()
                             findNavController().navigate(startDestination,null,navOptions)
+                        }else{
+                            tietLogin.text?.clear()
+                            tietPassword.text?.clear()
                         }
                     })
                 }
@@ -84,10 +88,6 @@ class LoginFragment : Fragment() {
             tvNoAccount.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
-
-            userViewModel.msgDone.observe(viewLifecycleOwner, Observer {
-                onMessageDoneSuscribe(it)
-            })
         }
 
     }

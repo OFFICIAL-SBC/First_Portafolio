@@ -66,6 +66,7 @@ class RegisterFragment : Fragment() {
                 }
                 if (flag) {
                     userViewModel.createNewUser(user,password).observe(viewLifecycleOwner, Observer { result ->
+                        onMessageDoneSuscribe(userViewModel.returnMessage())
                         if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                         else{
                             tietEmail.text?.clear()
@@ -76,11 +77,6 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
-
-        userViewModel.msgDone.observe(viewLifecycleOwner, Observer { msg ->
-            onMessageDoneSuscribe(msg)
-        })
-
     }
 
     fun onMessageDoneSuscribe(msg: String) {

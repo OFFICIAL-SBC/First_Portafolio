@@ -15,8 +15,8 @@ class UserViewModel: ViewModel() {
     private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will the variable that contains user information.
     val userIndicatorDone:LiveData<Boolean> = userIndicator
 
-    private val msg: MutableLiveData<String> = MutableLiveData()
-    val msgDone: LiveData<String> = msg
+    private var msg: String = ""
+
 
     fun firstMoment(){
         userIndicator.value = false
@@ -30,7 +30,8 @@ class UserViewModel: ViewModel() {
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener(){ task ->
                 loginIndicator.value = task.isSuccessful.also { result ->
-                    if (!result) msg.value = task.exception.toString()
+                    if (!result) msg = task.exception.toString()
+                    else msg = "Welcome"
                 }
                 userIndicator.value = task.isSuccessful //This is just temporary. This will be a class that will hold all user information.
             }
@@ -43,10 +44,14 @@ class UserViewModel: ViewModel() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(){ task ->
                 registerIndicator.value = task.isSuccessful.also { result ->
-                    if(result) msg.value = "User registation has been made correctly."
-                    else msg.value = task.exception.toString()
+                    if(result) msg = "User registation has been made correctly."
+                    else msg = task.exception.toString()
                 }
         }
         return registerIndicator
+    }
+
+    fun returnMessage():String{
+        return msg
     }
 }
