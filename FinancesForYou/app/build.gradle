@@ -56,8 +56,11 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 
     //ViewModel
+    // This library provides the ViewModel class, which is a part of the Android Architecture Components. ViewModels are designed to store and manage UI-related data in a lifecycle-conscious manner.
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+
     //LiveData
+    //This library provides LiveData, which is a data holder class that can be observed within an Android lifecycle-aware component such as an Activity or Fragment.
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
 

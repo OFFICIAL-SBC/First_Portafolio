@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper2 {
+    //This interceptor is commonly used in networking libraries to log HTTP request and response information for debugging and monitoring purposes
     private val loggin = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val headerInterceptor = HeaderInterceptor()

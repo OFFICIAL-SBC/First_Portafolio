@@ -12,7 +12,7 @@ class UserViewModel: ViewModel() {
 
     private lateinit var auth: FirebaseAuth
 
-    private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will the variable that contains user information.
+    private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will be the variable that contains user information.
     val userIndicatorDone:LiveData<Boolean> = userIndicator
 
     private var msg: String = ""

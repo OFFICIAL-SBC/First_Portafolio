@@ -15,7 +15,7 @@ abstract class CountryDatabase: RoomDatabase() {
 
         private fun create(context: Context): CountryDatabase =
             Room.databaseBuilder(context,CountryDatabase::class.java, NAME_DATABASE)
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigration() //This was done when I added a new column in the database
                 .build()
 
         fun getInstance(context: Context) =(instance ?: create(context)).also { instance = it }
