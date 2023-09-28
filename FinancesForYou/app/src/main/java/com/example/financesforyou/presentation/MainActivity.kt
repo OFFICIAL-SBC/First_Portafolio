@@ -14,6 +14,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.financesforyou.R
+import com.example.financesforyou.data.UserViewModel
 import com.example.financesforyou.databinding.ActivityMainBinding
 
 private lateinit var binding: ActivityMainBinding
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         val topLevelDestinations = setOf(R.id.transactionFragment, R.id.reportsFragment)
 
         appBarConfiguration = AppBarConfiguration(
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fcvHost) as NavHostFragment
+
         val navController = navHostFragment.navController
 
         setUpBottomNavMenu(navController)
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration: AppBarConfiguration
     ) {
         /*
-        * This method will connects the navigation controller with the default action app bar and allows the navigation
+        * This method will connects the navigation controller with the DEFAULT ACTION BAR and allows the navigation
         *  controller to control the action bar's appearance and behavior.
         * Basically, add navigation support to the default action bar.
         * */

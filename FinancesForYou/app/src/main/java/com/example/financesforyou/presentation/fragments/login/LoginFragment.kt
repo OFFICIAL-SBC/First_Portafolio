@@ -1,6 +1,5 @@
 package com.example.financesforyou.presentation.fragments.login
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,10 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.example.financesforyou.R
 import com.example.financesforyou.databinding.FragmentLoginBinding
-import com.example.financesforyou.presentation.UserViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.example.financesforyou.data.UserViewModel
 import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {

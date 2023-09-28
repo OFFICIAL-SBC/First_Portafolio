@@ -1,6 +1,5 @@
 package com.example.financesforyou.presentation.fragments.register
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.financesforyou.R
 import com.example.financesforyou.databinding.FragmentRegisterBinding
-import com.example.financesforyou.presentation.UserViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.example.financesforyou.data.UserViewModel
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {

@@ -1,11 +1,9 @@
-package com.example.financesforyou.presentation
+package com.example.financesforyou.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 
 class UserViewModel: ViewModel() {
@@ -44,8 +42,8 @@ class UserViewModel: ViewModel() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(){ task ->
                 registerIndicator.value = task.isSuccessful.also { result ->
-                    if(result) msg = "User registation has been made correctly."
-                    else msg = task.exception.toString()
+                    msg = if(result) "User registation has been made correctly."
+                    else task.exception.toString()
                 }
         }
         return registerIndicator

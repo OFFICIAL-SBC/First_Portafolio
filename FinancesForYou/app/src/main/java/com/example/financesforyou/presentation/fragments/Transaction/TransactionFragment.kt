@@ -2,7 +2,6 @@ package com.example.financesforyou.presentation.fragments.Transaction
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.R
-import com.example.financesforyou.presentation.UserViewModel
+import com.example.financesforyou.data.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
 
 class TransactionFragment : Fragment() {
@@ -43,7 +42,7 @@ class TransactionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val currentBackStackEntry = findNavController().currentBackStackEntry!!
         val saveStateHandle = currentBackStackEntry.savedStateHandle
-        saveStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL) //This execute only if the pair (key=LoginFragment.LOGIN_SUCCESSFUL, valur = true or false) exist in the saveStateHandle
+        saveStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL) //This execute only if the pair (key=LoginFragment.LOGIN_SUCCESSFUL, value = true or false) exist in the saveStateHandle
             .observe(currentBackStackEntry, Observer { success ->
                 if(!success){
                     findNavController().popBackStack()
