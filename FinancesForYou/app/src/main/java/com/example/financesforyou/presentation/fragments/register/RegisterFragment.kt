@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentRegisterBinding
-import com.example.financesforyou.data.UserViewModel
+import com.example.financesforyou.presentation.UserViewModel
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {

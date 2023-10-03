@@ -14,7 +14,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.financesforyou.R
-import com.example.financesforyou.data.UserViewModel
 import com.example.financesforyou.databinding.ActivityMainBinding
 
 private lateinit var binding: ActivityMainBinding

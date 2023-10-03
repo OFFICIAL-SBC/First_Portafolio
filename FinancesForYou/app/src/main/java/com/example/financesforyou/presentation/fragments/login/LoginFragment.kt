@@ -12,7 +12,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentLoginBinding
-import com.example.financesforyou.data.UserViewModel
+import com.example.financesforyou.presentation.UserViewModel
 import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
