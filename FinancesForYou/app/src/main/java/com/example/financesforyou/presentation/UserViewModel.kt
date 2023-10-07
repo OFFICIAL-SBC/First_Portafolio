@@ -28,8 +28,8 @@ class UserViewModel: ViewModel() {
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener(){ task ->
                 loginIndicator.value = task.isSuccessful.also { result ->
-                    if (!result) msg = task.exception.toString()
-                    else msg = "Welcome"
+                    msg = if (!result) task.exception.toString()
+                    else "Welcome"
                 }
                 userIndicator.value = task.isSuccessful //This is just temporary. This will be a class that will hold all user information.
             }

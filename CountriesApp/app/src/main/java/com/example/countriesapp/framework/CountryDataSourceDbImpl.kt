@@ -7,6 +7,7 @@ import com.example.countriesapp.framework.local.room.CountryEntity
 
 class CountryDataSourceDbImpl(context: Context):CountryDataSourceDb {
 
+    //Here I'm not using dependency injection. Why?
     private val countryDao = CountryDatabase.getInstance(context).getCountryDao()
 
     override suspend fun add(currentLocation: CountryEntity) {
