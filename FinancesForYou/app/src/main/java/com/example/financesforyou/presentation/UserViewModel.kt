@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.financesforyou.framework.FinancesViewModel
+import com.example.financesforyou.framework.Interactors
 import com.google.firebase.auth.FirebaseAuth
 
-class UserViewModel: ViewModel() {
+class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
 
     private lateinit var auth: FirebaseAuth
 

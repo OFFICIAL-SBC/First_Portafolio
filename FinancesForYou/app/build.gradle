@@ -47,7 +47,7 @@ dependencies {
 
 
     //Component navigation
-    def nav_version="2.5.3"
+    def nav_version="2.7.4"
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -57,18 +57,18 @@ dependencies {
 
     //ViewModel
     // This library provides the ViewModel class, which is a part of the Android Architecture Components. ViewModels are designed to store and manage UI-related data in a lifecycle-conscious manner.
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
 
     //LiveData
     //This library provides LiveData, which is a data holder class that can be observed within an Android lifecycle-aware component such as an Activity or Fragment.
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
 
 
 
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

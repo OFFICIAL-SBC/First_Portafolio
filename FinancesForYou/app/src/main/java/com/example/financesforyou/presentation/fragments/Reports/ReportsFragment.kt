@@ -23,10 +23,5 @@ class ReportsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_reports, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ReportsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }
