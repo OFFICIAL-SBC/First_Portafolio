@@ -66,25 +66,28 @@ class LoginFragment : Fragment() {
                     flag = false
                 }
                 if(flag){
-                    userViewModel.openSesion(user,password).observe(viewLifecycleOwner, Observer { result ->
-                        onMessageDoneSuscribe(userViewModel.returnMessage())
-                        if(result){
-                            savedStateHandle[LOGIN_SUCCESSFUL] = true
-                            val startDestination = findNavController().graph.startDestinationId
-                            val navOptions = NavOptions.Builder()
-                                .setPopUpTo(startDestination, true)
-                                .build()
-                            findNavController().navigate(startDestination,null,navOptions)
-                        }else{
-                            tietLogin.text?.clear()
-                            tietPassword.text?.clear()
-                        }
-                    })
+                    userViewModel.openSesion(user,password)
                 }
             }
             tvNoAccount.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
+
+
+            userViewModel.logInIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
+                onMessageDoneSuscribe(userViewModel.returnMessage())
+                if(result){
+                    savedStateHandle[LOGIN_SUCCESSFUL] = true
+                    val startDestination = findNavController().graph.startDestinationId
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(startDestination, true)
+                        .build()
+                    findNavController().navigate(startDestination,null,navOptions)
+                }else{
+                    tietLogin.text?.clear()
+                    tietPassword.text?.clear()
+                }
+            })
         }
 
     }

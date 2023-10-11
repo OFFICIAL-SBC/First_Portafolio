@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.databinding.ActivityMainBinding
+import com.example.financesforyou.framework.FinanceViewModelFactory
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -25,12 +26,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //User Sesion
-        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        viewModel.firstMoment()
-        viewModel.initializeAuth()
-
+        viewModel = ViewModelProvider(this,FinanceViewModelFactory)[UserViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.firstMoment()
 
 
         val topLevelDestinations = setOf(R.id.transactionFragment, R.id.reportsFragment)

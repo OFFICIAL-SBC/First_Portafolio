@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentRegisterBinding
 import com.example.financesforyou.presentation.UserViewModel
+import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -59,7 +61,8 @@ class RegisterFragment : Fragment() {
                     flag = false
                 }
                 if (flag) {
-                    userViewModel.createNewUser(user,password).observe(viewLifecycleOwner, Observer { result ->
+
+                    userViewModel.registerIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
                         onMessageDoneSuscribe(userViewModel.returnMessage())
                         if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                         else{
