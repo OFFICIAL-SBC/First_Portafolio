@@ -1,11 +1,12 @@
 package com.example.financesforyou.framework
 
 import android.app.Application
+import android.util.Log
 import com.example.financesforyou.data.FirebaseRepository
 import com.example.financesforyou.usecases.RegisterUseCase
 import com.example.financesforyou.usecases.SignInUseCase
 
-class FinancesApp: Application() {
+class FinancesApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -17,7 +18,7 @@ class FinancesApp: Application() {
                 RegisterUseCase(firebaseRepository)
         )
 
-        FinanceViewModelFactory.inject(interactors)
+        FinanceViewModelFactory.inject(dependencies = interactors)
 
     }
 

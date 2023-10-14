@@ -1,14 +1,15 @@
 package com.example.financesforyou.framework
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 object FinanceViewModelFactory : ViewModelProvider.Factory {
 
-    private lateinit var interactors: Interactors
+   lateinit var dependencies: Interactors
 
-    fun inject(depencies: Interactors) {
-        FinanceViewModelFactory.interactors = depencies
+    fun inject(dependencies: Interactors) {
+        FinanceViewModelFactory.dependencies = dependencies
     }
 
     // override fun <T : ViewModel> create(modelClass: Class<T>): T -> It is responsible for creating our view model's instance
@@ -19,7 +20,7 @@ object FinanceViewModelFactory : ViewModelProvider.Factory {
             //the instance of our view-models by calling newInstance
             return modelClass.getConstructor(Interactors::class.java)
                 .newInstance(
-                    interactors
+                    dependencies
                 )
         } else {
             throw IllegalStateException("ViewModel must extend FiancesViewModel")
