@@ -2,6 +2,7 @@ package com.example.financesforyou.presentation.fragments.Transaction
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class TransactionFragment : Fragment() {
 
         //Checking if there is a open user sesion
         userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
+            Log.i("TRF",user.toString())
             if (!user) { //User == null; remember that user will be a class That will contain all the user data.
                 findNavController().navigate(R.id.loginFragment)
             }

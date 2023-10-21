@@ -1,6 +1,7 @@
 package com.example.financesforyou.presentation.fragments.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,8 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var savedStateHandle: SavedStateHandle
+    var i = 0
+
     //private lateinit var auth: FirebaseAuth
     val EMAIL_ADDRESS_PATTERN = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -75,8 +78,10 @@ class LoginFragment : Fragment() {
 
 
             userViewModel.logInIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
+                i++
                 onMessageDoneSuscribe(userViewModel.returnMessage())
                 if(result){
+                    Log.i("LGFOb","${userViewModel.returnMessage()} $i")
                     savedStateHandle[LOGIN_SUCCESSFUL] = true
                     val startDestination = findNavController().graph.startDestinationId
                     val navOptions = NavOptions.Builder()

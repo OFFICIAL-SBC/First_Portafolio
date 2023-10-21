@@ -62,17 +62,20 @@ class RegisterFragment : Fragment() {
                 }
                 if (flag) {
 
-                    userViewModel.registerIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
-                        onMessageDoneSuscribe(userViewModel.returnMessage())
-                        if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-                        else{
-                            tietEmail.text?.clear()
-                            tietPassword.text?.clear()
-                            tietConPassword.text?.clear()
-                        }
-                    })
+                    userViewModel.createNewUser(user,password)
+
                 }
             }
+
+            userViewModel.registerIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
+                onMessageDoneSuscribe(userViewModel.returnMessage())
+                if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                else{
+                    tietEmail.text?.clear()
+                    tietPassword.text?.clear()
+                    tietConPassword.text?.clear()
+                }
+            })
         }
     }
 
