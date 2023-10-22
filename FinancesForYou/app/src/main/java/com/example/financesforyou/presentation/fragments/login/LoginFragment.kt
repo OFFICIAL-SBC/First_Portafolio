@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
 import java.util.regex.Pattern
+import kotlin.random.Random
 
 class LoginFragment : Fragment() {
 
@@ -78,10 +79,9 @@ class LoginFragment : Fragment() {
 
 
             userViewModel.logInIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
-                i++
                 onMessageDoneSuscribe(userViewModel.returnMessage())
                 if(result){
-                    Log.i("LGFOb","${userViewModel.returnMessage()} $i")
+                    userViewModel.secondMoment()
                     savedStateHandle[LOGIN_SUCCESSFUL] = true
                     val startDestination = findNavController().graph.startDestinationId
                     val navOptions = NavOptions.Builder()

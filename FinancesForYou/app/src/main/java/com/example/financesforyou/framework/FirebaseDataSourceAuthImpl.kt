@@ -16,9 +16,6 @@ class FirebaseDataSourceAuthImpl:FirebaseDataSourceAuth {
         //It is suppose that we have to send the data through a flow.
         return try {
             val result: AuthResult = auth.signInWithEmailAndPassword(user,password).await()
-            Log.i("AuthResult.user",result.user.toString())
-            Log.i("AuthResult.credentials",result.credential.toString())
-            Log.i("AuthResult.additional",result.additionalUserInfo.toString())
             Resource.Success(true)
         }catch (e: Exception){
             Resource.Error(e.message.toString())
@@ -28,7 +25,6 @@ class FirebaseDataSourceAuthImpl:FirebaseDataSourceAuth {
     override suspend fun register(user: String, password: String): Resource<Boolean> {
         return try {
             val result = auth.createUserWithEmailAndPassword(user,password).await()
-            Log.i("HELLOMFK",result.toString())
             Resource.Success(true)
         }catch (e: Exception){
             Resource.Error(e.message.toString())

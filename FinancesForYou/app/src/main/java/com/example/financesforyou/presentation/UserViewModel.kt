@@ -30,6 +30,10 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         userIndicator.value = false
     }
 
+    fun secondMoment(){
+        userIndicator.value = true
+    }
+
 
     private lateinit var msg: String
 
@@ -39,11 +43,11 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
             when(result){
                 is Resource.Error -> {
                     msg = result.message!!
-                    logInIndicator.postValue(false)
+                    logInIndicator.postValue(result.data!!)
                 }
                 is Resource.Success -> {
-                    msg = "Welcome"
-                    logInIndicator.postValue(true)
+                    msg = result.message!!
+                    logInIndicator.postValue(result.data!!)
                 }
             }
         }
