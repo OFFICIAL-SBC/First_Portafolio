@@ -43,11 +43,11 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
             when(result){
                 is Resource.Error -> {
                     msg = result.message!!
-                    logInIndicator.postValue(result.data!!)
+                    logInIndicator.postValue(false)
                 }
                 is Resource.Success -> {
-                    msg = result.message!!
-                    logInIndicator.postValue(result.data!!)
+                    msg = "Welcome"
+                    logInIndicator.postValue(true)
                 }
             }
         }

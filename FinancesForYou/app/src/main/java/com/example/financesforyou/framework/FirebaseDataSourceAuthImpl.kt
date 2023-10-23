@@ -15,6 +15,8 @@ class FirebaseDataSourceAuthImpl:FirebaseDataSourceAuth {
     override suspend fun logIn(user: String, password: String): Resource<Boolean> {
         //It is suppose that we have to send the data through a flow.
         return try {
+            //Here I have the user information, I'm not using it, Could I somehow send the user name to the welcome message
+            // in the UserViewModel
             val result: AuthResult = auth.signInWithEmailAndPassword(user,password).await()
             Resource.Success(true)
         }catch (e: Exception){

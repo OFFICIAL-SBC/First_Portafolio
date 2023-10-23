@@ -45,25 +45,23 @@ class RegisterFragment : Fragment() {
                 val user = tietEmail.text.toString()
                 val password = tietPassword.text.toString()
                 val conPassword = tietConPassword.text.toString()
-                var flag = true
-                if (user.isEmpty() || password.isEmpty() || conPassword.isEmpty()) {
-                    onMessageDoneSuscribe("You have to fill in all the fields.")
-                    flag = false
+
+                val error = if (user.isEmpty() || password.isEmpty() || conPassword.isEmpty()) {
+                    "You have to fill in all the fields."
                 }else if(!isValidEmail(user)){
-                    onMessageDoneSuscribe("Please type a valid email!")
-                    flag = false
+                    "Please type a valid email!"
                 }
-                else if (password != conPassword) {
-                    onMessageDoneSuscribe("The passwords dont match")
-                    flag = false
-                }else if(password.length < 6){
-                    onMessageDoneSuscribe("The password's lenght has to be at least 6 caracters")
-                    flag = false
+                else if (password.length < 6) {
+                    "The password's lenght has to be at least 6 caracters"
+                }else if(password != conPassword){
+                    "The passwords dont match"
+                }else{
+                    null
                 }
-                if (flag) {
-
+                if (error.isNullOrBlank()) {
                     userViewModel.createNewUser(user,password)
-
+                }else{
+                    onMessageDoneSuscribe(error)
                 }
             }
 

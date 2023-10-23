@@ -58,19 +58,19 @@ class LoginFragment : Fragment() {
             btLogin.setOnClickListener {
                 val user = tietLogin.text.toString()
                 val password = tietPassword.text.toString()
-                var flag = true
-                if (user.isEmpty() || password.isEmpty()) {
-                    onMessageDoneSuscribe("You have to type your email and password")
-                    flag=false
+                val error = if (user.isEmpty() || password.isEmpty()) {
+                    "You have to type your email and password"
                 }else if(!isValidEmail(user)){
-                    onMessageDoneSuscribe("Please, type a valid email")
-                    flag = false
+                    "Please, type a valid email"
                 }else if(password.length < 6){
-                    onMessageDoneSuscribe("Password must be a at lest of 6 characters")
-                    flag = false
+                    "Password must be a at lest of 6 characters"
+                }else{
+                    null
                 }
-                if(flag){
+                if(error.isNullOrBlank()){
                     userViewModel.openSesion(user,password)
+                }else{
+                    onMessageDoneSuscribe(error)
                 }
             }
             tvNoAccount.setOnClickListener {

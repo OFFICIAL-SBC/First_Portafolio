@@ -33,7 +33,6 @@ class TransactionFragment : Fragment() {
 
         //Checking if there is a open user sesion
         userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
-            Log.i("TRF",user.toString())
             if (!user) { //User == null; remember that user will be a class That will contain all the user data.
                 findNavController().navigate(R.id.loginFragment)
             }
