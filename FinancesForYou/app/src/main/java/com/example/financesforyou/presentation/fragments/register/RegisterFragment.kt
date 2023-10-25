@@ -14,6 +14,7 @@ import com.example.financesforyou.databinding.FragmentRegisterBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
+import com.google.firebase.auth.AuthResult
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -29,6 +30,21 @@ class RegisterFragment : Fragment() {
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
+
+    private val observer = Observer<Resource<AuthResult>>  {
+        when(it){
+            is Resource.Error ->{
+                onMessageDoneSuscribe(it.message!!)
+            }
+            is Resource.Loading -> {
+                onMessageDoneSuscribe("Loading")
+            }
+            is Resource.Success -> {
+                onMessageDoneSuscribe("The user has been registered correctly")
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +83,8 @@ class RegisterFragment : Fragment() {
                 }
             }
 
+            /**
+
             userViewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
                 when(it){
                     is Resource.Error ->{
@@ -84,7 +102,17 @@ class RegisterFragment : Fragment() {
                     }
                 }
             })
+            **/
+
+            userViewModel.userRegistrationStatus.observe(viewLifecycleOwner, observer)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        userViewModel.userRegistrationStatus.removeObserver(observer)
+
     }
 
     fun onMessageDoneSuscribe(msg: String) {
