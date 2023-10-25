@@ -14,6 +14,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
+import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
 import kotlin.random.Random
 
@@ -78,19 +79,26 @@ class LoginFragment : Fragment() {
             }
 
 
-            userViewModel.logInIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
-                onMessageDoneSuscribe(userViewModel.returnMessage())
-                if(result){
-                    userViewModel.secondMoment()
-                    savedStateHandle[LOGIN_SUCCESSFUL] = true
-                    val startDestination = findNavController().graph.startDestinationId
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo(startDestination, true)
-                        .build()
-                    findNavController().navigate(startDestination,null,navOptions)
-                }else{
-                    tietLogin.text?.clear()
-                    tietPassword.text?.clear()
+            userViewModel.userSignInStatus.observe(viewLifecycleOwner, Observer {
+                when(it){
+                    is Resource.Error -> {
+                        onMessageDoneSuscribe(it.message!!)
+                        tietLogin.text?.clear()
+                        tietPassword.text?.clear()
+                    }
+                    is Resource.Loading -> {
+                        onMessageDoneSuscribe("Loading")
+                    }
+                    is Resource.Success -> {
+                        onMessageDoneSuscribe("Welcome")
+                        userViewModel.secondMoment()
+                        savedStateHandle[LOGIN_SUCCESSFUL] = true
+                        val startDestination = findNavController().graph.startDestinationId
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(startDestination, true)
+                            .build()
+                        findNavController().navigate(startDestination,null,navOptions)
+                    }
                 }
             })
         }

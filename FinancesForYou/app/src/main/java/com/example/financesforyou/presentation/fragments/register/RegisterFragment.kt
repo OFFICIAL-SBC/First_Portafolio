@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentRegisterBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
+import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -58,6 +59,7 @@ class RegisterFragment : Fragment() {
                 }else{
                     null
                 }
+
                 if (error.isNullOrBlank()) {
                     userViewModel.createNewUser(user,password)
                 }else{
@@ -65,13 +67,21 @@ class RegisterFragment : Fragment() {
                 }
             }
 
-            userViewModel.registerIndicatorDone.observe(viewLifecycleOwner, Observer { result ->
-                onMessageDoneSuscribe(userViewModel.returnMessage())
-                if(result) findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-                else{
-                    tietEmail.text?.clear()
-                    tietPassword.text?.clear()
-                    tietConPassword.text?.clear()
+            userViewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
+                when(it){
+                    is Resource.Error ->{
+                        onMessageDoneSuscribe(it.message!!)
+                        tietEmail.text?.clear()
+                        tietPassword.text?.clear()
+                        tietConPassword.text?.clear()
+                    }
+                    is Resource.Loading -> {
+                        onMessageDoneSuscribe("Loading")
+                    }
+                    is Resource.Success -> {
+                        onMessageDoneSuscribe("The user has been registered correctly")
+                        findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                    }
                 }
             })
         }

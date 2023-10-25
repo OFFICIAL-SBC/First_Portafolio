@@ -1,14 +1,15 @@
 package com.example.financesforyou.data
 
 import com.example.financesforyou.utils.Resource
+import com.google.firebase.auth.AuthResult
 
 class FirebaseRepository(private val firebaseDataSourceAuth: FirebaseDataSourceAuth) {
 
-    suspend fun signIn(email: String, password: String): Resource<Boolean> {
+    suspend fun signIn(email: String, password: String): Resource<AuthResult> {
         return firebaseDataSourceAuth.logIn(email,password)
     }
 
-    suspend fun newUser(email: String, password: String):Resource<Boolean>{
+    suspend fun newUser(email: String, password: String):Resource<AuthResult>{
         return firebaseDataSourceAuth.register(email,password)
     }
 }

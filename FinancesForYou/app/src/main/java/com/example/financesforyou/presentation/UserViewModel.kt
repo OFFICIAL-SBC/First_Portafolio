@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.financesforyou.framework.FinancesViewModel
 import com.example.financesforyou.framework.Interactors
 import com.example.financesforyou.utils.Resource
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,14 +19,17 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
     private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will be the variable that contains user information.
     val userIndicatorDone:LiveData<Boolean> = userIndicator
 
-    //LogIn indicator
-    private val logInIndicator:MutableLiveData<Boolean> = MutableLiveData()
-    val logInIndicatorDone:LiveData<Boolean> = logInIndicator
+    //RegisterIndicator
+    private val _userRegistrationStatus = MutableLiveData<Resource<AuthResult>>()
+    val userRegistrationStatus: LiveData<Resource<AuthResult>> = _userRegistrationStatus
 
-    //Register indicator
-    private val registerIndicator:MutableLiveData<Boolean> = MutableLiveData()
-    val registerIndicatorDone:LiveData<Boolean> = registerIndicator
+    //Login Indicator
+    private val _userSignInStatus = MutableLiveData<Resource<AuthResult>>()
+    val userSignInStatus: LiveData<Resource<AuthResult>> = _userSignInStatus
 
+
+    //This function represent the actual user data, I'll change them later
+    //--------------------------------------------------------------------
     fun firstMoment(){
         userIndicator.value = false
     }
@@ -33,45 +37,22 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
     fun secondMoment(){
         userIndicator.value = true
     }
-
-
-    private lateinit var msg: String
+    //--------------------------------------------------------------------
 
     fun openSesion(email:String, password: String){
         viewModelScope.launch(Dispatchers.IO){
-            val result: Resource<Boolean> = interactors.signInUseCase(email,password)
-            when(result){
-                is Resource.Error -> {
-                    msg = result.message!!
-                    logInIndicator.postValue(false)
-                }
-                is Resource.Success -> {
-                    msg = "Welcome"
-                    logInIndicator.postValue(true)
-                }
-            }
+            _userSignInStatus.postValue(Resource.Loading())
+            val result: Resource<AuthResult> = interactors.signInUseCase(email,password)
+            _userSignInStatus.postValue(result)
         }
     }
 
     fun createNewUser(email:String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _userRegistrationStatus.postValue(Resource.Loading())
             val result = interactors.registerUseCase(email, password)
-            when (result) {
-                is Resource.Error -> {
-                    msg = result.message!!
-                    registerIndicator.postValue(false)
-                }
-
-                is Resource.Success -> {
-                    msg = "The user has been registered"
-                    registerIndicator.postValue(true)
-                }
-            }
+            _userRegistrationStatus.postValue(result)
         }
-    }
-
-    fun returnMessage(): String{
-        return msg
     }
 
 }
