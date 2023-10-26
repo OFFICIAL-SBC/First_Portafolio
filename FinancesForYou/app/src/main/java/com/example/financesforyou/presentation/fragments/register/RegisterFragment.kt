@@ -31,25 +31,11 @@ class RegisterFragment : Fragment() {
                 ")+"
     )
 
-    private val observer = Observer<Resource<AuthResult>>  {
-        when(it){
-            is Resource.Error ->{
-                onMessageDoneSuscribe(it.message!!)
-            }
-            is Resource.Loading -> {
-                onMessageDoneSuscribe("Loading")
-            }
-            is Resource.Success -> {
-                onMessageDoneSuscribe("The user has been registered correctly")
-                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userViewModel.setLiveDataToNull()
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -83,9 +69,7 @@ class RegisterFragment : Fragment() {
                 }
             }
 
-            /**
-
-            userViewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
+            userViewModel.userRegistrationStatus?.observe(viewLifecycleOwner, Observer {
                 when(it){
                     is Resource.Error ->{
                         onMessageDoneSuscribe(it.message!!)
@@ -98,22 +82,18 @@ class RegisterFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         onMessageDoneSuscribe("The user has been registered correctly")
-                        findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                        //findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                        findNavController().popBackStack()
                     }
+
+                    null ->{}
                 }
             })
-            **/
 
-            userViewModel.userRegistrationStatus.observe(viewLifecycleOwner, observer)
+
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        userViewModel.userRegistrationStatus.removeObserver(observer)
-
-    }
 
     fun onMessageDoneSuscribe(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

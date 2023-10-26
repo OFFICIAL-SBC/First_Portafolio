@@ -44,6 +44,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userViewModel.setLiveDataToNull()
         //auth = FirebaseAuth.getInstance()
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         return binding.root
@@ -99,6 +100,8 @@ class LoginFragment : Fragment() {
                             .build()
                         findNavController().navigate(startDestination,null,navOptions)
                     }
+
+                    null -> {}
                 }
             })
         }

@@ -20,12 +20,12 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
     val userIndicatorDone:LiveData<Boolean> = userIndicator
 
     //RegisterIndicator
-    private val _userRegistrationStatus = MutableLiveData<Resource<AuthResult>>()
-    val userRegistrationStatus: LiveData<Resource<AuthResult>> = _userRegistrationStatus
+    private val _userRegistrationStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
+    val userRegistrationStatus: LiveData<Resource<AuthResult>?> = _userRegistrationStatus
 
     //Login Indicator
-    private val _userSignInStatus = MutableLiveData<Resource<AuthResult>>()
-    val userSignInStatus: LiveData<Resource<AuthResult>> = _userSignInStatus
+    private val _userSignInStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
+    val userSignInStatus: LiveData<Resource<AuthResult>?> = _userSignInStatus
 
 
     //This function represent the actual user data, I'll change them later
@@ -53,6 +53,11 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
             val result = interactors.registerUseCase(email, password)
             _userRegistrationStatus.postValue(result)
         }
+    }
+
+    fun setLiveDataToNull(){
+        _userRegistrationStatus.value = null
+        _userSignInStatus.value = null
     }
 
 }
