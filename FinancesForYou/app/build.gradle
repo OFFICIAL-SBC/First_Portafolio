@@ -42,8 +42,10 @@ dependencies {
 
     //Firebase
     // Import the Firebase BoM
+    //By using the Firebase Android BoM, your app will always use compatible versions of Firebase Android libraries.
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
 
     //Component navigation

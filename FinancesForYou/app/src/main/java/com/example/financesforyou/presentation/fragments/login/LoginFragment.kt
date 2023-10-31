@@ -23,7 +23,6 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var savedStateHandle: SavedStateHandle
-    var i = 0
 
     //private lateinit var auth: FirebaseAuth
     val EMAIL_ADDRESS_PATTERN = Pattern.compile(

@@ -46,6 +46,8 @@ class TransactionFragment : Fragment() {
         saveStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL) //This execute only if the pair (key=LoginFragment.LOGIN_SUCCESSFUL, value = true or false) exist in the saveStateHandle
             .observe(currentBackStackEntry, Observer { success ->
                 if(!success){
+                    //This is for the scene where the user has been sent to the loginfragment
+                    //but he try to press the back button
                     findNavController().popBackStack()
                 }
             })
