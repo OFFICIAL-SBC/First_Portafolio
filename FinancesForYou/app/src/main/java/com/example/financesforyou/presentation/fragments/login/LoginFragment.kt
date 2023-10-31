@@ -93,11 +93,14 @@ class LoginFragment : Fragment() {
                         onMessageDoneSuscribe("Welcome")
                         userViewModel.secondMoment()
                         savedStateHandle[LOGIN_SUCCESSFUL] = true
-                        val startDestination = findNavController().graph.startDestinationId
-                        val navOptions = NavOptions.Builder()
-                            .setPopUpTo(startDestination, true)
-                            .build()
-                        findNavController().navigate(startDestination,null,navOptions)
+
+                        it.data?.additionalUserInfo?.apply {
+                            if (isNewUser){
+                                createNewUserDataBase()
+                            }else {
+                                navigatePopingUpTo()
+                            }
+                        }
                     }
 
                     null -> {}
@@ -105,6 +108,28 @@ class LoginFragment : Fragment() {
             })
         }
 
+    }
+
+    private fun createNewUserDataBase(){
+        userViewModel.createNewUserInCloudFireStore().observe(viewLifecycleOwner,Observer<Resource<Boolean>>{response ->
+            when(response){
+                is Resource.Error -> {
+                    onMessageDoneSuscribe(response.message!!)
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    navigatePopingUpTo()
+                }
+            }
+        })
+    }
+
+    private fun navigatePopingUpTo(){
+        val startDestination = findNavController().graph.startDestinationId
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(startDestination, true)
+            .build()
+        findNavController().navigate(startDestination,null,navOptions)
     }
 
     private fun onMessageDoneSuscribe(msg: String) {

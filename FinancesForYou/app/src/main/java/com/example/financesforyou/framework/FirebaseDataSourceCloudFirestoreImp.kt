@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.flow
 
 class FirebaseDataSourceCloudFirestoreImp(private val cloudDataBase: FirebaseFirestore):FirebaseDataSourceCloudFirestore {
 
-    override suspend fun createNewUser(): Flow<Resource<Boolean>> = flow{
+    override suspend fun createNewUser(): Flow<Resource<Boolean>> {
+        return flow{
 
+        }
     }
 
 }

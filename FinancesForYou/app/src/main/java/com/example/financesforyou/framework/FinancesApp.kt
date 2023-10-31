@@ -3,6 +3,7 @@ package com.example.financesforyou.framework
 import android.app.Application
 import android.util.Log
 import com.example.financesforyou.data.FirebaseRepository
+import com.example.financesforyou.usecases.CreateNewUserInCloudFireStore
 import com.example.financesforyou.usecases.RegisterUseCase
 import com.example.financesforyou.usecases.SignInUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +24,8 @@ class FinancesApp : Application() {
 
         val interactors = Interactors(
             SignInUseCase(firebaseRepository),
-            RegisterUseCase(firebaseRepository)
+            RegisterUseCase(firebaseRepository),
+            CreateNewUserInCloudFireStore(firebaseRepository)
         )
 
         FinanceViewModelFactory.inject(dependencies = interactors)

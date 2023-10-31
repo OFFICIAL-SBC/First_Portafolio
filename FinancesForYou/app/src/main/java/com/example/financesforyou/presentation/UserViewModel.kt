@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.financesforyou.framework.FinancesViewModel
 import com.example.financesforyou.framework.Interactors
@@ -52,6 +53,14 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
             _userRegistrationStatus.postValue(Resource.Loading())
             val result = interactors.registerUseCase(email, password)
             _userRegistrationStatus.postValue(result)
+        }
+    }
+
+    fun createNewUserInCloudFireStore():LiveData<Resource<Boolean>>{
+        return liveData(Dispatchers.IO){
+            interactors.createNewUserInCloudFireStore().collect{
+                emit(it)
+            }
         }
     }
 
