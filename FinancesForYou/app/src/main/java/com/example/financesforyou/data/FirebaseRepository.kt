@@ -1,5 +1,6 @@
 package com.example.financesforyou.data
 
+import com.example.financesforyou.domain.User
 import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +20,8 @@ class FirebaseRepository(
         return firebaseDataSourceAuth.register(email,password)
     }
 
-    suspend fun addNewUserCloudFiresatore(): Flow<Resource<Boolean>> {
-        return firebaseDataSourceCloudFirestore.createNewUser()
+    suspend fun addNewUserCloudFiresatore(user: User): Flow<Resource<Boolean>> {
+        return firebaseDataSourceCloudFirestore.createNewUser(user)
     }
 
 

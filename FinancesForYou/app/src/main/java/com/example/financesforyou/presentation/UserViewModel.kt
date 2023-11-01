@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.financesforyou.domain.User
 import com.example.financesforyou.framework.FinancesViewModel
 import com.example.financesforyou.framework.Interactors
 import com.example.financesforyou.utils.Resource
@@ -56,9 +57,9 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         }
     }
 
-    fun createNewUserInCloudFireStore():LiveData<Resource<Boolean>>{
+    fun createNewUserInCloudFireStore(user: User):LiveData<Resource<Boolean>>{
         return liveData(Dispatchers.IO){
-            interactors.createNewUserInCloudFireStore().collect{
+            interactors.createNewUserInCloudFireStore(user).collect{
                 emit(it)
             }
         }
