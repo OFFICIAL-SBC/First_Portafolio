@@ -30,9 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.firstMoment()
-
-
         val topLevelDestinations = setOf(R.id.transactionFragment, R.id.reportsFragment)
 
         appBarConfiguration = AppBarConfiguration(

@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -16,7 +18,7 @@ import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
-import kotlin.random.Random
+import com.google.firebase.firestore.FieldValue.serverTimestamp
 
 class LoginFragment : Fragment() {
 
@@ -45,7 +47,7 @@ class LoginFragment : Fragment() {
     ): View? {
         userViewModel.setLiveDataToNull()
         //auth = FirebaseAuth.getInstance()
-        binding = FragmentLoginBinding.inflate(inflater,container,false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -53,24 +55,25 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
-        savedStateHandle[LOGIN_SUCCESSFUL] = false //Create this savedStatedHandle in the transaction fragment
+        savedStateHandle[LOGIN_SUCCESSFUL] =
+            false //Create this savedStatedHandle in the transaction fragment
 
-        with(binding){
+        with(binding) {
             btLogin.setOnClickListener {
                 val user = tietLogin.text.toString()
                 val password = tietPassword.text.toString()
                 val error = if (user.isEmpty() || password.isEmpty()) {
                     "You have to type your email and password"
-                }else if(!isValidEmail(user)){
+                } else if (!isValidEmail(user)) {
                     "Please, type a valid email"
-                }else if(password.length < 6){
+                } else if (password.length < 6) {
                     "Password must be a at lest of 6 characters"
-                }else{
+                } else {
                     null
                 }
-                if(error.isNullOrBlank()){
-                    userViewModel.openSesion(user,password)
-                }else{
+                if (error.isNullOrBlank()) {
+                    userViewModel.openSesion(user, password)
+                } else {
                     onMessageDoneSuscribe(error)
                 }
             }
@@ -80,24 +83,35 @@ class LoginFragment : Fragment() {
 
 
             userViewModel.userSignInStatus.observe(viewLifecycleOwner, Observer {
-                when(it){
+                when (it) {
                     is Resource.Error -> {
+                        visibitlyView()
                         onMessageDoneSuscribe(it.message!!)
                         tietLogin.text?.clear()
                         tietPassword.text?.clear()
                     }
+
                     is Resource.Loading -> {
-                        onMessageDoneSuscribe("Loading")
+                        visibitlyGone()
                     }
+
                     is Resource.Success -> {
-                        onMessageDoneSuscribe("Welcome")
-                        userViewModel.secondMoment()
+                        //onMessageDoneSuscribe("Welcome")
+                        //userViewModel.secondMoment()
+                        userViewModel.setUserData(
+                            it.data?.user!!.uid,
+                            it.data?.user!!.displayName,
+                            it.data.user!!.email,
+                            it.data.user!!.photoUrl.toString(),
+                            serverTimestamp().toString()
+                        )
                         savedStateHandle[LOGIN_SUCCESSFUL] = true
 
                         it.data?.additionalUserInfo?.apply {
-                            if (isNewUser){
+                            Log.i("MDF",isNewUser.toString())
+                            if (isNewUser) {
                                 createNewUserDataBase()
-                            }else {
+                            } else {
                                 navigatePopingUpTo()
                             }
                         }
@@ -110,33 +124,61 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun createNewUserDataBase(){
-        userViewModel.createNewUserInCloudFireStore().observe(viewLifecycleOwner,Observer<Resource<Boolean>>{response ->
-            when(response){
-                is Resource.Error -> {
-                    onMessageDoneSuscribe(response.message!!)
+    private fun createNewUserDataBase() {
+        userViewModel.createNewUserInCloudFireStore()
+            .observe(viewLifecycleOwner, Observer<Resource<Boolean>> { response ->
+                when (response) {
+                    is Resource.Error -> {
+                        onMessageDoneSuscribe(response.message!!)
+                    }
+
+                    is Resource.Loading -> {
+                        visibitlyGone()
+                    }
+                    is Resource.Success -> {
+                        navigatePopingUpTo()
+                    }
                 }
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    navigatePopingUpTo()
-                }
-            }
-        })
+            })
     }
 
-    private fun navigatePopingUpTo(){
+    private fun navigatePopingUpTo() {
+        onMessageDoneSuscribe("Welcome")
+        visibitlyView()
         val startDestination = findNavController().graph.startDestinationId
         val navOptions = NavOptions.Builder()
             .setPopUpTo(startDestination, true)
             .build()
-        findNavController().navigate(startDestination,null,navOptions)
+        findNavController().navigate(startDestination, null, navOptions)
     }
 
     private fun onMessageDoneSuscribe(msg: String) {
-        Toast.makeText(requireContext(),msg,Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    fun isValidEmail(str: String): Boolean{
+    private fun visibitlyGone(){
+        with(binding){
+            tvTitleLogin.visibility = GONE
+            tvNoAccount.visibility=GONE
+            tilEmailLogin.visibility= GONE
+            tilPaswordLogin.visibility=GONE
+            btLogin.visibility= GONE
+            pbLoading.visibility=VISIBLE
+        }
+    }
+
+    private fun visibitlyView(){
+        with(binding){
+            tvTitleLogin.visibility = VISIBLE
+            tvNoAccount.visibility=VISIBLE
+            tilEmailLogin.visibility= VISIBLE
+            tilPaswordLogin.visibility=VISIBLE
+            btLogin.visibility= VISIBLE
+            pbLoading.visibility=GONE
+        }
+    }
+
+    fun isValidEmail(str: String): Boolean {
         return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
     }
 

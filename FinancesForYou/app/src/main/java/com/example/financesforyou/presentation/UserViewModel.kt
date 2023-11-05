@@ -17,9 +17,11 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
 
+    private var user: User? = null
+
     //User data
-    private val userIndicator:MutableLiveData<Boolean> = MutableLiveData() // This will be the variable that contains user information.
-    val userIndicatorDone:LiveData<Boolean> = userIndicator
+    private val userIndicator:MutableLiveData<User?> = MutableLiveData() // This will be the variable that contains user information.
+    val userIndicatorDone:LiveData<User?> = userIndicator
 
     //RegisterIndicator
     private val _userRegistrationStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
@@ -29,17 +31,15 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
     private val _userSignInStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
     val userSignInStatus: LiveData<Resource<AuthResult>?> = _userSignInStatus
 
-
-    //This function represent the actual user data, I'll change them later
-    //--------------------------------------------------------------------
-    fun firstMoment(){
-        userIndicator.value = false
+    init {
+        userIndicator.value = user
     }
 
-    fun secondMoment(){
-        userIndicator.value = true
+
+    fun setUserData(id:String, name: String?, email: String?, photo: String,date: String){
+        user = User(id,name,email,photo,date)
+        userIndicator.value =user
     }
-    //--------------------------------------------------------------------
 
     fun openSesion(email:String, password: String){
         viewModelScope.launch(Dispatchers.IO){
@@ -57,9 +57,9 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         }
     }
 
-    fun createNewUserInCloudFireStore(user: User):LiveData<Resource<Boolean>>{
+    fun createNewUserInCloudFireStore():LiveData<Resource<Boolean>>{
         return liveData(Dispatchers.IO){
-            interactors.createNewUserInCloudFireStore(user).collect{
+            interactors.createNewUserInCloudFireStore(user!!).collect{
                 emit(it)
             }
         }

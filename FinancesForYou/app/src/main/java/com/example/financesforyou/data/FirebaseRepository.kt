@@ -24,5 +24,4 @@ class FirebaseRepository(
         return firebaseDataSourceCloudFirestore.createNewUser(user)
     }
 
-
 }

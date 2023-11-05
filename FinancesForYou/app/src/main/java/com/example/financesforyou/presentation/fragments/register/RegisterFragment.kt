@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -72,15 +74,17 @@ class RegisterFragment : Fragment() {
             userViewModel.userRegistrationStatus?.observe(viewLifecycleOwner, Observer {
                 when(it){
                     is Resource.Error ->{
+                        visibilityVisible()
                         onMessageDoneSuscribe(it.message!!)
                         tietEmail.text?.clear()
                         tietPassword.text?.clear()
                         tietConPassword.text?.clear()
                     }
                     is Resource.Loading -> {
-                        onMessageDoneSuscribe("Loading")
+                        visibilityGone()
                     }
                     is Resource.Success -> {
+                        visibilityVisible()
                         onMessageDoneSuscribe("The user has been registered correctly")
                         //findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                         findNavController().popBackStack()
@@ -94,6 +98,27 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    private fun visibilityGone(){
+        with(binding){
+            tvTitleRegister.visibility=GONE
+            tilEmailRegister.visibility= GONE
+            tilPaswordRegister.visibility= GONE
+            tilConfirmPaswordRegister.visibility= GONE
+            btSaveUser.visibility= GONE
+            pbRegister.visibility= VISIBLE
+        }
+    }
+
+    private fun visibilityVisible(){
+        with(binding){
+            tvTitleRegister.visibility= VISIBLE
+            tilEmailRegister.visibility= VISIBLE
+            tilPaswordRegister.visibility= VISIBLE
+            tilConfirmPaswordRegister.visibility= VISIBLE
+            btSaveUser.visibility= VISIBLE
+            pbRegister.visibility= GONE
+        }
+    }
 
     fun onMessageDoneSuscribe(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
