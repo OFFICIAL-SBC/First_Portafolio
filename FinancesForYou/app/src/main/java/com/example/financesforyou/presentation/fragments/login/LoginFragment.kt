@@ -1,7 +1,6 @@
 package com.example.financesforyou.presentation.fragments.login
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -85,19 +84,21 @@ class LoginFragment : Fragment() {
             userViewModel.userSignInStatus.observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is Resource.Error -> {
-                        visibitlyView()
+                        visibilityView()
                         onMessageDoneSuscribe(it.message!!)
                         tietLogin.text?.clear()
                         tietPassword.text?.clear()
                     }
 
                     is Resource.Loading -> {
-                        visibitlyGone()
+                        visibilityGone()
                     }
 
                     is Resource.Success -> {
                         //onMessageDoneSuscribe("Welcome")
                         //userViewModel.secondMoment()
+                        savedStateHandle[LOGIN_SUCCESSFUL] = true
+
                         userViewModel.setUserData(
                             it.data?.user!!.uid,
                             it.data?.user!!.displayName,
@@ -105,16 +106,8 @@ class LoginFragment : Fragment() {
                             it.data.user!!.photoUrl.toString(),
                             serverTimestamp().toString()
                         )
-                        savedStateHandle[LOGIN_SUCCESSFUL] = true
 
-                        it.data?.additionalUserInfo?.apply {
-                            Log.i("MDF",isNewUser.toString())
-                            if (isNewUser) {
-                                createNewUserDataBase()
-                            } else {
-                                navigatePopingUpTo()
-                            }
-                        }
+                        navigatePopingUpTo()
                     }
 
                     null -> {}
@@ -124,27 +117,11 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun createNewUserDataBase() {
-        userViewModel.createNewUserInCloudFireStore()
-            .observe(viewLifecycleOwner, Observer<Resource<Boolean>> { response ->
-                when (response) {
-                    is Resource.Error -> {
-                        onMessageDoneSuscribe(response.message!!)
-                    }
 
-                    is Resource.Loading -> {
-                        visibitlyGone()
-                    }
-                    is Resource.Success -> {
-                        navigatePopingUpTo()
-                    }
-                }
-            })
-    }
 
     private fun navigatePopingUpTo() {
         onMessageDoneSuscribe("Welcome")
-        visibitlyView()
+        visibilityView()
         val startDestination = findNavController().graph.startDestinationId
         val navOptions = NavOptions.Builder()
             .setPopUpTo(startDestination, true)
@@ -156,7 +133,7 @@ class LoginFragment : Fragment() {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun visibitlyGone(){
+    private fun visibilityGone(){
         with(binding){
             tvTitleLogin.visibility = GONE
             tvNoAccount.visibility=GONE
@@ -167,7 +144,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun visibitlyView(){
+    private fun visibilityView(){
         with(binding){
             tvTitleLogin.visibility = VISIBLE
             tvNoAccount.visibility=VISIBLE

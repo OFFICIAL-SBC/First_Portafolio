@@ -17,6 +17,7 @@ import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.firestore.FieldValue
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -84,10 +85,15 @@ class RegisterFragment : Fragment() {
                         visibilityGone()
                     }
                     is Resource.Success -> {
-                        visibilityVisible()
-                        onMessageDoneSuscribe("The user has been registered correctly")
                         //findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-                        findNavController().popBackStack()
+                        userViewModel.setUserData(
+                            it.data?.user!!.uid,
+                            it.data?.user!!.displayName,
+                            it.data.user!!.email,
+                            it.data.user!!.photoUrl.toString(),
+                            FieldValue.serverTimestamp().toString()
+                        )
+                        createNewUserDataBase()
                     }
 
                     null ->{}
@@ -118,6 +124,38 @@ class RegisterFragment : Fragment() {
             btSaveUser.visibility= VISIBLE
             pbRegister.visibility= GONE
         }
+    }
+
+    private fun createNewUserDataBase() {
+        userViewModel.createNewUserInCloudFireStore()
+            .observe(viewLifecycleOwner, Observer<Resource<Boolean>> { response ->
+                when (response) {
+                    is Resource.Error -> {
+                        visibilityVisible()
+                        onMessageDoneSuscribe(response.message!!)
+                    }
+
+                    is Resource.Loading -> {
+                        visibilityGone()
+                    }
+                    is Resource.Success -> {
+
+                        navigatePopingUpTo()
+                    }
+                }
+            })
+    }
+
+    private fun navigatePopingUpTo() {
+        onMessageDoneSuscribe("Welcome")
+        visibilityVisible()
+        val startDestination = findNavController().graph.startDestinationId
+        val savedStateHandle = findNavController().getBackStackEntry(startDestination).savedStateHandle
+        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL]=true
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(startDestination, true)
+            .build()
+        findNavController().navigate(startDestination, null, navOptions)
     }
 
     fun onMessageDoneSuscribe(msg: String) {
