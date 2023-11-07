@@ -24,6 +24,7 @@ class FirebaseDataSourceCloudFirestoreImp(private val cloudDataBase: FirebaseFir
         //Im creating user to see what the type of the result of cloudDataBase.collection("users").document(id).get().await() is
         val user: DocumentSnapshot = cloudDataBase.collection("users").document(id).get().await()
         val userObject = user.toObject(User::class.java)
+        //What if is there an error?
         userObject?.let {result ->
             emit(Resource.Success(result))
         }
