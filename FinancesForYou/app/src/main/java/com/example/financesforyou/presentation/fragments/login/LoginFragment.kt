@@ -18,6 +18,7 @@ import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
 import com.google.firebase.firestore.FieldValue.serverTimestamp
+import java.util.Date
 
 class LoginFragment : Fragment() {
 
@@ -89,27 +90,13 @@ class LoginFragment : Fragment() {
                         tietLogin.text?.clear()
                         tietPassword.text?.clear()
                     }
-
                     is Resource.Loading -> {
                         visibilityGone()
                     }
-
                     is Resource.Success -> {
-                        //onMessageDoneSuscribe("Welcome")
-                        //userViewModel.secondMoment()
                         savedStateHandle[LOGIN_SUCCESSFUL] = true
-
-                        userViewModel.setUserData(
-                            it.data?.user!!.uid,
-                            it.data?.user!!.displayName,
-                            it.data.user!!.email,
-                            it.data.user!!.photoUrl.toString(),
-                            serverTimestamp().toString()
-                        )
-
-                        navigatePopingUpTo()
+                        getUser(it.data?.user!!.uid)
                     }
-
                     null -> {}
                 }
             })
@@ -118,9 +105,29 @@ class LoginFragment : Fragment() {
     }
 
 
+    private fun getUser(uid: String){
+        userViewModel.getUserFromCloudFireastore(uid).observe(viewLifecycleOwner, Observer {
+            when(it){
+                is Resource.Error -> {
+                    onMessageDoneSuscribe(it.message!!)
+                }
+                is Resource.Loading -> {
+                    visibilityGone()
+                }
+                is Resource.Success -> {
+                    val user = it.data
+                    user?.let {uit->
+                        userViewModel.setUserData(uit.id!!,uit.name,uit.email,uit.photoUrl!!,uit.createdAt!!)
+                    }
+                    navigatePopingUpTo()
+                }
+            }
+        })
+    }
+
 
     private fun navigatePopingUpTo() {
-        onMessageDoneSuscribe("Welcome")
+        onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
         visibilityView()
         val startDestination = findNavController().graph.startDestinationId
         val navOptions = NavOptions.Builder()

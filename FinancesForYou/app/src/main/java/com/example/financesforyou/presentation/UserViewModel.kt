@@ -14,6 +14,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
 
@@ -35,8 +36,16 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         userIndicator.value = user
     }
 
+    fun setLiveDataToNull(){
+        _userRegistrationStatus.value = null
+        _userSignInStatus.value = null
+    }
+    fun getNameUser():String {
+        return user?.name!!
+    }
 
-    fun setUserData(id:String, name: String?, email: String?, photo: String,date: String){
+
+    fun setUserData(id:String, name: String?, email: String?, photo: String,date: Date){
         user = User(id,name,email,photo,date)
         userIndicator.value =user
     }
@@ -65,9 +74,14 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         }
     }
 
-    fun setLiveDataToNull(){
-        _userRegistrationStatus.value = null
-        _userSignInStatus.value = null
+    fun getUserFromCloudFireastore(uid:String): LiveData<Resource<User>>{
+        return liveData(Dispatchers.IO){
+            interactors.getUserUseCase(uid).collect{
+                emit(it)
+            }
+        }
     }
+
+
 
 }

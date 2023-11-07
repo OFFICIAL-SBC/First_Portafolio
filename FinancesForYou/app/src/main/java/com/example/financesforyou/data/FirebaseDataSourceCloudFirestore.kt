@@ -7,5 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface FirebaseDataSourceCloudFirestore {
 
     suspend fun createNewUser(user: User): Flow<Resource<Boolean>>
+    suspend fun getUser(id: String): Flow<Resource<User>>
+
 
 }

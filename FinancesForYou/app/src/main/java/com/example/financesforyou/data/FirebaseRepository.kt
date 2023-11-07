@@ -24,4 +24,6 @@ class FirebaseRepository(
         return firebaseDataSourceCloudFirestore.createNewUser(user)
     }
 
+    suspend fun getUser(id: String): Flow<Resource<User>> = firebaseDataSourceCloudFirestore.getUser(id)
+
 }

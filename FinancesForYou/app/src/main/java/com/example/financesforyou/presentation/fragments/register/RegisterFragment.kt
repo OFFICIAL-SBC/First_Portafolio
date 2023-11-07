@@ -18,6 +18,8 @@ import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FieldValue.serverTimestamp
+import java.util.Date
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -85,13 +87,13 @@ class RegisterFragment : Fragment() {
                         visibilityGone()
                     }
                     is Resource.Success -> {
-                        //findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+
                         userViewModel.setUserData(
                             it.data?.user!!.uid,
-                            it.data?.user!!.displayName,
+                            it.data?.user!!.displayName ?: "",
                             it.data.user!!.email,
                             it.data.user!!.photoUrl.toString(),
-                            FieldValue.serverTimestamp().toString()
+                            Date(it.data.user!!.metadata!!.creationTimestamp)
                         )
                         createNewUserDataBase()
                     }
@@ -147,7 +149,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun navigatePopingUpTo() {
-        onMessageDoneSuscribe("Welcome")
+        onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
         visibilityVisible()
         val startDestination = findNavController().graph.startDestinationId
         val savedStateHandle = findNavController().getBackStackEntry(startDestination).savedStateHandle
