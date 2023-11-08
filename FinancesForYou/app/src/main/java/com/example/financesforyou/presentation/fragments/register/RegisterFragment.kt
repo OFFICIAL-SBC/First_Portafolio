@@ -136,12 +136,10 @@ class RegisterFragment : Fragment() {
                         visibilityVisible()
                         onMessageDoneSuscribe(response.message!!)
                     }
-
                     is Resource.Loading -> {
                         visibilityGone()
                     }
                     is Resource.Success -> {
-
                         navigatePopingUpTo()
                     }
                 }
