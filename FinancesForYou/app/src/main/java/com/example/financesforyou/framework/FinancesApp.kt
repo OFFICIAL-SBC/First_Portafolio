@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.example.financesforyou.data.FirebaseRepository
 import com.example.financesforyou.usecases.CreateNewUserInCloudFireStore
+import com.example.financesforyou.usecases.GetAuthState
 import com.example.financesforyou.usecases.GetUserUseCase
 import com.example.financesforyou.usecases.RegisterUseCase
 import com.example.financesforyou.usecases.SignInUseCase
@@ -27,7 +28,8 @@ class FinancesApp : Application() {
             SignInUseCase(firebaseRepository),
             RegisterUseCase(firebaseRepository),
             CreateNewUserInCloudFireStore(firebaseRepository),
-            GetUserUseCase(firebaseRepository)
+            GetUserUseCase(firebaseRepository),
+            GetAuthState(firebaseRepository)
         )
 
         FinanceViewModelFactory.inject(dependencies = interactors)

@@ -117,7 +117,7 @@ class LoginFragment : Fragment() {
                 is Resource.Success -> {
                     val user = it.data
                     user?.let {uit->
-                        userViewModel.setUserData(uit.id!!,uit.name,uit.email,uit.photoUrl!!,uit.createdAt!!)
+                        userViewModel.setUserData(uit)
                         navigatePopingUpTo()
                     }
                 }

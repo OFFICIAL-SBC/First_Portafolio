@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -16,17 +18,18 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.databinding.ActivityMainBinding
 import com.example.financesforyou.framework.FinanceViewModelFactory
+import com.example.financesforyou.utils.Resource
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var viewModel: UserViewModel
+private lateinit var userViewModel: UserViewModel
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //User Sesion
-        viewModel = ViewModelProvider(this,FinanceViewModelFactory)[UserViewModel::class.java]
+        userViewModel = ViewModelProvider(this,FinanceViewModelFactory)[UserViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,6 +59,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        getAuthState()
+
     }
 
     private fun setUpBottomNavMenu(navController: NavController) {
@@ -77,5 +82,29 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fcvHost)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun getAuthState(){
+        userViewModel.getAuthState().observe(this, Observer{isUserSignedOut ->
+
+            if(isUserSignedOut == ""){
+                userViewModel.setNullUser()
+            }else{
+                userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
+                    when(it){
+                        is Resource.Error -> {onMessageDoneSuscribe(it.message!!)}
+                        is Resource.Loading -> {}
+                        is Resource.Success -> {
+                            userViewModel.setUserData(it.data!!)
+                        }
+                    }
+                })
+            }
+
+        })
+    }
+
+    fun onMessageDoneSuscribe(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

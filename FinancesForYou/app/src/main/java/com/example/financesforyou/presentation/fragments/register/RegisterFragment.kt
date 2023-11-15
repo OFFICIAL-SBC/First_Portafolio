@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentRegisterBinding
+import com.example.financesforyou.domain.User
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
@@ -56,49 +57,54 @@ class RegisterFragment : Fragment() {
 
                 val error = if (user.isEmpty() || password.isEmpty() || conPassword.isEmpty()) {
                     "You have to fill in all the fields."
-                }else if(!isValidEmail(user)){
+                } else if (!isValidEmail(user)) {
                     "Please type a valid email!"
-                }
-                else if (password.length < 6) {
+                } else if (password.length < 6) {
                     "The password's lenght has to be at least 6 caracters"
-                }else if(password != conPassword){
+                } else if (password != conPassword) {
                     "The passwords dont match"
-                }else{
+                } else {
                     null
                 }
 
                 if (error.isNullOrBlank()) {
-                    userViewModel.createNewUser(user,password)
-                }else{
+                    userViewModel.createNewUser(user, password)
+                } else {
                     onMessageDoneSuscribe(error)
                 }
             }
 
             userViewModel.userRegistrationStatus?.observe(viewLifecycleOwner, Observer {
-                when(it){
-                    is Resource.Error ->{
+                when (it) {
+                    is Resource.Error -> {
                         visibilityVisible()
                         onMessageDoneSuscribe(it.message!!)
                         tietEmail.text?.clear()
                         tietPassword.text?.clear()
                         tietConPassword.text?.clear()
                     }
+
                     is Resource.Loading -> {
                         visibilityGone()
                     }
+
                     is Resource.Success -> {
 
+                        val auxUser = User(
+                            id = it.data?.user!!.uid,
+                            name = it.data?.user!!.displayName ?: "",
+                            email = it.data.user!!.email,
+                            photoUrl = it.data.user!!.photoUrl.toString(),
+                            createdAt = Date(it.data.user!!.metadata!!.creationTimestamp)
+                        )
+
                         userViewModel.setUserData(
-                            it.data?.user!!.uid,
-                            it.data?.user!!.displayName ?: "",
-                            it.data.user!!.email,
-                            it.data.user!!.photoUrl.toString(),
-                            Date(it.data.user!!.metadata!!.creationTimestamp)
+                            auxUser
                         )
                         createNewUserDataBase()
                     }
 
-                    null ->{}
+                    null -> {}
                 }
             })
 
@@ -106,25 +112,25 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun visibilityGone(){
-        with(binding){
-            tvTitleRegister.visibility=GONE
-            tilEmailRegister.visibility= GONE
-            tilPaswordRegister.visibility= GONE
-            tilConfirmPaswordRegister.visibility= GONE
-            btSaveUser.visibility= GONE
-            pbRegister.visibility= VISIBLE
+    private fun visibilityGone() {
+        with(binding) {
+            tvTitleRegister.visibility = GONE
+            tilEmailRegister.visibility = GONE
+            tilPaswordRegister.visibility = GONE
+            tilConfirmPaswordRegister.visibility = GONE
+            btSaveUser.visibility = GONE
+            pbRegister.visibility = VISIBLE
         }
     }
 
-    private fun visibilityVisible(){
-        with(binding){
-            tvTitleRegister.visibility= VISIBLE
-            tilEmailRegister.visibility= VISIBLE
-            tilPaswordRegister.visibility= VISIBLE
-            tilConfirmPaswordRegister.visibility= VISIBLE
-            btSaveUser.visibility= VISIBLE
-            pbRegister.visibility= GONE
+    private fun visibilityVisible() {
+        with(binding) {
+            tvTitleRegister.visibility = VISIBLE
+            tilEmailRegister.visibility = VISIBLE
+            tilPaswordRegister.visibility = VISIBLE
+            tilConfirmPaswordRegister.visibility = VISIBLE
+            btSaveUser.visibility = VISIBLE
+            pbRegister.visibility = GONE
         }
     }
 
@@ -136,9 +142,11 @@ class RegisterFragment : Fragment() {
                         visibilityVisible()
                         onMessageDoneSuscribe(response.message!!)
                     }
+
                     is Resource.Loading -> {
                         visibilityGone()
                     }
+
                     is Resource.Success -> {
                         navigatePopingUpTo()
                     }
@@ -150,8 +158,9 @@ class RegisterFragment : Fragment() {
         onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
         visibilityVisible()
         val startDestination = findNavController().graph.startDestinationId
-        val savedStateHandle = findNavController().getBackStackEntry(startDestination).savedStateHandle
-        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL]=true
+        val savedStateHandle =
+            findNavController().getBackStackEntry(startDestination).savedStateHandle
+        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL] = true
         val navOptions = NavOptions.Builder()
             .setPopUpTo(startDestination, true)
             .build()
@@ -162,7 +171,7 @@ class RegisterFragment : Fragment() {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    fun isValidEmail(str: String): Boolean{
+    fun isValidEmail(str: String): Boolean {
         return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
     }
 

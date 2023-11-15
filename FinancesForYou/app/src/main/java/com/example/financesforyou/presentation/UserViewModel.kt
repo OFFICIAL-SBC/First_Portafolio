@@ -18,8 +18,6 @@ import java.util.Date
 
 class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
 
-    private var user: User? = null
-
     //User data
     private val userIndicator:MutableLiveData<User?> = MutableLiveData() // This will be the variable that contains user information.
     val userIndicatorDone:LiveData<User?> = userIndicator
@@ -32,8 +30,8 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
     private val _userSignInStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
     val userSignInStatus: LiveData<Resource<AuthResult>?> = _userSignInStatus
 
-    init {
-        userIndicator.value = user
+    fun setNullUser(){
+        userIndicator.value = null
     }
 
     fun setLiveDataToNull(){
@@ -41,13 +39,12 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         _userSignInStatus.value = null
     }
     fun getNameUser():String {
-        return user?.name!!
+        return userIndicator.value?.name!!
     }
 
 
-    fun setUserData(id:String, name: String?, email: String?, photo: String,date: Date){
-        user = User(id,name,email,photo,date)
-        userIndicator.value =user
+    fun setUserData(_user:User){
+        userIndicator.value =_user
     }
 
     fun openSesion(email:String, password: String){
@@ -68,7 +65,7 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
 
     fun createNewUserInCloudFireStore():LiveData<Resource<Boolean>>{
         return liveData(Dispatchers.IO){
-            interactors.createNewUserInCloudFireStore(user!!).collect{
+            interactors.createNewUserInCloudFireStore(userIndicator.value!!).collect{
                 emit(it)
             }
         }
@@ -82,6 +79,14 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         }
     }
 
+    fun getAuthState(): LiveData<String>{
+        return liveData(Dispatchers.IO){
+            interactors.getAuthState().collect{
+                emit(it)
+            }
+        }
+
+    }
 
 
 }
