@@ -34,11 +34,22 @@ class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataS
 
     override suspend fun getAuthState(): Flow<String> {
         return callbackFlow {
-            val authStateListener = AuthStateListener {
+            // This is the lambda version
+            val authStateListener = AuthStateListener { auth ->
                 val send = if (auth.currentUser == null) ""
                 else auth.currentUser!!.uid
                 trySend(send)
             }
+
+            //This is the traditional way to do it.
+//            val authStateListener = object : AuthStateListener {
+//                override fun onAuthStateChanged(p0: FirebaseAuth) {
+//                    val send = if (p0.currentUser == null) ""
+//                     else p0.currentUser!!.uid
+//                    trySend(send)
+//                }
+//
+//            }
 
             //Here I'm making this flow a hot stream
             auth.addAuthStateListener(authStateListener)

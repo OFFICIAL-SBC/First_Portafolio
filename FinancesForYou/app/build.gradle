@@ -46,10 +46,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'androidx.preference:preference:1.2.1'
 
 
     //Component navigation
-    def nav_version="2.7.4"
+    def nav_version="2.7.5"
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -64,6 +65,11 @@ dependencies {
     //LiveData
     //This library provides LiveData, which is a data holder class that can be observed within an Android lifecycle-aware component such as an Activity or Fragment.
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+
+    //This is for creating your setting fragment
+    //The Preference library allows you to build interactive settings screens, without needing
+    //to handle interacting with device storage or managing the user interface.
+    implementation "androidx.preference:preference-ktx:1.2.1"
 
 
 

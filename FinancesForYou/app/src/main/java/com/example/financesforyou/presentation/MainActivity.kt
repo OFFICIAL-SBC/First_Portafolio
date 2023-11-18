@@ -2,6 +2,9 @@ package com.example.financesforyou.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -53,8 +56,9 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar?.hide()
                 binding.bnvMainNavigation.visibility = GONE
             } else {
+                if (nd.id != R.id.settingsFragment) binding.bnvMainNavigation.visibility = VISIBLE
+                else binding.bnvMainNavigation.visibility = GONE
                 supportActionBar?.show()
-                binding.bnvMainNavigation.visibility = VISIBLE
             }
 
         }
@@ -106,5 +110,20 @@ class MainActivity : AppCompatActivity() {
 
     fun onMessageDoneSuscribe(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.overload_main_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.go_settings_option -> findNavController(R.id.fcvHost).navigate(R.id.settingsFragment)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
