@@ -7,6 +7,7 @@ import com.example.financesforyou.usecases.GetAuthStateUseCase
 import com.example.financesforyou.usecases.GetUserUseCase
 import com.example.financesforyou.usecases.RegisterUseCase
 import com.example.financesforyou.usecases.SignInUseCase
+import com.example.financesforyou.usecases.SignOutUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -28,7 +29,8 @@ class FinancesApp : Application() {
             RegisterUseCase(firebaseRepository),
             CreateNewUserInCloudFireStore(firebaseRepository),
             GetUserUseCase(firebaseRepository),
-            GetAuthStateUseCase(firebaseRepository)
+            GetAuthStateUseCase(firebaseRepository),
+            SignOutUseCase(firebaseRepository)
         )
 
         FinanceViewModelFactory.inject(dependencies = interactors)

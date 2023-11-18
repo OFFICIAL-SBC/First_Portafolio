@@ -13,6 +13,7 @@ import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -85,7 +86,12 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
                 emit(it)
             }
         }
+    }
 
+    fun signOut():LiveData<Resource<Boolean>> = liveData(Dispatchers.IO){
+        interactors.signOutUseCase().collect{
+            emit(it)
+        }
     }
 
 

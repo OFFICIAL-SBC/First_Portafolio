@@ -8,8 +8,9 @@ import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
+import kotlin.Exception
 
 class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataSourceAuth {
 
@@ -58,6 +59,18 @@ class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataS
                 auth.removeAuthStateListener(authStateListener)
             }
 
+        }
+    }
+
+    override suspend fun signOut(): Flow<Resource<Boolean>> {
+        return flow {
+            try {
+                emit(Resource.Loading())
+                auth.signOut()
+                emit(Resource.Success(true))
+            }catch (e: Exception){
+                emit(Resource.Error(errorMessage = e.message!!))
+            }
         }
     }
 }

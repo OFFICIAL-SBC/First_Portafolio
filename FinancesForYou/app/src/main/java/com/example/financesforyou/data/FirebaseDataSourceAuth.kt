@@ -9,5 +9,5 @@ interface FirebaseDataSourceAuth {
     suspend fun logIn(user: String, password: String):Resource<AuthResult>
     suspend fun register(user: String, password: String):Resource<AuthResult>
     suspend fun getAuthState(): Flow<String>
-
+    suspend fun signOut(): Flow<Resource<Boolean>>
 }

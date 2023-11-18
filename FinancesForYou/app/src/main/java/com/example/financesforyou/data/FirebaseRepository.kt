@@ -30,4 +30,8 @@ class FirebaseRepository(
         return firebaseDataSourceAuth.getAuthState()
     }
 
+    suspend fun signOut():Flow<Resource<Boolean>>{
+        return firebaseDataSourceAuth.signOut()
+    }
+
 }

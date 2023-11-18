@@ -12,8 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -93,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
             if(isUserSignedOut == ""){
                 userViewModel.setNullUser()
+                navigatePopingUpTo()
             }else{
                 userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
                     when(it){
@@ -126,4 +129,13 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+    private fun navigatePopingUpTo() {
+        val startDestination = findNavController(R.id.fcvHost).graph.startDestinationId
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(startDestination, true)
+            .build()
+        findNavController(R.id.fcvHost).navigate(startDestination, null, navOptions)
+    }
+
 }
