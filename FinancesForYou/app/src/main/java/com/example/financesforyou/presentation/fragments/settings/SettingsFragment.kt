@@ -17,7 +17,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private val userViewModel: UserViewModel by activityViewModels()
     private var signOutPreference: Preference? = null
-    val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)

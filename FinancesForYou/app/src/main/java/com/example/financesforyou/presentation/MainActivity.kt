@@ -95,7 +95,6 @@ class MainActivity : AppCompatActivity() {
 
             if(isUserSignedOut == ""){
                 userViewModel.setNullUser()
-                navigatePopingUpTo()
             }else{
                 userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
                     when(it){

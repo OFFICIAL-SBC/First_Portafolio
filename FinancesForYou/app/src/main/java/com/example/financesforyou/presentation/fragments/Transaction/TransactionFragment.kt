@@ -34,6 +34,7 @@ class TransactionFragment : Fragment() {
         //Checking if there is a open user sesion
         userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
             if (user == null) {
+                Log.i("HELLO","IM HERE")
                 findNavController().navigate(R.id.loginFragment)
             }
         })
@@ -45,7 +46,9 @@ class TransactionFragment : Fragment() {
         val saveStateHandle = currentBackStackEntry.savedStateHandle
         saveStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL) //This execute only if the pair (key=LoginFragment.LOGIN_SUCCESSFUL, value = true or false) exist in the saveStateHandle
             .observe(currentBackStackEntry, Observer { success ->
+                Log.i("HELLO1","IM HERE $success")
                 if(!success){
+                    Log.i("BYE","IM HERE $success")
                     //This is for the scene where the user has been sent to the loginfragment
                     //but he try to press the back button
                     findNavController().popBackStack()
