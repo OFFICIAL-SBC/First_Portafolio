@@ -1,16 +1,20 @@
 package com.example.financesforyou.presentation.fragments.settings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.example.financesforyou.R
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
+import kotlinx.coroutines.flow.StateFlow
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -32,6 +36,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+        printBackStack()
+
     }
 
     private fun signOutFromSettings(){
@@ -50,5 +56,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun onMessageDoneSuscribe(msg: String){
         Toast.makeText(requireContext(),msg,Toast.LENGTH_SHORT).show()
+    }
+
+    private fun printBackStack(){
+
+        val backStack: StateFlow<List<NavBackStackEntry>> = findNavController().currentBackStack
+        for (entry in backStack.value){
+            Log.i("HELLO5",entry.destination.displayName)
+        }
     }
 }

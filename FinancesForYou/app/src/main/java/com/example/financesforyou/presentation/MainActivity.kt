@@ -2,6 +2,7 @@ package com.example.financesforyou.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         /*
         * This method will connects the navigation controller with the DEFAULT ACTION BAR and allows the navigation
-        *  controller to control the action bar's appearance and behavior.
+        * controller to control the action bar's appearance and behavior.
         * Basically, add navigation support to the default action bar.
         * */
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
             if(isUserSignedOut == ""){
                 userViewModel.setNullUser()
+                navigatePopingUpTo()
             }else{
                 userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
                     when(it){
@@ -130,6 +132,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigatePopingUpTo() {
+       // val navController = findNavController(R.id.fcvHost) //You have to pass the fragment container view (the NavHostFragment)
+        //navController.popBackStack(navController.graph.startDestinationId,false)
         val startDestination = findNavController(R.id.fcvHost).graph.startDestinationId
         val navOptions = NavOptions.Builder()
             .setPopUpTo(startDestination, true)

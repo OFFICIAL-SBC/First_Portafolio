@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
+import kotlinx.coroutines.flow.StateFlow
 
 class TransactionFragment : Fragment() {
 
@@ -34,10 +36,11 @@ class TransactionFragment : Fragment() {
         //Checking if there is a open user sesion
         userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
             if (user == null) {
-                Log.i("HELLO","IM HERE")
                 findNavController().navigate(R.id.loginFragment)
             }
         })
+
+        printBackStack()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +49,14 @@ class TransactionFragment : Fragment() {
         val saveStateHandle = currentBackStackEntry.savedStateHandle
         saveStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL) //This execute only if the pair (key=LoginFragment.LOGIN_SUCCESSFUL, value = true or false) exist in the saveStateHandle
             .observe(currentBackStackEntry, Observer { success ->
-                Log.i("HELLO1","IM HERE $success")
                 if(!success){
-                    Log.i("BYE","IM HERE $success")
-                    //This is for the scene where the user has been sent to the loginfragment
-                    //but he try to press the back button
+                    //This is for the case where the user has been sent to the loginfragment
+                    //but he try to press the back/up button
+
+                    //  findNavController().popBackStack() will pop up this fragment and therefor
+                    //  send you to the nav-graph itself (that is the root element in the back stack)
+                    // and the navgraph will send you to start destination. In this case, it's the same
+                    //transaction fragment but with user info still null, it will redirect you to the logging fragment
                     findNavController().popBackStack()
                 }
             })
@@ -58,6 +64,14 @@ class TransactionFragment : Fragment() {
 
     private fun onSuscribeMsgDone(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+    }
+
+    private fun printBackStack(){
+
+        val backStack: StateFlow<List<NavBackStackEntry>> = findNavController().currentBackStack
+        for (entry in backStack.value){
+            Log.i("HELLO5",entry.destination.displayName)
+        }
     }
 
 }

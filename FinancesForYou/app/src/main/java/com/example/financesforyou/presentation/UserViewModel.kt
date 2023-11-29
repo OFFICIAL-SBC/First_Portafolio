@@ -17,46 +17,56 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.Date
 
-class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
+class UserViewModel(interactors: Interactors) : FinancesViewModel(interactors) {
 
     //User data
-    private val userIndicator:MutableLiveData<User?> = MutableLiveData() // This will be the variable that contains user information.
-    val userIndicatorDone:LiveData<User?> = userIndicator
+    private val userIndicator: MutableLiveData<User?> =
+        MutableLiveData() // This will be the variable that contains user information.
+    val userIndicatorDone: LiveData<User?> = userIndicator
 
     //RegisterIndicator
-    private val _userRegistrationStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
+    private val _userRegistrationStatus: MutableLiveData<Resource<AuthResult>?> =
+        MutableLiveData<Resource<AuthResult>?>()
     val userRegistrationStatus: LiveData<Resource<AuthResult>?> = _userRegistrationStatus
 
     //Login Indicator
-    private val _userSignInStatus: MutableLiveData<Resource<AuthResult>?> = MutableLiveData<Resource<AuthResult>?>()
+    private val _userSignInStatus: MutableLiveData<Resource<AuthResult>?> =
+        MutableLiveData<Resource<AuthResult>?>()
     val userSignInStatus: LiveData<Resource<AuthResult>?> = _userSignInStatus
 
-    fun setNullUser(){
+    init {
+        //This is because without this block the transaction fragment will be created and it'll appear
+        // just for a few seconds before you're send to the logging fragment (this is, of course, if there is not a user's session open)
+        setNullUser()
+    }
+
+    fun setNullUser() {
         userIndicator.value = null
     }
 
-    fun setLiveDataToNull(){
+    fun setLiveDataToNull() {
         _userRegistrationStatus.value = null
         _userSignInStatus.value = null
     }
-    fun getNameUser():String {
+
+    fun getNameUser(): String {
         return userIndicator.value?.name!!
     }
 
 
-    fun setUserData(_user:User){
-        userIndicator.value =_user
+    fun setUserData(_user: User) {
+        userIndicator.value = _user
     }
 
-    fun openSesion(email:String, password: String){
-        viewModelScope.launch(Dispatchers.IO){
+    fun openSesion(email: String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             _userSignInStatus.postValue(Resource.Loading())
-            val result: Resource<AuthResult> = interactors.signInUseCase(email,password)
+            val result: Resource<AuthResult> = interactors.signInUseCase(email, password)
             _userSignInStatus.postValue(result)
         }
     }
 
-    fun createNewUser(email:String, password: String) {
+    fun createNewUser(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _userRegistrationStatus.postValue(Resource.Loading())
             val result = interactors.registerUseCase(email, password)
@@ -64,32 +74,32 @@ class UserViewModel(interactors: Interactors): FinancesViewModel(interactors) {
         }
     }
 
-    fun createNewUserInCloudFireStore():LiveData<Resource<Boolean>>{
-        return liveData(Dispatchers.IO){
-            interactors.createNewUserInCloudFireStore(userIndicator.value!!).collect{
+    fun createNewUserInCloudFireStore(): LiveData<Resource<Boolean>> {
+        return liveData(Dispatchers.IO) {
+            interactors.createNewUserInCloudFireStore(userIndicator.value!!).collect {
                 emit(it)
             }
         }
     }
 
-    fun getUserFromCloudFireastore(uid:String): LiveData<Resource<User>>{
-        return liveData(Dispatchers.IO){
-            interactors.getUserUseCase(uid).collect{
+    fun getUserFromCloudFireastore(uid: String): LiveData<Resource<User>> {
+        return liveData(Dispatchers.IO) {
+            interactors.getUserUseCase(uid).collect {
                 emit(it)
             }
         }
     }
 
-    fun getAuthState(): LiveData<String>{
-        return liveData(Dispatchers.IO){
-            interactors.getAuthState().collect{
+    fun getAuthState(): LiveData<String> {
+        return liveData(Dispatchers.IO) {
+            interactors.getAuthState().collect {
                 emit(it)
             }
         }
     }
 
-    fun signOut():LiveData<Resource<Boolean>> = liveData(Dispatchers.IO){
-        interactors.signOutUseCase().collect{
+    fun signOut(): LiveData<Resource<Boolean>> = liveData(Dispatchers.IO) {
+        interactors.signOutUseCase().collect {
             emit(it)
         }
     }

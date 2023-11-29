@@ -1,6 +1,7 @@
 package com.example.financesforyou.presentation.fragments.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentLoginBinding
@@ -18,6 +20,7 @@ import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
 import com.google.firebase.firestore.FieldValue.serverTimestamp
+import kotlinx.coroutines.flow.StateFlow
 import java.util.Date
 
 class LoginFragment : Fragment() {
@@ -104,6 +107,8 @@ class LoginFragment : Fragment() {
             })
         }
 
+        printBackStack()
+
     }
 
 
@@ -166,6 +171,14 @@ class LoginFragment : Fragment() {
 
     fun isValidEmail(str: String): Boolean {
         return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
+    }
+
+    private fun printBackStack(){
+
+        val backStack: StateFlow<List<NavBackStackEntry>> = findNavController().currentBackStack
+        for (entry in backStack.value){
+            Log.i("HELLO5",entry.destination.displayName)
+        }
     }
 
 }
