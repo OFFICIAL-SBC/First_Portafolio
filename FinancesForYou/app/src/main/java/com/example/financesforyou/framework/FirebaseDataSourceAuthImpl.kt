@@ -1,6 +1,7 @@
 package com.example.financesforyou.framework
 
 import com.example.financesforyou.data.FirebaseDataSourceAuth
+import com.example.financesforyou.domain.User
 import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 import kotlin.Exception
 
 class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataSourceAuth {
@@ -33,12 +35,21 @@ class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataS
         }
     }
 
-    override suspend fun getAuthState(): Flow<String> {
+    override suspend fun getAuthState(): Flow<User?> {
         return callbackFlow {
             // This is the lambda version
+
             val authStateListener = AuthStateListener { auth ->
-                val send = if (auth.currentUser == null) ""
-                else auth.currentUser!!.uid
+                val send = if (auth.currentUser == null) null
+                else {
+                    User(
+                        id = auth.currentUser!!.uid,
+                        name = auth.currentUser!!.displayName ?: "",
+                        email = auth.currentUser!!.email,
+                        photoUrl = auth.currentUser!!.photoUrl.toString(),
+                        createdAt = Date(auth.currentUser!!.metadata!!.creationTimestamp)
+                    )
+                }
                 trySend(send)
             }
 

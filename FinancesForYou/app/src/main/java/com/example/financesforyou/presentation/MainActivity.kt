@@ -24,6 +24,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.databinding.ActivityMainBinding
 import com.example.financesforyou.framework.FinanceViewModelFactory
+import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
 
 private lateinit var binding: ActivityMainBinding
@@ -92,40 +93,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAuthState(){
-        userViewModel.getAuthState().observe(this, Observer{isUserSignedOut ->
-            Log.i("HELLO","xxx")
-            if(isUserSignedOut == ""){
-                Log.i("HELLO","1")
+        userViewModel.getAuthState().observe(this, Observer{userSidnedIn ->
+            Log.i("HELLO1","xxx")
+            if(userSidnedIn == null){
                 userViewModel.setNullUser()
                 navigatePopingUpTo()
-            }else if(userViewModel.userIndicatorDone.value == null){
-                Log.i("HELLO",isUserSignedOut)
-                userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
-                    when(it){
-                        is Resource.Error -> {onMessageDoneSuscribe(it.message!!)}
-                        is Resource.Loading -> {}
-                        is Resource.Success -> {
-                            userViewModel.setUserData(it.data!!)
-                            navigatePopingUpTo()
-                        }
-                    }
-                })
             }else{
-                userViewModel.createNewUserInCloudFireStore()
-                    .observe(this, Observer<Resource<Boolean>> { response ->
-                        when (response) {
-                            is Resource.Error -> {
-                                onMessageDoneSuscribe(response.message!!)
+                //Actually, we need to use previous becase ill add a loading fragment
+                if(findNavController(R.id.fcvHost).currentBackStackEntry?.destination?.id == R.id.loginFragment){
+                    userViewModel.getUserFromCloudFireastore(userSidnedIn.id!!).observe(this, Observer {
+                            when(it){
+                                is Resource.Error -> { onMessageDoneSuscribe(it.message!!)}
+                                is Resource.Loading -> {}
+                                is Resource.Success -> {
+                                    userViewModel.setUserData(it.data!!)
+                                    navigatePopingUpTo()
+                                }
                             }
-                            is Resource.Loading -> {
-                            }
-                            is Resource.Success -> {
-                                navigatePopingUpTo()
-                            }
-                        }
-                    })
-            }
+                        })
+                }else if(findNavController(R.id.fcvHost).currentBackStackEntry?.destination?.id == R.id.registerFragment){
+                 userViewModel.setUserData(userSidnedIn)
+                 userViewModel.createNewUserInCloudFireStore().observe(this, Observer {
+                     when (it) {
+                         is Resource.Error -> {
+                             onMessageDoneSuscribe(it.message!!)
+                         }
+                         is Resource.Loading -> {
+                         }
+                         is Resource.Success -> {
+                             navigatePopingUpTo()
+                         }
+                     }
+                 })
+                }
 
+            }
         })
     }
 
@@ -152,6 +154,9 @@ class MainActivity : AppCompatActivity() {
        // val navController = findNavController(R.id.fcvHost) //You have to pass the fragment container view (the NavHostFragment)
         //navController.popBackStack(navController.graph.startDestinationId,false)
         val startDestination = findNavController(R.id.fcvHost).graph.startDestinationId
+        val savedStateHandle =
+            findNavController(R.id.fcvHost).getBackStackEntry(startDestination).savedStateHandle
+        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL] = true
         val navOptions = NavOptions.Builder()
             .setPopUpTo(startDestination, true)
             .build()

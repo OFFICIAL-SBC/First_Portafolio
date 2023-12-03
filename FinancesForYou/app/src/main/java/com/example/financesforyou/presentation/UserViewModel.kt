@@ -56,6 +56,11 @@ class UserViewModel(interactors: Interactors) : FinancesViewModel(interactors) {
 
     fun setUserData(_user: User) {
         userIndicator.value = _user
+        Log.i("HELLO5",userIndicator.value.toString())
+    }
+
+    fun getUserValue(): User?{
+        return userIndicator.value
     }
 
     fun openSesion(email: String, password: String) {
@@ -90,7 +95,7 @@ class UserViewModel(interactors: Interactors) : FinancesViewModel(interactors) {
         }
     }
 
-    fun getAuthState(): LiveData<String> {
+    fun getAuthState(): LiveData<User?> {
         return liveData(Dispatchers.IO) {
             interactors.getAuthState().collect {
                 emit(it)

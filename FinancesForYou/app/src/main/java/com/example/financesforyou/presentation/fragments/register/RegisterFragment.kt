@@ -93,25 +93,24 @@ class RegisterFragment : Fragment() {
 
                     is Resource.Success -> {
 
-                        visibilityVisible()
-                        val auxUser = User(
-                            id = it.data?.user!!.uid,
-                            name = it.data?.user!!.displayName ?: "",
-                            email = it.data.user!!.email,
-                            photoUrl = it.data.user!!.photoUrl.toString(),
-                            createdAt = Date(it.data.user!!.metadata!!.creationTimestamp)
-                        )
-                        userViewModel.setUserData(
-                            auxUser
-                        )
-                        navigatePopingUpTo()
+//                        visibilityVisible()
+//                        val auxUser = User(
+//                            id = it.data?.user!!.uid,
+//                            name = it.data?.user!!.displayName ?: "",
+//                            email = it.data.user!!.email,
+//                            photoUrl = it.data.user!!.photoUrl.toString(),
+//                            createdAt = Date(it.data.user!!.metadata!!.creationTimestamp)
+//                        )
+//                        userViewModel.setUserData(
+//                            auxUser
+//                        )
+                        //navigatePopingUpTo()
                         //createNewUserDataBase()
                     }
 
                     null -> {}
                 }
             })
-
 
         }
 
@@ -161,7 +160,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun navigatePopingUpTo() {
-        onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
+        //onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
         visibilityVisible()
         val startDestination = findNavController().graph.startDestinationId
         val savedStateHandle =

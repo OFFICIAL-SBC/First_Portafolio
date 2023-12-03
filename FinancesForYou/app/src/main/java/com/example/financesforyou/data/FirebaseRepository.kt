@@ -26,7 +26,7 @@ class FirebaseRepository(
 
     suspend fun getUser(id: String): Flow<Resource<User>> = firebaseDataSourceCloudFirestore.getUser(id)
 
-    suspend fun getAuthStateUser():Flow<String>{
+    suspend fun getAuthStateUser():Flow<User?>{
         return firebaseDataSourceAuth.getAuthState()
     }
 
