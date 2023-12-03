@@ -1,5 +1,6 @@
 package com.example.financesforyou.presentation.fragments.Transaction
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -35,8 +36,11 @@ class TransactionFragment : Fragment() {
 
         //Checking if there is a open user sesion
         userViewModel.userIndicatorDone.observe(viewLifecycleOwner, Observer { user ->
+            Log.i("hello","bye")
             if (user == null) {
                 findNavController().navigate(R.id.loginFragment)
+            }else{
+                Log.i("hello","hello")
             }
         })
 

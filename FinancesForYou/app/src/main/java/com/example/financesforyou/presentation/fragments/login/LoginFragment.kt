@@ -19,9 +19,7 @@ import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
 import java.util.regex.Pattern
-import com.google.firebase.firestore.FieldValue.serverTimestamp
 import kotlinx.coroutines.flow.StateFlow
-import java.util.Date
 
 class LoginFragment : Fragment() {
 
@@ -100,7 +98,6 @@ class LoginFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         savedStateHandle[LOGIN_SUCCESSFUL] = true
-                        getUser(it.data?.user!!.uid)
                     }
                     null -> {}
                 }
@@ -125,7 +122,6 @@ class LoginFragment : Fragment() {
                     val user = it.data
                     user?.let {uit->
                         userViewModel.setUserData(uit)
-                        navigatePopingUpTo()
                     }
                 }
             }

@@ -93,6 +93,7 @@ class RegisterFragment : Fragment() {
 
                     is Resource.Success -> {
 
+                        visibilityVisible()
                         val auxUser = User(
                             id = it.data?.user!!.uid,
                             name = it.data?.user!!.displayName ?: "",
@@ -100,11 +101,11 @@ class RegisterFragment : Fragment() {
                             photoUrl = it.data.user!!.photoUrl.toString(),
                             createdAt = Date(it.data.user!!.metadata!!.creationTimestamp)
                         )
-
                         userViewModel.setUserData(
                             auxUser
                         )
-                        createNewUserDataBase()
+                        navigatePopingUpTo()
+                        //createNewUserDataBase()
                     }
 
                     null -> {}
@@ -166,10 +167,10 @@ class RegisterFragment : Fragment() {
         val savedStateHandle =
             findNavController().getBackStackEntry(startDestination).savedStateHandle
         savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL] = true
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(startDestination, true)
-            .build()
-        findNavController().navigate(startDestination, null, navOptions)
+//        val navOptions = NavOptions.Builder()
+//            .setPopUpTo(startDestination, true)
+//            .build()
+//        findNavController().navigate(startDestination, null, navOptions)
     }
 
     fun onMessageDoneSuscribe(msg: String) {

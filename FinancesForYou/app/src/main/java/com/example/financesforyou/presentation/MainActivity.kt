@@ -93,20 +93,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAuthState(){
         userViewModel.getAuthState().observe(this, Observer{isUserSignedOut ->
-
+            Log.i("HELLO","xxx")
             if(isUserSignedOut == ""){
+                Log.i("HELLO","1")
                 userViewModel.setNullUser()
                 navigatePopingUpTo()
-            }else{
+            }else if(userViewModel.userIndicatorDone.value == null){
+                Log.i("HELLO",isUserSignedOut)
                 userViewModel.getUserFromCloudFireastore(isUserSignedOut).observe(this, Observer {
                     when(it){
                         is Resource.Error -> {onMessageDoneSuscribe(it.message!!)}
                         is Resource.Loading -> {}
                         is Resource.Success -> {
                             userViewModel.setUserData(it.data!!)
+                            navigatePopingUpTo()
                         }
                     }
                 })
+            }else{
+                userViewModel.createNewUserInCloudFireStore()
+                    .observe(this, Observer<Resource<Boolean>> { response ->
+                        when (response) {
+                            is Resource.Error -> {
+                                onMessageDoneSuscribe(response.message!!)
+                            }
+                            is Resource.Loading -> {
+                            }
+                            is Resource.Success -> {
+                                navigatePopingUpTo()
+                            }
+                        }
+                    })
             }
 
         })
