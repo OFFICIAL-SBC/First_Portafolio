@@ -51,7 +51,12 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         with(binding) {
+            visibilityVisible()
+            tietEmail.text?.clear()
+            tietPassword.text?.clear()
+            tietConPassword.text?.clear()
 
             btSaveUser.setOnClickListener {
                 val user = tietEmail.text.toString()
@@ -93,19 +98,6 @@ class RegisterFragment : Fragment() {
 
                     is Resource.Success -> {
 
-//                        visibilityVisible()
-//                        val auxUser = User(
-//                            id = it.data?.user!!.uid,
-//                            name = it.data?.user!!.displayName ?: "",
-//                            email = it.data.user!!.email,
-//                            photoUrl = it.data.user!!.photoUrl.toString(),
-//                            createdAt = Date(it.data.user!!.metadata!!.creationTimestamp)
-//                        )
-//                        userViewModel.setUserData(
-//                            auxUser
-//                        )
-                        //navigatePopingUpTo()
-                        //createNewUserDataBase()
                     }
 
                     null -> {}
@@ -137,39 +129,6 @@ class RegisterFragment : Fragment() {
             btSaveUser.visibility = VISIBLE
             pbRegister.visibility = GONE
         }
-    }
-
-    private fun createNewUserDataBase() {
-        userViewModel.createNewUserInCloudFireStore()
-            .observe(viewLifecycleOwner, Observer<Resource<Boolean>> { response ->
-                when (response) {
-                    is Resource.Error -> {
-                        visibilityVisible()
-                        onMessageDoneSuscribe(response.message!!)
-                    }
-
-                    is Resource.Loading -> {
-                        visibilityGone()
-                    }
-
-                    is Resource.Success -> {
-                        navigatePopingUpTo()
-                    }
-                }
-            })
-    }
-
-    private fun navigatePopingUpTo() {
-        //onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
-        visibilityVisible()
-        val startDestination = findNavController().graph.startDestinationId
-        val savedStateHandle =
-            findNavController().getBackStackEntry(startDestination).savedStateHandle
-        savedStateHandle[LoginFragment.LOGIN_SUCCESSFUL] = true
-//        val navOptions = NavOptions.Builder()
-//            .setPopUpTo(startDestination, true)
-//            .build()
-//        findNavController().navigate(startDestination, null, navOptions)
     }
 
     fun onMessageDoneSuscribe(msg: String) {

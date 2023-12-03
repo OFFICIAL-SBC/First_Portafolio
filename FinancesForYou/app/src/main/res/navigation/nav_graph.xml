@@ -34,4 +34,9 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.financesforyou.presentation.fragments.settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.financesforyou.presentation.fragments.loading.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" />
 </navigation>

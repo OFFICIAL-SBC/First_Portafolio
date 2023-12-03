@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        visibilityView()
         savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
         savedStateHandle[LOGIN_SUCCESSFUL] =
             false //Create this savedStatedHandle in the transaction fragment
@@ -108,37 +108,6 @@ class LoginFragment : Fragment() {
 
     }
 
-
-    private fun getUser(uid: String){
-        userViewModel.getUserFromCloudFireastore(uid).observe(viewLifecycleOwner, Observer {
-            when(it){
-                is Resource.Error -> {
-                    onMessageDoneSuscribe(it.message!!)
-                }
-                is Resource.Loading -> {
-                    visibilityGone()
-                }
-                is Resource.Success -> {
-                    val user = it.data
-                    user?.let {uit->
-                        userViewModel.setUserData(uit)
-                    }
-                }
-            }
-        })
-    }
-
-
-    private fun navigatePopingUpTo() {
-        onMessageDoneSuscribe("Welcome ${userViewModel.getNameUser()}")
-        visibilityView()
-        val startDestination = findNavController().graph.startDestinationId
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(startDestination, true)
-            .build()
-        findNavController().navigate(startDestination, null, navOptions)
-    }
-
     private fun onMessageDoneSuscribe(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
@@ -173,7 +142,7 @@ class LoginFragment : Fragment() {
 
         val backStack: StateFlow<List<NavBackStackEntry>> = findNavController().currentBackStack
         for (entry in backStack.value){
-            Log.i("HELLO5",entry.destination.displayName)
+            Log.i("HELLO8",entry.destination.displayName)
         }
     }
 

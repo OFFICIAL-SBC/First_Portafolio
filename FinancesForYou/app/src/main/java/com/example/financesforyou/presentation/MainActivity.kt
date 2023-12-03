@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
 
-            if (nd.id == R.id.loginFragment || nd.id == R.id.registerFragment) {
+            if (nd.id == R.id.loginFragment || nd.id == R.id.registerFragment || nd.id == R.id.loadingFragment ) {
                 supportActionBar?.hide()
                 binding.bnvMainNavigation.visibility = GONE
             } else {
@@ -103,8 +103,11 @@ class MainActivity : AppCompatActivity() {
                 if(findNavController(R.id.fcvHost).currentBackStackEntry?.destination?.id == R.id.loginFragment){
                     userViewModel.getUserFromCloudFireastore(userSidnedIn.id!!).observe(this, Observer {
                             when(it){
-                                is Resource.Error -> { onMessageDoneSuscribe(it.message!!)}
-                                is Resource.Loading -> {}
+                                is Resource.Error -> {
+                                    findNavController(R.id.fcvHost).popBackStack(R.id.loginFragment,false)
+                                    onMessageDoneSuscribe(it.message!!)
+                                }
+                                is Resource.Loading -> {findNavController(R.id.fcvHost).navigate(R.id.loadingFragment)}
                                 is Resource.Success -> {
                                     userViewModel.setUserData(it.data!!)
                                     navigatePopingUpTo()
@@ -116,9 +119,11 @@ class MainActivity : AppCompatActivity() {
                  userViewModel.createNewUserInCloudFireStore().observe(this, Observer {
                      when (it) {
                          is Resource.Error -> {
+                             findNavController(R.id.fcvHost).popBackStack(R.id.registerFragment,false)
                              onMessageDoneSuscribe(it.message!!)
                          }
                          is Resource.Loading -> {
+                             findNavController(R.id.fcvHost).navigate(R.id.loadingFragment)
                          }
                          is Resource.Success -> {
                              navigatePopingUpTo()

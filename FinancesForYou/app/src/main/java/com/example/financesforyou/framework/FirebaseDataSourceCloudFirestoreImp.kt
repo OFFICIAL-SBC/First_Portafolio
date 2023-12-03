@@ -23,6 +23,7 @@ class FirebaseDataSourceCloudFirestoreImp(private val cloudDataBase: FirebaseFir
 
     override suspend fun createNewUser(user: User): Flow<Resource<Boolean>> {
         return flow {
+            emit(Resource.Loading())
             try {
                 cloudDataBase.collection("users").document(user.id!!).set(user).await()
                     .also { emit(Resource.Success(true)) }
@@ -33,6 +34,7 @@ class FirebaseDataSourceCloudFirestoreImp(private val cloudDataBase: FirebaseFir
     }
 
     override suspend fun getUser(id: String): Flow<Resource<User>> = flow {
+        emit(Resource.Loading())
         try {
             //Im creating user22 to see what the type of the result of cloudDataBase.collection("users").document(id).get().await() is
             val user22: DocumentSnapshot =
