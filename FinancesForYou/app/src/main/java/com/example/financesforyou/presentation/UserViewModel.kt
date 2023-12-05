@@ -56,7 +56,6 @@ class UserViewModel(interactors: Interactors) : FinancesViewModel(interactors) {
 
     fun setUserData(_user: User) {
         userIndicator.value = _user
-        Log.i("HELLO5",userIndicator.value.toString())
     }
 
     fun getUserValue(): User?{

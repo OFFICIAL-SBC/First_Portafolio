@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity() {
                 userViewModel.setNullUser()
                 navigatePopingUpTo()
             }else{
-                //Actually, we need to use previous becase ill add a loading fragment
                 if(findNavController(R.id.fcvHost).currentBackStackEntry?.destination?.id == R.id.loginFragment){
                     userViewModel.getUserFromCloudFireastore(userSidnedIn.id!!).observe(this, Observer {
                             when(it){
