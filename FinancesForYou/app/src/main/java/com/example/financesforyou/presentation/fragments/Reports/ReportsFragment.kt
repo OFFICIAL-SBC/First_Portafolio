@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 
+@AndroidEntryPoint
 class ReportsFragment : Fragment() {
 
     private lateinit var viewModel: ReportsViewModel

@@ -14,8 +14,10 @@ import androidx.preference.PreferenceManager
 import com.example.financesforyou.R
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
 
 

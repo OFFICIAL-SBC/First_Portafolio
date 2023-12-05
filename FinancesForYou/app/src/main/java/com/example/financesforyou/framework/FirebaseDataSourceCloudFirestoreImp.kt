@@ -9,9 +9,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 
-class FirebaseDataSourceCloudFirestoreImp(private val cloudDataBase: FirebaseFirestore) :
+class FirebaseDataSourceCloudFirestoreImp @Inject constructor(
+    private val cloudDataBase: FirebaseFirestore
+) :
     FirebaseDataSourceCloudFirestore {
 
     //I tried to use a flow, catch blocks

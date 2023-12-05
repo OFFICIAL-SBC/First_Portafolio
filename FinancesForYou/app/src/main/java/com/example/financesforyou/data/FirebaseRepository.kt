@@ -6,8 +6,9 @@ import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FirebaseRepository(
+class FirebaseRepository @Inject constructor(
     private val firebaseDataSourceAuth: FirebaseDataSourceAuth,
     private val firebaseDataSourceCloudFirestore: FirebaseDataSourceCloudFirestore
     ) {

@@ -16,8 +16,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.R
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 
+@AndroidEntryPoint
 class TransactionFragment : Fragment() {
 
     private lateinit var viewModel: TransactionViewModel

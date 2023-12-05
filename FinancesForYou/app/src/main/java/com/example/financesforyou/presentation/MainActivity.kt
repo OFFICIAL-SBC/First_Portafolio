@@ -26,12 +26,14 @@ import com.example.financesforyou.databinding.ActivityMainBinding
 import com.example.financesforyou.framework.FinanceViewModelFactory
 import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
 private lateinit var userViewModel: UserViewModel
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -12,9 +12,12 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.util.Date
+import javax.inject.Inject
 import kotlin.Exception
 
-class FirebaseDataSourceAuthImpl(private val auth: FirebaseAuth) : FirebaseDataSourceAuth {
+class FirebaseDataSourceAuthImpl @Inject constructor(
+    private val auth: FirebaseAuth
+) : FirebaseDataSourceAuth {
 
     override suspend fun logIn(user: String, password: String): Resource<AuthResult> {
         //It is suppose that we have to send the data through a flow.

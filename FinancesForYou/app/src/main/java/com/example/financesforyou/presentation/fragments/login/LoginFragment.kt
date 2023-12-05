@@ -18,9 +18,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.financesforyou.databinding.FragmentLoginBinding
 import com.example.financesforyou.presentation.UserViewModel
 import com.example.financesforyou.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 import kotlinx.coroutines.flow.StateFlow
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding

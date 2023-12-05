@@ -10,30 +10,32 @@ import com.example.financesforyou.usecases.SignInUseCase
 import com.example.financesforyou.usecases.SignOutUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class FinancesApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        val auth: FirebaseAuth = FirebaseAuth.getInstance()
-        val cloudDataBase: FirebaseFirestore = FirebaseFirestore.getInstance()
+//        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+//        val cloudDataBase: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-        val firebaseRepository = FirebaseRepository(
-            FirebaseDataSourceAuthImpl(auth),
-            FirebaseDataSourceCloudFirestoreImp(cloudDataBase)
-        )
+//        val firebaseRepository = FirebaseRepository(
+//            FirebaseDataSourceAuthImpl(auth),
+//            FirebaseDataSourceCloudFirestoreImp(cloudDataBase)
+//        )
 
-        val interactors = Interactors(
-            SignInUseCase(firebaseRepository),
-            RegisterUseCase(firebaseRepository),
-            CreateNewUserInCloudFireStore(firebaseRepository),
-            GetUserUseCase(firebaseRepository),
-            GetAuthStateUseCase(firebaseRepository),
-            SignOutUseCase(firebaseRepository)
-        )
+//        val interactors = Interactors(
+//            SignInUseCase(firebaseRepository),
+//            RegisterUseCase(firebaseRepository),
+//            CreateNewUserInCloudFireStore(firebaseRepository),
+//            GetUserUseCase(firebaseRepository),
+//            GetAuthStateUseCase(firebaseRepository),
+//            SignOutUseCase(firebaseRepository)
+//        )
 
-        FinanceViewModelFactory.inject(dependencies = interactors)
+//        FinanceViewModelFactory.inject(dependencies = interactors)
 
     }
 

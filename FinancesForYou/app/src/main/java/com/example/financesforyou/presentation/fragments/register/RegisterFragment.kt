@@ -22,10 +22,12 @@ import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FieldValue.serverTimestamp
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Date
 import java.util.regex.Pattern
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private val userViewModel: UserViewModel by activityViewModels()
