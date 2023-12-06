@@ -12,12 +12,17 @@ import com.example.financesforyou.framework.Interactors
 import com.example.financesforyou.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.Date
+import javax.inject.Inject
 
-class UserViewModel(interactors: Interactors) : FinancesViewModel(interactors) {
+@HiltViewModel
+class UserViewModel @Inject constructor(
+    private val interactors: Interactors
+) {
 
     //User data
     private val userIndicator: MutableLiveData<User?> =

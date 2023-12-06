@@ -1,7 +1,10 @@
 package com.example.financesforyou.presentation.fragments.Transaction
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class TransactionViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+@HiltViewModel
+class TransactionViewModel @Inject constructor() : ViewModel() {
+
 }

@@ -28,17 +28,18 @@ import com.example.financesforyou.presentation.fragments.login.LoginFragment
 import com.example.financesforyou.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
-private lateinit var binding: ActivityMainBinding
-private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var userViewModel: UserViewModel
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var userViewModel: UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         //User Sesion
-        userViewModel = ViewModelProvider(this,FinanceViewModelFactory)[UserViewModel::class.java]
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
