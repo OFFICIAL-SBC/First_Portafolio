@@ -70,14 +70,24 @@ dependencies {
     //This library provides LiveData, which is a data holder class that can be observed within an Android lifecycle-aware component such as an Activity or Fragment.
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
+    // Librerias opcionales para facilitar la creacion del viewmodel en el activity y en el fragment
+    //Fragment
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    //Activity
+    implementation "androidx.activity:activity-ktx:1.8.1"
+
+    //Corrutinas
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
     //This is for creating your setting fragment
     //The Preference library allows you to build interactive settings screens, without needing
     //to handle interacting with device storage or managing the user interface.
     implementation "androidx.preference:preference-ktx:1.2.1"
 
     //Hilt
-    implementation "com.google.dagger:hilt-android:2.44"
+    implementation "com.google.dagger:hilt-android:2.48"
     kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation "androidx.hilt:hilt-navigation-fragment:1.1.0"
 
 
     implementation 'androidx.core:core-ktx:1.12.0'

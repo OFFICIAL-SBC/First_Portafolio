@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val interactors: Interactors
-) {
+):ViewModel() {
 
     //User data
     private val userIndicator: MutableLiveData<User?> =

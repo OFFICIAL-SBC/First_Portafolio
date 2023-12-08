@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 class TransactionFragment : Fragment() {
 
     private lateinit var viewModel: TransactionViewModel
-    private val userViewModel: UserViewModel by viewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
