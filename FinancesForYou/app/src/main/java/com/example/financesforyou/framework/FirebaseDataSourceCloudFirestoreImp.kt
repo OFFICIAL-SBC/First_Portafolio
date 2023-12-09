@@ -14,13 +14,12 @@ import javax.inject.Inject
 
 class FirebaseDataSourceCloudFirestoreImp @Inject constructor(
     private val cloudDataBase: FirebaseFirestore
-) :
-    FirebaseDataSourceCloudFirestore {
+) : FirebaseDataSourceCloudFirestore {
 
     //I tried to use a flow, catch blocks
     //flow{
     // ..
-    // }.catch { I tried to do it this way but an arror appered: here in the catch block I had to emit Resource.Success(User) which doesn't make sense.
+    // }.catch { I tried to do it this way but an error appeared: here in the catch block I had to emit Resource.Success(User) which doesn't make sense.
     //..
     //}
 

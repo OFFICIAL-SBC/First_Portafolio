@@ -70,9 +70,9 @@ class RegisterFragment : Fragment() {
                 } else if (!isValidEmail(user)) {
                     "Please type a valid email!"
                 } else if (password.length < 6) {
-                    "The password's lenght has to be at least 6 caracters"
+                    "The password's length has to be at least 6 characters"
                 } else if (password != conPassword) {
-                    "The passwords dont match"
+                    "The passwords don't match"
                 } else {
                     null
                 }

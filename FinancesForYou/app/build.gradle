@@ -77,6 +77,11 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.8.1"
 
     //Corrutinas
+//    Adds the Kotlin coroutines library tailored for Android to the project dependencies.
+//    This inclusion is crucial for leveraging Kotlin coroutines in an Android app, providing specific
+//    support and optimizations for asynchronous programming on the Android platform. Without this line,
+//    the Android-specific features and enhancements of the coroutines library would be unavailable,
+//    hindering the efficient implementation of asynchronous tasks in Android development.
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     //This is for creating your setting fragment
@@ -86,8 +91,7 @@ dependencies {
 
     //Hilt
     implementation "com.google.dagger:hilt-android:2.48"
-    kapt "com.google.dagger:hilt-compiler:2.44"
-    implementation "androidx.hilt:hilt-navigation-fragment:1.1.0"
+    kapt  "com.google.dagger:hilt-compiler:2.48"
 
 
     implementation 'androidx.core:core-ktx:1.12.0'
@@ -97,4 +101,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

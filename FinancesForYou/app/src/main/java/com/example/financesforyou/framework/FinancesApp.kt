@@ -18,6 +18,8 @@ class FinancesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        //This is the manual way to do it.
+
 //        val auth: FirebaseAuth = FirebaseAuth.getInstance()
 //        val cloudDataBase: FirebaseFirestore = FirebaseFirestore.getInstance()
 

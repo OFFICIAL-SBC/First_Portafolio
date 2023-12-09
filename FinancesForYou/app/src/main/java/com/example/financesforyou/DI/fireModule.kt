@@ -17,6 +17,8 @@ object fireModule {
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
+    @Provides
+    @Singleton
     fun provideFirebaseCloud(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
 }
