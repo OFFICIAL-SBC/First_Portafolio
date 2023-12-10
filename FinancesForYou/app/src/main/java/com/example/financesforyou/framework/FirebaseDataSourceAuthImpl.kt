@@ -78,8 +78,8 @@ class FirebaseDataSourceAuthImpl @Inject constructor(
 
     override suspend fun signOut(): Flow<Resource<Boolean>> {
         return flow {
+            emit(Resource.Loading())
             try {
-                emit(Resource.Loading())
                 auth.signOut()
                 emit(Resource.Success(true))
             }catch (e: Exception){

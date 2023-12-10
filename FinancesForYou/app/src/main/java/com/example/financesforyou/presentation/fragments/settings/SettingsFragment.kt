@@ -2,9 +2,15 @@ package com.example.financesforyou.presentation.fragments.settings
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
@@ -18,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 
 @AndroidEntryPoint
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat(), MenuProvider{
 
 
     private val userViewModel: UserViewModel by activityViewModels()
@@ -31,12 +37,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val menuHost: MenuHost = requireActivity()
+
         signOutPreference = findPreference("signout")
 
         signOutPreference?.setOnPreferenceClickListener {
             signOutFromSettings()
             true
         }
+
+        menuHost.addMenuProvider(this,viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         printBackStack()
 
@@ -48,7 +58,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 is Resource.Error -> {
                     onMessageDoneSuscribe(it.message!!)
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    findNavController().navigate(R.id.loadingFragment)
+                }
                 is Resource.Success -> {
                     onMessageDoneSuscribe("Bye, come back soon!!")
                 }
@@ -67,4 +79,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.i("HELLO5",entry.destination.displayName)
         }
     }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return false
+    }
+
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
+        if(menu != null){
+            menu.findItem(R.id.go_settings_option).setVisible(false)
+        }
+    }
+
+
 }
